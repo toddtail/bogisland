@@ -6,9 +6,13 @@ abstract class Routes {
 
   static const HOME = _Paths.HOME;
   static const FORUM = _Paths.FORUM;
+  static const POST_EDIT = _Paths.POST_EDIT;
+  static const CONTENT = _Paths.CONTENT;
 }
 
 abstract class _Paths {
   static const HOME = '/home';
   static const FORUM = '/forum';
+  static const POST_EDIT = '/post-edit';
+  static const CONTENT = '/content';
 }
