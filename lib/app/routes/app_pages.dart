@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import 'package:bog_island/app/modules/forum/bindings/forum_binding.dart';
+import 'package:bog_island/app/modules/forum/views/forum_view.dart';
 import 'package:bog_island/app/modules/home/bindings/home_binding.dart';
 import 'package:bog_island/app/modules/home/views/home_view.dart';
 
@@ -15,6 +17,11 @@ class AppPages {
       name: _Paths.HOME,
       page: () => HomeView(),
       binding: HomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.FORUM,
+      page: () => ForumView(),
+      binding: ForumBinding(),
     ),
   ];
 }
