@@ -50,6 +50,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
+  extended_list_library:
+    dependency: transitive
+    description:
+      name: extended_list_library
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.0"
   fake_async:
     dependency: transitive
     description:
@@ -238,6 +245,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.1"
+  waterfall_flow:
+    dependency: "direct main"
+    description:
+      name: waterfall_flow
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.2"
   xml:
     dependency: transitive
     description:

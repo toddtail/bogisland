@@ -7,11 +7,8 @@ import '../controllers/forum_controller.dart';
 class ForumView extends GetView<ForumController> {
   @override
   Widget build(BuildContext context) {
+    controller.test();
     return Scaffold(
-      appBar: AppBar(
-        title: Text('ForumView'),
-        centerTitle: true,
-      ),
       body: Center(
         child: Text(
           'ForumView is working',

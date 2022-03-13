@@ -1,12 +1,15 @@
+import 'package:bog_island/app/modules/forum/providers/forum_provider.dart';
 import 'package:get/get.dart';
 
 class ForumController extends GetxController {
-  //TODO: Implement ForumController
+  final forumProvider = Get.find<ForumProvider>();
+  final forumTopicList = [].obs;
 
-  final count = 0.obs;
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
+    print('ForumController init');
+    _readTopic();
   }
 
   @override
@@ -16,5 +19,13 @@ class ForumController extends GetxController {
 
   @override
   void onClose() {}
-  void increment() => count.value++;
+
+  void _readTopic() async {
+    dynamic forumTopicListResult = forumProvider.postForum(0, 1);
+    print(forumTopicListResult);
+  }
+
+  void test() {
+    print('test');
+  }
 }
