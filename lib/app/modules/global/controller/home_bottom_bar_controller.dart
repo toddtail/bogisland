@@ -4,6 +4,6 @@ class HomeBottomBarController extends GetxController {
   HomeBottomBarController();
 
   void onBarIconTap(int index) {
-    
+    print(index);
   }
 }

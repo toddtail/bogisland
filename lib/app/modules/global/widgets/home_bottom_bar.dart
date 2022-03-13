@@ -13,7 +13,7 @@ class HomeBottomBar extends GetWidget<HomeBottomBarController> {
   Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         _barIcon(iconPlanetPath, () => controller.onBarIconTap(1)),
         _barIcon(iconListBoxPath, () => controller.onBarIconTap(2)),
@@ -21,9 +21,9 @@ class HomeBottomBar extends GetWidget<HomeBottomBarController> {
         _barIcon(iconSettingsPath, () => controller.onBarIconTap(4))
       ],
     )
-        .width(324.h)
+        .width(324.w)
         .height(60.h)
-        .padding(left: 20.h, right: 20.h)
+        // .padding(left: 20.h, right: 20.h)
         .backgroundColor(const Color(0xFFFFFEF3));
   }
 }
