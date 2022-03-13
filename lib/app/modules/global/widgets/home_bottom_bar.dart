@@ -15,10 +15,22 @@ class HomeBottomBar extends GetWidget<HomeBottomBarController> {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _barIcon(iconPlanetPath, () => controller.onBarIconTap(1)),
-        _barIcon(iconListBoxPath, () => controller.onBarIconTap(2)),
-        _barIcon(iconPenPath, () => controller.onBarIconTap(3)),
-        _barIcon(iconSettingsPath, () => controller.onBarIconTap(4))
+        _barIcon(
+          1,
+          iconPlanetPath,
+        ),
+        _barIcon(
+          2,
+          iconListBoxPath,
+        ),
+        _barIcon(
+          3,
+          iconPenPath,
+        ),
+        _barIcon(
+          4,
+          iconSettingsPath,
+        )
       ],
     )
         .width(324.w)
@@ -28,16 +40,20 @@ class HomeBottomBar extends GetWidget<HomeBottomBarController> {
   }
 }
 
-Widget _barIcon(String svgPath, VoidCallback function) {
-  return InkWell(
-    child: SizedBox(
-      height: 36.h,
-      width: 36.h,
+Widget _barIcon(int index, String svgPath) {
+  final controller = Get.find<HomeBottomBarController>();
+
+  return Obx(() => InkWell(
+    child: AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOutCirc,
+      height: !controller.iconSelectedState[index - 1] ? 32.h : 40.h,
+      width: !controller.iconSelectedState[index - 1] ? 32.h : 40.h,
       child: SvgPicture.asset(
         svgPath,
-        color: const Color(0xFF545454),
+        color: !controller.iconSelectedState[index - 1] ? const Color(0xFF545454) : const Color(0XFF3395F8),
       ),
     ),
-    onTap: () => function,
-  );
+    onTap: () => controller.onBarIconTap(index),
+  ));
 }
