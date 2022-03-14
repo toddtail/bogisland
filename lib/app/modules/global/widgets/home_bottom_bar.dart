@@ -25,10 +25,14 @@ class HomeBottomBar extends GetWidget<HomeBottomBarController> {
         ),
         _barIcon(
           3,
-          iconPenPath,
+          iconHeartPath,
         ),
         _barIcon(
           4,
+          iconPenPath,
+        ),
+        _barIcon(
+          5,
           iconSettingsPath,
         )
       ],
