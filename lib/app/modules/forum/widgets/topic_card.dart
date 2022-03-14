@@ -1,10 +1,10 @@
 import 'package:bog_island/app/modules/forum/controllers/forum_controller.dart';
 import 'package:bog_island/app/modules/forum/models/forum_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:styled_widget/styled_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:simple_rich_text/simple_rich_text.dart';
 
 class TopicCard extends GetWidget<ForumController> {
   const TopicCard(this.index, {Key? key}) : super(key: key);
@@ -52,7 +52,7 @@ class TopicCard extends GetWidget<ForumController> {
                   fit: BoxFit.fitWidth,
                   width: 100.h,
                   height: 100.h,
-                ).padding(bottom: 4.h)
+                ).padding(top: 4.h)
         ],
       ).padding(all: 8.h),
     )
@@ -63,11 +63,12 @@ class TopicCard extends GetWidget<ForumController> {
 
   Widget contentDisplay(String text) {
     // TODO
-    text = text.replaceAll('<br />', '\n');
-    return Text(
-      text,
-      maxLines: 15,
-      overflow: TextOverflow.ellipsis,
-    ).fontSize(12.sp).fontWeight(FontWeight.w500);
+    // text = text.replaceAll('<br />', '\n');
+    // return Text(
+    //   text,
+    //   maxLines: 15,
+    //   overflow: TextOverflow.ellipsis,
+    // ).fontSize(12.sp).fontWeight(FontWeight.w500);
+    return Html(data: text);
   }
 }
