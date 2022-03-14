@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 class ForumListController extends GetxController {
   ForumListController();
 
-  final fullForumList = [].obs;
+  final fullForumList = <Info>[].obs;
   final liteForumMap = {}.obs;
 
   final forumListProvider = Get.find<ForumListProvider>();
