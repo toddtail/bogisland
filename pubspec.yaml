@@ -12,6 +12,7 @@ dependencies:
   flutter_screenutil: 5.3.1
   flutter_svg: 1.0.3
   waterfall_flow: 3.0.2
+  simple_rich_text: 2.0.49
   flutter: 
     sdk: flutter
   flutter_localizations: 

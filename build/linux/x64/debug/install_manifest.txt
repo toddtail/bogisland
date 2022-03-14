@@ -1,6 +1,7 @@
 /home/ephf/Project/flutter/bogisland/build/linux/x64/debug/bundle/bog_island
 /home/ephf/Project/flutter/bogisland/build/linux/x64/debug/bundle/data/icudtl.dat
 /home/ephf/Project/flutter/bogisland/build/linux/x64/debug/bundle/lib/libflutter_linux_gtk.so
+/home/ephf/Project/flutter/bogisland/build/linux/x64/debug/bundle/lib/liburl_launcher_linux_plugin.so
 /home/ephf/Project/flutter/bogisland/build/linux/x64/debug/bundle/data/flutter_assets/version.json
 /home/ephf/Project/flutter/bogisland/build/linux/x64/debug/bundle/data/flutter_assets/fonts/MaterialIcons-Regular.otf
 /home/ephf/Project/flutter/bogisland/build/linux/x64/debug/bundle/data/flutter_assets/kernel_blob.bin

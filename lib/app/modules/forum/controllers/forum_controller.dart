@@ -5,12 +5,13 @@ import 'package:get/get.dart';
 class ForumController extends GetxController {
   final forumProvider = Get.find<ForumProvider>();
   final forumTopicList = [].obs;
+  int _currentLoadedPage = 0;
 
   @override
   void onInit() async {
     super.onInit();
     print('ForumController init');
-    _readTopic();
+    loadTopic();
   }
 
   @override
@@ -21,18 +22,15 @@ class ForumController extends GetxController {
   @override
   void onClose() {}
 
-  void _readTopic() async {
-    await forumProvider.getForum(0, 1).then((value) {
+  void loadTopic() async {
+    _currentLoadedPage = _currentLoadedPage + 1;
+    await forumProvider.getForum(0, _currentLoadedPage).then((value) {
       if(value.body is Map) {
         // TODO error display
       } else if(value.body is Forum) {
         Forum result = value.body;
-        print(result.info!.length);
+        forumTopicList.addAll(result.info!);
       }
     });
-  }
-
-  void test() {
-    print('test');
   }
 }

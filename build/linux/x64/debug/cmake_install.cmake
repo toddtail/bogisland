@@ -68,7 +68,7 @@ file(INSTALL DESTINATION "/home/ephf/Project/flutter/bogisland/build/linux/x64/d
      NOT IS_SYMLINK "$ENV{DESTDIR}/home/ephf/Project/flutter/bogisland/build/linux/x64/debug/bundle/bog_island")
     file(RPATH_CHANGE
          FILE "$ENV{DESTDIR}/home/ephf/Project/flutter/bogisland/build/linux/x64/debug/bundle/bog_island"
-         OLD_RPATH "/home/ephf/Project/flutter/bogisland/linux/flutter/ephemeral:"
+         OLD_RPATH "/home/ephf/Project/flutter/bogisland/build/linux/x64/debug/plugins/url_launcher_linux:/home/ephf/Project/flutter/bogisland/linux/flutter/ephemeral:"
          NEW_RPATH "$ORIGIN/lib")
     if(CMAKE_INSTALL_DO_STRIP)
       execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}/home/ephf/Project/flutter/bogisland/build/linux/x64/debug/bundle/bog_island")
@@ -101,6 +101,18 @@ file(INSTALL DESTINATION "/home/ephf/Project/flutter/bogisland/build/linux/x64/d
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xRuntimex" OR NOT CMAKE_INSTALL_COMPONENT)
+  list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
+   "/home/ephf/Project/flutter/bogisland/build/linux/x64/debug/bundle/lib/liburl_launcher_linux_plugin.so")
+  if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
+    message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+  endif()
+  if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
+    message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+  endif()
+file(INSTALL DESTINATION "/home/ephf/Project/flutter/bogisland/build/linux/x64/debug/bundle/lib" TYPE FILE FILES "/home/ephf/Project/flutter/bogisland/build/linux/x64/debug/plugins/url_launcher_linux/liburl_launcher_linux_plugin.so")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xRuntimex" OR NOT CMAKE_INSTALL_COMPONENT)
   
   file(REMOVE_RECURSE "/home/ephf/Project/flutter/bogisland/build/linux/x64/debug/bundle/data/flutter_assets")
   
@@ -121,6 +133,7 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/home/ephf/Project/flutter/bogisland/build/linux/x64/debug/flutter/cmake_install.cmake")
+  include("/home/ephf/Project/flutter/bogisland/build/linux/x64/debug/plugins/url_launcher_linux/cmake_install.cmake")
 
 endif()
 

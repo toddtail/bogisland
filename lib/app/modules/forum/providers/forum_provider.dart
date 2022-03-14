@@ -9,7 +9,6 @@ class ForumProvider extends BogConnect {
     super.onInit();
     httpClient.defaultDecoder = (map) {
       if (map['type'] == 'error') {
-        // print(map['info']);
         return map as Map;
       }
       if (map is Map<String, dynamic>) return Forum.fromJson(map);
