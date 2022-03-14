@@ -13,7 +13,7 @@ class ForumView extends GetView<ForumController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0XFF3395F8),
+      // backgroundColor: const Color(0XFF3395F8),
       body: Center(
           child: Obx(
         () => controller.forumTopicList.isEmpty
@@ -56,6 +56,7 @@ class ForumView extends GetView<ForumController> {
                             return TopicCard(index);
                           },
                           itemCount: controller.forumTopicList.length,
+                          shrinkWrap: true,
                         )),
                   ),
                 ],

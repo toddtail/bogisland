@@ -52,14 +52,19 @@ class TopicCard extends GetWidget<ForumController> {
                 height: 100.h,
               ).padding(top: 4.h)
       ],
-    ).padding(left: 12.h, right: 12.h, top: 16.h, bottom: 8.h).width(300.h).decorated(
-        borderRadius: index == 0
-            ? BorderRadius.only(
-                topLeft: Radius.circular(24.h),
-                topRight: Radius.circular(24.h),
-              )
-            : null,
-        color: const Color(0xFFFFFEF3));
+    )
+        .padding(left: 12.h, right: 12.h, top: 16.h, bottom: 8.h)
+        .width(300.h)
+        .decorated(
+            borderRadius: index == 0
+                ? BorderRadius.only(
+                    topLeft: Radius.circular(24.h),
+                    topRight: Radius.circular(24.h),
+                  )
+                : null,
+            color: const Color(0xFFFFFEF3))
+        .backgroundColor(
+            index == 0 ? const Color(0XFF3395F8) : const Color(0xFFFFFEF3));
   }
 
   Widget contentDisplay(String text) {
