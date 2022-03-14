@@ -69,6 +69,18 @@ class TopicCard extends GetWidget<ForumController> {
     //   maxLines: 15,
     //   overflow: TextOverflow.ellipsis,
     // ).fontSize(12.sp).fontWeight(FontWeight.w500);
-    return Html(data: text);
+    return Html(
+      data: text,
+      shrinkWrap: true,
+      style: {
+        'body': Style(
+          margin: EdgeInsets.zero,
+          padding: EdgeInsets.zero,
+          fontSize: FontSize(12.sp),
+          maxLines: 15,
+          textOverflow: TextOverflow.ellipsis,
+        )
+      },
+    );
   }
 }

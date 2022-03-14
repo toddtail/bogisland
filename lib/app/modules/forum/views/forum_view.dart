@@ -9,6 +9,7 @@ class ForumView extends GetView<ForumController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0XFFFFFEF3),
       body: Center(
           child: Obx(
         () => controller.forumTopicList.isEmpty
