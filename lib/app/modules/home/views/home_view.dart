@@ -12,17 +12,19 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color(0XFFFFFEF3),
-        body: Stack(
-          children: [
-            Positioned(
-              top: 0,
-              child: ForumView().width(324.w).height(720.h)),
-            Positioned(
-              bottom: 0,
-              child: HomeBottomBar(),
-            )
-          ],
+        backgroundColor: const Color(0XFF3395F8),
+        body: SafeArea(
+          child: Stack(
+            children: [
+              Positioned(
+                top: 0,
+                child: ForumView().width(324.w).height(720.h)),
+              const Positioned(
+                bottom: 0,
+                child: HomeBottomBar(),
+              )
+            ],
+          ),
         ));
   }
 }

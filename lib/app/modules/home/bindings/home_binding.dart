@@ -1,6 +1,8 @@
 import 'package:bog_island/app/modules/forum/controllers/forum_controller.dart';
 import 'package:bog_island/app/modules/forum/providers/forum_provider.dart';
+import 'package:bog_island/app/modules/global/controller/forum_list_controller.dart';
 import 'package:bog_island/app/modules/global/controller/home_bottom_bar_controller.dart';
+import 'package:bog_island/app/modules/global/providers/forum_list_provider.dart';
 import 'package:get/get.dart';
 
 import '../controllers/home_controller.dart';
@@ -19,6 +21,12 @@ class HomeBinding extends Bindings {
     );
     Get.lazyPut<ForumProvider>(
       () => ForumProvider(),
+    );
+    Get.lazyPut<ForumListController>(
+      () => ForumListController(),
+    );
+    Get.lazyPut<ForumListProvider>(
+      () => ForumListProvider(),
     );
   }
 }
