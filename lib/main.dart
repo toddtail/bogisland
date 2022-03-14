@@ -6,7 +6,9 @@ import 'package:get/get.dart';
 
 import 'app/routes/app_pages.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Future.delayed(const Duration(milliseconds: 100));
   runApp(
     ScreenUtilInit(
       designSize: const Size(324, 720),
