@@ -8,7 +8,6 @@ class ForumProvider extends BogConnect {
   void onInit() {
     super.onInit();
     httpClient.defaultDecoder = (map) {
-      print(map);
       if (map['type'] == 'error') {
         // print(map['info']);
         return map as Map;
@@ -18,8 +17,8 @@ class ForumProvider extends BogConnect {
     };
   }
 
-  Future<Response<dynamic>> postForum(int id, int page) async {
-    Map<String, dynamic> body = {'id': id, 'page': page};
-    return await post('forum', body);
+  Future<Response<dynamic>> getForum(int id, int page) async {
+    String body = '/$id/$page';
+    return await get('forum$body');
   }
 }
