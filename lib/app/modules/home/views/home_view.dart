@@ -20,7 +20,7 @@ class HomeView extends GetView<HomeController> {
         body: SafeArea(
           child: Stack(
             children: [
-              Positioned(top: 0, child: ForumView().width(324.w).height(720.h)),
+              Positioned(top: 0, child: ForumView().width(324.w).height(710.h)),
               Obx(() => AnimatedPositioned(
                   bottom: homeBottomBarController.isOnForumSelect.value
                       ? 59.h
