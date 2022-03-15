@@ -1,3 +1,4 @@
+import 'package:bog_island/app/common/function/time_transfer.dart';
 import 'package:bog_island/app/modules/forum/controllers/forum_controller.dart';
 import 'package:bog_island/app/modules/forum/models/forum_model.dart';
 import 'package:bog_island/app/modules/global/controller/forum_list_controller.dart';
@@ -26,7 +27,7 @@ class TopicCard extends GetWidget<ForumController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(info.cookie!).fontSize(12.sp).fontWeight(FontWeight.normal),
-            Text(info.root!).fontSize(12.sp).fontWeight(FontWeight.normal)
+            Text(timeTransfer(info.time!)).fontSize(12.sp).fontWeight(FontWeight.normal)
           ],
         ),
         Row(

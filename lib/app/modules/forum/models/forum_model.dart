@@ -31,10 +31,11 @@ class Info {
   int? id;
   int? res;
   String? root;
+  int? time;
   int? forum;
   String? name;
   String? cookie;
-  int? admin;
+  dynamic admin;
   String? title;
   String? content;
   dynamic lock;
@@ -47,6 +48,7 @@ class Info {
       {this.id,
       this.res,
       this.root,
+      this.time,
       this.forum,
       this.name,
       this.cookie,
@@ -63,6 +65,7 @@ class Info {
     id = json['id'];
     res = json['res'];
     root = json['root'];
+    time = json['time'];
     forum = json['forum'];
     name = json['name'];
     cookie = json['cookie'];
@@ -91,6 +94,7 @@ class Info {
     data['id'] = id;
     data['res'] = res;
     data['root'] = root;
+    data['time'] = time;
     data['forum'] = forum;
     data['name'] = name;
     data['cookie'] = cookie;
@@ -132,6 +136,7 @@ class Images {
 class Reply {
   int? id;
   int? res;
+  int? time;
   String? name;
   String? cookie;
   dynamic admin;
@@ -141,6 +146,7 @@ class Reply {
   Reply(
       {this.id,
       this.res,
+      this.time,
       this.name,
       this.cookie,
       this.admin,
@@ -150,6 +156,7 @@ class Reply {
   Reply.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     res = json['res'];
+    time = json['time'];
     name = json['name'];
     cookie = json['cookie'];
     admin = json['admin'];
@@ -166,6 +173,7 @@ class Reply {
     final data = <String, dynamic>{};
     data['id'] = id;
     data['res'] = res;
+    data['time'] = time;
     data['name'] = name;
     data['cookie'] = cookie;
     data['admin'] = admin;
