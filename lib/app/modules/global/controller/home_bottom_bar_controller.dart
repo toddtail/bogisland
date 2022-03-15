@@ -14,9 +14,11 @@ class HomeBottomBarController extends GetxController {
       isOnForumSelect.value = false;
     } else {
       iconSelectedState.value = [true, false, false, false, false];
-      isOnForumSelect.value = true;
+      isOnForumSelect.value = !isOnForumSelect.value;
     }
+  }
 
-    print(index);
+  void onTopicCellTaped() {
+    isOnForumSelect.value = false;
   }
 }

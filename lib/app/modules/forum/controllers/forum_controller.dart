@@ -3,11 +3,13 @@ import 'package:bog_island/app/modules/forum/providers/forum_provider.dart';
 import 'package:bog_island/app/modules/global/controller/forum_list_controller.dart';
 import 'package:get/get.dart';
 
+// 板块包含内容
 class ForumController extends GetxController {
   final forumProvider = Get.find<ForumProvider>();
   final forumListController = Get.find<ForumListController>();
   final forumTopicList = [].obs;
   int _currentLoadedPage = 0;
+  final selectedForumId = 0.obs;
 
   @override
   void onInit() async {
@@ -27,7 +29,7 @@ class ForumController extends GetxController {
 
   void loadTopic() async {
     _currentLoadedPage = _currentLoadedPage + 1;
-    await forumProvider.getForum(0, _currentLoadedPage).then((value) {
+    await forumProvider.getForum(selectedForumId.value, _currentLoadedPage).then((value) {
       if (value.body is Map) {
         // TODO error display
       } else if (value.body is Forum) {
@@ -35,5 +37,12 @@ class ForumController extends GetxController {
         forumTopicList.addAll(result.info!);
       }
     });
+  }
+
+  void reloadTopic(int id) {
+    forumTopicList.value = [];
+    _currentLoadedPage = 0;
+    selectedForumId.value = id;
+    loadTopic();
   }
 }
