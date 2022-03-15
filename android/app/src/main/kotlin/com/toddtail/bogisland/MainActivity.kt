@@ -1,4 +1,4 @@
-package com.toddtail.bogisland.bog_island
+package com.toddtail.bogisland
 
 import io.flutter.embedding.android.FlutterActivity
 
