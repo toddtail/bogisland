@@ -1,4 +1,5 @@
 import 'package:bog_island/app/modules/content/widgets/content_card.dart';
+import 'package:bog_island/app/modules/forum/widgets/topic_card.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -11,11 +12,11 @@ import 'package:bog_island/app/data/icons_path.dart';
 class ContentView extends GetView<ContentController> {
   ContentView();
 
-  final int contentId = Get.arguments;
+  final arguments = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
-    controller.loadContent(contentId);
+    controller.openNewContent(arguments[0]);
     return Scaffold(
       // backgroundColor: const Color(0XFF3395F8),
       backgroundColor: const Color(0xFFFFFEF3),
@@ -31,7 +32,7 @@ class ContentView extends GetView<ContentController> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('>>$contentId')
+                    Text('>>${arguments[0]}')
                         .fontSize(18.sp)
                         .fontWeight(FontWeight.bold)
                         .textColor(Colors.white),
@@ -52,15 +53,19 @@ class ContentView extends GetView<ContentController> {
                           onNotification: (ScrollNotification scrollInfo) {
                             if (scrollInfo.metrics.pixels ==
                                 scrollInfo.metrics.maxScrollExtent) {
-                              controller.loadContent(contentId);
+                              controller.loadContent();
                             }
                             return true;
                           },
                           child: ListView.builder(
                             itemBuilder: (BuildContext context, int index) {
-                              return ContentCard(index);
+                              if (index == 0) {
+                                return TopicCard(arguments[1]);
+                              } else {
+                                return ContentCard(index);
+                              }
                             },
-                            itemCount: controller.contentList.length,
+                            itemCount: controller.contentList.length + 1,
                             shrinkWrap: true,
                           )),
                     ),
