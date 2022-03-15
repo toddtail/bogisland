@@ -41,7 +41,7 @@ class ContentController extends GetxController {
     loadContent();
   }
 
-  loadContent() async {
+  void loadContent() async {
     if (!_onLoad) {
       _currentLoadedPage = _currentLoadedPage + 1;
       Response result;
@@ -57,9 +57,6 @@ class ContentController extends GetxController {
       } else if (result.body is Threads) {
         contentList.addAll(result.body.info!.reply!);
       }
-      return true;
     }
-
-    return true;
   }
 }

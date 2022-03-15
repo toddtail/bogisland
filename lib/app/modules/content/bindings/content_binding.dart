@@ -1,3 +1,4 @@
+import 'package:bog_island/app/modules/content/controllers/content_bottom_bar_controller.dart';
 import 'package:bog_island/app/modules/content/providers/threads_provider.dart';
 import 'package:get/get.dart';
 
@@ -11,6 +12,9 @@ class ContentBinding extends Bindings {
     );
     Get.lazyPut<ThreadsProvider>(
       () => ThreadsProvider(),
+    );
+    Get.lazyPut<ContentBottomBarController>(
+      () => ContentBottomBarController(),
     );
   }
 }
