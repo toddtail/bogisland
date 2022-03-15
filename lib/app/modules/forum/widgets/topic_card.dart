@@ -7,6 +7,8 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:styled_widget/styled_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:html/dom.dart' as dom;
+import 'package:url_launcher/url_launcher.dart';
 
 class TopicCard extends GetWidget<ForumController> {
   TopicCard(this.index, {Key? key}) : super(key: key);
@@ -34,7 +36,6 @@ class TopicCard extends GetWidget<ForumController> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // TODO
             Text(forumListController.liteForumMap[info.forum])
                 .textColor(const Color(0XFF1281EC))
                 .fontSize(12.sp)
@@ -83,6 +84,11 @@ class TopicCard extends GetWidget<ForumController> {
           textOverflow: TextOverflow.ellipsis,
         )
       },
-    );
+      onLinkTap: (String? url, RenderContext context,
+            Map<String, String> attributes, dom.Element? element) async {
+          print('lauch');
+          if (!await launch(url!)) throw 'Could not launch $url';
+        });
+    
   }
 }

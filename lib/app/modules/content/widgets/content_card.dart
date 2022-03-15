@@ -7,7 +7,8 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:styled_widget/styled_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
+import 'package:html/dom.dart' as dom;
+import 'package:url_launcher/url_launcher.dart';
 
 class ContentCard extends GetWidget<ContentController> {
   ContentCard(this.index, {Key? key}) : super(key: key);
@@ -35,9 +36,17 @@ class ContentCard extends GetWidget<ContentController> {
                 .fontWeight(FontWeight.normal)
           ],
         ),
-        Container(
-            alignment: Alignment.centerRight,
-            child: Text('#${reply.id}').fontSize(12.sp).padding(bottom: 8.h)),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('${index + 1}楼')
+                .fontSize(12.sp)
+                .textColor(const Color(0XFF3395F8)),
+            Text('#${reply.id}').fontSize(12.sp)
+            // .fontWeight(FontWeight.w500)
+          ],
+        ).padding(bottom: 4.h),
         contentDisplay(reply.content!),
         // TODO more images
         reply.images == null
@@ -60,15 +69,19 @@ class ContentCard extends GetWidget<ContentController> {
   Widget contentDisplay(String text) {
     // TODO url clicked, id display
     return Html(
-      data: text,
-      shrinkWrap: true,
-      style: {
-        'body': Style(
-          margin: EdgeInsets.zero,
-          padding: EdgeInsets.zero,
-          fontSize: FontSize(12.sp),
-        )
-      },
-    );
+        data: text,
+        shrinkWrap: true,
+        style: {
+          'body': Style(
+            margin: EdgeInsets.zero,
+            padding: EdgeInsets.zero,
+            fontSize: FontSize(12.sp),
+          )
+        },
+        onLinkTap: (String? url, RenderContext context,
+            Map<String, String> attributes, dom.Element? element) async {
+          print('lauch');
+          if (!await launch(url!)) throw 'Could not launch $url';
+        });
   }
 }
