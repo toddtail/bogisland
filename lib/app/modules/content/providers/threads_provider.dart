@@ -22,7 +22,7 @@ class ThreadsProvider extends BogConnect {
   Future<Response<dynamic>> postThreads(int id, int page) async {
     FormData data = FormData({
       'id': '$id',
-      'page': '1',
+      'page': '$page',
       'page_def': '20',
       'order': '0'
     });

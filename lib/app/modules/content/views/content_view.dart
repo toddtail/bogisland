@@ -52,6 +52,7 @@ class ContentView extends GetView<ContentController> {
                             if (scrollInfo.metrics.pixels ==
                                 scrollInfo.metrics.maxScrollExtent) {
                               controller.loadContent();
+                              
                             }
                             return true;
                           },

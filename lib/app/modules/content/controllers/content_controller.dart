@@ -11,6 +11,7 @@ class ContentController extends GetxController {
   final originalInfo = fm.Info().obs;
   int _currentLoadedPage = 0;
   int _id = 0;
+  bool _onLoad = false;
 
   @override
   void onInit() {
@@ -40,14 +41,26 @@ class ContentController extends GetxController {
     loadContent();
   }
 
-  void loadContent() async {
-    _currentLoadedPage = _currentLoadedPage + 1;
-    var result = await threadsProvider.postThreads(_id, _currentLoadedPage);
-
-    if (result.body is Map) {
-      //TODO error display
-    } else if (result.body is Threads) {
-      contentList.addAll(result.body.info!.reply!);
+  loadContent() async {
+    if (!_onLoad) {
+      print(_currentLoadedPage);
+      _currentLoadedPage = _currentLoadedPage + 1;
+      var result;
+      _onLoad = true;
+      try {
+        result = await threadsProvider.postThreads(_id, _currentLoadedPage);
+      }catch(e) {
+        print(e);
+      }
+      _onLoad = false;
+      if (result.body is Map) {
+        //TODO error display
+      } else if (result.body is Threads) {
+        contentList.addAll(result.body.info!.reply!);
+      }
+      return true;
     }
+
+    return true;
   }
 }
