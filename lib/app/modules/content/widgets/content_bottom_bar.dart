@@ -25,11 +25,11 @@ class ContentBottomBar extends GetWidget<ContentBottomBarController> {
         ),
         _barIcon(
           3,
-          iconFlowerPath,
+          iconFloorPath,
         ),
         _barIcon(
           4,
-          iconImagePath,
+          iconSharePath,
         ),
       ],
     )

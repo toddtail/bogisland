@@ -11,3 +11,5 @@ const iconListBoxPath = 'assets/icons/list-box-line.svg';
 const iconMusicPath = 'assets/icons/music-line.svg';
 const iconSettingsPath = 'assets/icons/settings-cog-line.svg';
 const iconTvPath = 'assets/icons/tv-old-line.svg';
+const iconSharePath = 'assets/icons/share-circle-line.svg';
+const iconFloorPath = 'assets/icons/line-height-line.svg';
