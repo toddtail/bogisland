@@ -43,14 +43,13 @@ class ContentController extends GetxController {
 
   loadContent() async {
     if (!_onLoad) {
-      print(_currentLoadedPage);
       _currentLoadedPage = _currentLoadedPage + 1;
-      var result;
+      Response result;
       _onLoad = true;
       try {
         result = await threadsProvider.postThreads(_id, _currentLoadedPage);
       }catch(e) {
-        print(e);
+        rethrow;
       }
       _onLoad = false;
       if (result.body is Map) {

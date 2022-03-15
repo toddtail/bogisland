@@ -8,8 +8,9 @@ class ForumController extends GetxController {
   final forumProvider = Get.find<ForumProvider>();
   final forumListController = Get.find<ForumListController>();
   final forumTopicList = [].obs;
-  int _currentLoadedPage = 0;
   final selectedForumId = 0.obs;
+  int _currentLoadedPage = 0;
+  bool _loadLock = false;
 
   @override
   void onInit() async {
@@ -28,15 +29,25 @@ class ForumController extends GetxController {
   void onClose() {}
 
   void loadTopic() async {
-    _currentLoadedPage = _currentLoadedPage + 1;
-    await forumProvider.postForum(selectedForumId.value, _currentLoadedPage).then((value) {
-      if (value.body is Map) {
-        // TODO error display
-      } else if (value.body is Forum) {
-        Forum result = value.body;
-        forumTopicList.addAll(result.info!);
+    if (!_loadLock) {
+      _currentLoadedPage = _currentLoadedPage + 1;
+      _loadLock = true;
+      try {
+        await forumProvider
+            .postForum(selectedForumId.value, _currentLoadedPage)
+            .then((value) {
+          if (value.body is Map) {
+            // TODO error display
+          } else if (value.body is Forum) {
+            Forum result = value.body;
+            forumTopicList.addAll(result.info!);
+          }
+        });
+        _loadLock = false;
+      } catch (e) {
+        rethrow;
       }
-    });
+    }
   }
 
   void reloadTopic(int id) {
