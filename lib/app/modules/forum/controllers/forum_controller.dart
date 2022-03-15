@@ -29,7 +29,7 @@ class ForumController extends GetxController {
 
   void loadTopic() async {
     _currentLoadedPage = _currentLoadedPage + 1;
-    await forumProvider.getForum(selectedForumId.value, _currentLoadedPage).then((value) {
+    await forumProvider.postForum(selectedForumId.value, _currentLoadedPage).then((value) {
       if (value.body is Map) {
         // TODO error display
       } else if (value.body is Forum) {

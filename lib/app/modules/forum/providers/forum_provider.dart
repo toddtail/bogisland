@@ -22,7 +22,7 @@ class ForumProvider extends BogConnect {
   }
 
   Future<Response<dynamic>> postForum(int id, int page) async {
-    var body = {'id': id, 'page': page};
-    return await post('forum', body);
+    FormData data = FormData({'id': id, 'page': page});
+    return await post('forum', data);
   }
 }
