@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 class ContentController extends GetxController {
   //TODO: Implement ContentController
 
-  final count = 0.obs;
+  final contentList = [].obs;
+
+
   @override
   void onInit() {
     super.onInit();
@@ -16,5 +18,9 @@ class ContentController extends GetxController {
 
   @override
   void onClose() {}
-  void increment() => count.value++;
+
+  void loadContent() {
+    
+  }
+
 }
