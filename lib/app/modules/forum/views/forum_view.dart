@@ -59,7 +59,9 @@ class ForumView extends GetView<ForumController> {
                         },
                         child: ListView.builder(
                           itemBuilder: (BuildContext context, int index) {
-                            return TopicCard(index);
+                            return Hero(
+                              tag: 'forum$index',
+                              child: Material(child: TopicCard(index)));
                           },
                           itemCount: controller.forumTopicList.length,
                           shrinkWrap: true,

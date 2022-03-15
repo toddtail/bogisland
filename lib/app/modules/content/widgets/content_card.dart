@@ -36,8 +36,8 @@ class ContentCard extends GetWidget<ContentController> {
           ],
         ),
         Container(
-          alignment: Alignment.centerRight,
-          child: Text('#${reply.id}').fontSize(12.sp).padding(bottom: 8.h)),
+            alignment: Alignment.centerRight,
+            child: Text('#${reply.id}').fontSize(12.sp).padding(bottom: 8.h)),
         contentDisplay(reply.content!),
         // TODO more images
         reply.images == null
@@ -52,14 +52,7 @@ class ContentCard extends GetWidget<ContentController> {
     )
         .padding(left: 12.h, right: 12.h, top: 16.h, bottom: 8.h)
         .width(300.h)
-        .decorated(
-            borderRadius: index == 0
-                ? BorderRadius.only(
-                    topLeft: Radius.circular(24.h),
-                    topRight: Radius.circular(24.h),
-                  )
-                : null,
-            color: const Color(0xFFFFFEF3))
+        .decorated(color: const Color(0xFFFFFEF3))
         .backgroundColor(
             index == 0 ? const Color(0XFF3395F8) : const Color(0xFFFFFEF3));
   }

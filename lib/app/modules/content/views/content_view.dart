@@ -46,9 +46,7 @@ class ContentView extends GetView<ContentController> {
               )
                   .padding(left: 12.w, right: 12.w)
                   .backgroundColor(const Color(0XFF3395F8)),
-              controller.contentList.isEmpty
-                  ? Container()
-                  : Expanded(
+              Expanded(
                       child: NotificationListener<ScrollNotification>(
                           onNotification: (ScrollNotification scrollInfo) {
                             if (scrollInfo.metrics.pixels ==
@@ -60,9 +58,11 @@ class ContentView extends GetView<ContentController> {
                           child: ListView.builder(
                             itemBuilder: (BuildContext context, int index) {
                               if (index == 0) {
-                                return TopicCard(arguments[1]);
+                                return Hero(
+                                  tag: 'forum${arguments[1]}',
+                                  child: Material (child: TopicCard(arguments[1])));
                               } else {
-                                return ContentCard(index);
+                                return ContentCard(index-1);
                               }
                             },
                             itemCount: controller.contentList.length + 1,
