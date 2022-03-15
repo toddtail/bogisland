@@ -20,4 +20,9 @@ class ForumProvider extends BogConnect {
     String body = '/$id/$page';
     return await get('forum$body');
   }
+
+  Future<Response<dynamic>> postForum(int id, int page) async {
+    var body = {'id': id, 'page': page};
+    return await post('forum', body);
+  }
 }

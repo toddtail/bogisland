@@ -64,7 +64,9 @@ class TopicCard extends GetWidget<ForumController> {
                 : null,
             color: const Color(0xFFFFFEF3))
         .backgroundColor(
-            index == 0 ? const Color(0XFF3395F8) : const Color(0xFFFFFEF3));
+            index == 0 ? const Color(0XFF3395F8) : const Color(0xFFFFFEF3)).gestures(onTap: () {
+              Get.toNamed("/content", arguments: info.id);
+            });
   }
 
   Widget contentDisplay(String text) {
