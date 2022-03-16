@@ -28,59 +28,63 @@ class ContentView extends GetView<ContentController> {
               top: 0,
               child: Obx(
                 () => Column(
-              children: [
-                SizedBox(
-                  // width: 324.w,
-                  height: 44.h,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('>>${arguments[0]}')
-                          .fontSize(18.sp)
-                          .fontWeight(FontWeight.bold)
-                          .textColor(Colors.white),
-                      SvgPicture.asset(
-                        iconPlanetPath,
-                        color: Colors.white,
-                        width: 24.h,
-                      )
-                    ],
-                  ),
-                )
-                    .padding(left: 12.w, right: 12.w)
-                    .backgroundColor(const Color(0XFF3395F8)),
-                Expanded(
-                        child: NotificationListener<ScrollNotification>(
-                            onNotification: (ScrollNotification scrollInfo) {
-                              if (scrollInfo.metrics.pixels ==
-                                  scrollInfo.metrics.maxScrollExtent) {
-                                controller.loadContent();
-                                
-                              }
-                              return true;
-                            },
-                            child: ListView.builder(
-                              itemBuilder: (BuildContext context, int index) {
-                                if (index == 0) {
-                                  return Hero(
-                                    tag: 'forum${arguments[1]}',
-                                    child: Material (child: TopicCard(arguments[1])));
-                                } else {
-                                  return ContentCard(index-1);
-                                }
-                              },
-                              itemCount: controller.contentList.length + 1,
-                              shrinkWrap: true,
-                            )),
+                  children: [
+                    SizedBox(
+                      // width: 324.w,
+                      height: 44.h,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('>>${arguments[0]}')
+                              .fontSize(18.sp)
+                              .fontWeight(FontWeight.bold)
+                              .textColor(Colors.white),
+                          SvgPicture.asset(
+                            iconPlanetPath,
+                            color: Colors.white,
+                            width: 24.h,
+                          )
+                        ],
                       ),
-              ],
+                    )
+                        .padding(left: 12.w, right: 12.w)
+                        .backgroundColor(const Color(0XFF3395F8)),
+                    Expanded(
+                      child: NotificationListener<ScrollNotification>(
+                          onNotification: (ScrollNotification scrollInfo) {
+                            if (scrollInfo.metrics.pixels ==
+                                scrollInfo.metrics.maxScrollExtent) {
+                              controller.loadContent();
+                            }
+                            return true;
+                          },
+                          child: ListView.builder(
+                            itemBuilder: (BuildContext context, int index) {
+                              if (index == 0) {
+                                return Hero(
+                                    tag: 'forum${arguments[1]}',
+                                    child: Material(
+                                        child: TopicCard(
+                                      arguments[1],
+                                      isInContent: true,
+                                    )));
+                              } else {
+                                return ContentCard(index - 1);
+                              }
+                            },
+                            itemCount: controller.contentList.length + 1,
+                            shrinkWrap: true,
+                          )),
+                    ),
+                  ],
                 ).width(324.w).height(656.h),
               ),
             ),
             const Positioned(
               bottom: 0,
-              child: ContentBottomBar(),)
+              child: ContentBottomBar(),
+            )
           ],
         ),
       ),

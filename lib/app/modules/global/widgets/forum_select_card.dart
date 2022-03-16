@@ -17,6 +17,7 @@ class ForumSelectCard extends GetWidget<HomeBottomBarController> {
 
   @override
   Widget build(BuildContext context) {
+    // TODO use Wrap replace
     return Obx((() => Container(
                 child: GridView.count(
           crossAxisCount: 5,

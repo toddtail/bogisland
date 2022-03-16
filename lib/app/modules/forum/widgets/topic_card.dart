@@ -11,9 +11,10 @@ import 'package:html/dom.dart' as dom;
 import 'package:url_launcher/url_launcher.dart';
 
 class TopicCard extends GetWidget<ForumController> {
-  TopicCard(this.index, {Key? key}) : super(key: key);
+  TopicCard(this.index, {this.isInContent = false, Key? key}) : super(key: key);
 
   final int index;
+  final bool isInContent;
   final forumListController = Get.find<ForumListController>();
 
   @override
@@ -72,16 +73,28 @@ class TopicCard extends GetWidget<ForumController> {
   }
 
   Widget contentDisplay(String text) {
-    return Html(
+    if(!isInContent) {
+      return Html(
       data: text,
       shrinkWrap: true,
       style: {
         'body': Style(
           margin: EdgeInsets.zero,
           padding: EdgeInsets.zero,
-          fontSize: FontSize(12.sp),
+          fontSize: FontSize(14.sp),
           maxLines: 15,
           textOverflow: TextOverflow.ellipsis,
+        )
+      },);
+    } else {
+      return Html(
+      data: text,
+      shrinkWrap: true,
+      style: {
+        'body': Style(
+          margin: EdgeInsets.zero,
+          padding: EdgeInsets.zero,
+          fontSize: FontSize(14.sp),
         )
       },
       onLinkTap: (String? url, RenderContext context,
@@ -89,6 +102,7 @@ class TopicCard extends GetWidget<ForumController> {
           print('lauch');
           if (!await launch(url!)) throw 'Could not launch $url';
         });
+    }
     
   }
 }
