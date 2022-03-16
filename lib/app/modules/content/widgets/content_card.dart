@@ -84,13 +84,4 @@ class ContentCard extends GetWidget<ContentController> {
           if (!await launch(url!)) throw 'Could not launch $url';
         });
   }
-
-  Widget ImageCell() {
-    return Image.network(
-                'https://bog-ac-static.smartgslb.com/image/thumb/${reply.images![0].url}${reply.images![0].ext}',
-                fit: BoxFit.fitWidth,
-                width: 100.h,
-                height: 100.h,
-              ).padding(all: 4.h);
-  }
 }
