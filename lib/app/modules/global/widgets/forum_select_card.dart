@@ -1,4 +1,5 @@
 import 'package:bog_island/app/data/icons_path.dart';
+import 'package:bog_island/app/data/tailwind_colors.dart';
 import 'package:bog_island/app/modules/forum/controllers/forum_controller.dart';
 import 'package:bog_island/app/modules/global/controller/forum_list_controller.dart';
 import 'package:bog_island/app/modules/global/controller/home_bottom_bar_controller.dart';
@@ -39,11 +40,11 @@ class ForumSelectCard extends GetWidget<HomeBottomBarController> {
                 topLeft: Radius.circular(24.h),
                 topRight: Radius.circular(24.h),
               ),
-              // color: const Color(0xFFFFFEF3),
+              // color: colorAmber50,
             )
             .width(324.w)
             .height(164.h)
-            .backgroundColor(const Color(0xFFFFFEF3))));
+            .backgroundColor(colorAmber50)));
   }
 
   Widget forumCell(String text, int id) {
@@ -55,7 +56,7 @@ class ForumSelectCard extends GetWidget<HomeBottomBarController> {
         .decorated(
             borderRadius: BorderRadius.all(Radius.circular(8.h)),
             color: id != forumController.selectedForumId.value
-                ? const Color(0XFF3395F8)
+                ? colorSky500
                 : const Color(0XFF33F8A5))
         .padding(bottom: 8.h, top: 8.h, left: 4.h, right: 4.h)
         .gestures(onTap: () {

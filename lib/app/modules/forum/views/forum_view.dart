@@ -1,4 +1,5 @@
 import 'package:bog_island/app/data/icons_path.dart';
+import 'package:bog_island/app/data/tailwind_colors.dart';
 import 'package:bog_island/app/modules/forum/widgets/topic_card.dart';
 import 'package:bog_island/app/modules/global/controller/forum_list_controller.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +17,8 @@ class ForumView extends GetView<ForumController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: const Color(0XFF3395F8),
-      backgroundColor: const Color(0xFFFFFEF3),
+      // backgroundColor: colorSky500,
+      backgroundColor: colorAmber50,
       body: Center(
           child: Obx(
         () => Column(
@@ -29,10 +30,10 @@ class ForumView extends GetView<ForumController> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    controller.forumTopicList.isEmpty ? '':
-                    forumListController
-                          .liteForumMap[controller.selectedForumId.value])
+                  Text(controller.forumTopicList.isEmpty
+                          ? ''
+                          : forumListController
+                              .liteForumMap[controller.selectedForumId.value])
                       .fontSize(18.sp)
                       .fontWeight(FontWeight.bold)
                       .textColor(Colors.white),
@@ -43,9 +44,7 @@ class ForumView extends GetView<ForumController> {
                   )
                 ],
               ),
-            )
-                .padding(left: 12.w, right: 12.w)
-                .backgroundColor(const Color(0XFF3395F8)),
+            ).padding(left: 12.w, right: 12.w).backgroundColor(colorSky500),
             controller.forumTopicList.isEmpty
                 ? Container()
                 : Expanded(
@@ -60,8 +59,8 @@ class ForumView extends GetView<ForumController> {
                         child: ListView.builder(
                           itemBuilder: (BuildContext context, int index) {
                             return Hero(
-                              tag: 'forum$index',
-                              child: Material(child: TopicCard(index)));
+                                tag: 'forum$index',
+                                child: Material(child: TopicCard(index)));
                           },
                           itemCount: controller.forumTopicList.length,
                           shrinkWrap: true,

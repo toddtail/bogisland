@@ -1,3 +1,4 @@
+import 'package:bog_island/app/data/tailwind_colors.dart';
 import 'package:bog_island/app/modules/forum/views/forum_view.dart';
 import 'package:bog_island/app/modules/global/controller/home_bottom_bar_controller.dart';
 import 'package:bog_island/app/modules/global/widgets/forum_select_card.dart';
@@ -16,7 +17,7 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color(0XFF3395F8),
+        backgroundColor: colorSky500,
         body: SafeArea(
           child: Stack(
             children: [

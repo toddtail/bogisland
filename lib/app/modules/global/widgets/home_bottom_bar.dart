@@ -1,4 +1,5 @@
 import 'package:bog_island/app/data/icons_path.dart';
+import 'package:bog_island/app/data/tailwind_colors.dart';
 import 'package:bog_island/app/modules/global/controller/home_bottom_bar_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -40,7 +41,7 @@ class HomeBottomBar extends GetWidget<HomeBottomBarController> {
         .width(324.w)
         .height(60.h)
         // .padding(left: 20.h, right: 20.h)
-        .backgroundColor(const Color(0xFFFFFEF3));
+        .backgroundColor(colorYellow50);
   }
 }
 
@@ -55,7 +56,7 @@ Widget _barIcon(int index, String svgPath) {
       width: !controller.iconSelectedState[index - 1] ? 32.h : 40.h,
       child: SvgPicture.asset(
         svgPath,
-        color: !controller.iconSelectedState[index - 1] ? const Color(0xFF545454) : const Color(0XFF3395F8),
+        color: !controller.iconSelectedState[index - 1] ? colorNeutral500 : colorSky500,
       ),
     ),
     onTap: () => controller.onBarIconTap(index),

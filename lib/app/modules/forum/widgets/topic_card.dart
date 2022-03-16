@@ -1,4 +1,5 @@
 import 'package:bog_island/app/common/function/time_transfer.dart';
+import 'package:bog_island/app/data/tailwind_colors.dart';
 import 'package:bog_island/app/modules/forum/controllers/forum_controller.dart';
 import 'package:bog_island/app/modules/forum/models/forum_model.dart';
 import 'package:bog_island/app/modules/global/controller/forum_list_controller.dart';
@@ -29,8 +30,14 @@ class TopicCard extends GetWidget<ForumController> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(info.cookie!).fontSize(12.sp).fontWeight(FontWeight.normal),
-            Text(timeTransfer(info.time!)).fontSize(12.sp).fontWeight(FontWeight.normal)
+            Text(info.cookie!)
+                .fontSize(12.sp)
+                .fontWeight(FontWeight.normal)
+                .textColor(colorSlate500),
+            Text(timeTransfer(info.time!))
+                .fontSize(12.sp)
+                .fontWeight(FontWeight.normal)
+                .textColor(colorSlate500),
           ],
         ),
         Row(
@@ -41,7 +48,7 @@ class TopicCard extends GetWidget<ForumController> {
                 .textColor(const Color(0XFF1281EC))
                 .fontSize(12.sp)
                 .fontWeight(FontWeight.w500),
-            Text('#${info.id}').fontSize(12.sp)
+            Text('#${info.id}').fontSize(12.sp).textColor(colorSlate400),
             // .fontWeight(FontWeight.w500)
           ],
         ).padding(bottom: 4.h),
@@ -65,44 +72,44 @@ class TopicCard extends GetWidget<ForumController> {
                     topRight: Radius.circular(24.h),
                   )
                 : null,
-            color: const Color(0xFFFFFEF3))
-        .backgroundColor(
-            index == 0 ? const Color(0XFF3395F8) : const Color(0xFFFFFEF3)).gestures(onTap: () {
-              controller.jumpToContent(index);
-            });
+            color: colorAmber50)
+        .backgroundColor(index == 0 ? colorSky500 : colorAmber50)
+        .gestures(onTap: () {
+      controller.jumpToContent(index);
+    });
   }
 
   Widget contentDisplay(String text) {
-    if(!isInContent) {
+    if (!isInContent) {
       return Html(
-      data: text,
-      shrinkWrap: true,
-      style: {
-        'body': Style(
-          margin: EdgeInsets.zero,
-          padding: EdgeInsets.zero,
-          fontSize: FontSize(14.sp),
-          maxLines: 15,
-          textOverflow: TextOverflow.ellipsis,
-        )
-      },);
+        data: text,
+        shrinkWrap: true,
+        style: {
+          'body': Style(
+              margin: EdgeInsets.zero,
+              padding: EdgeInsets.zero,
+              fontSize: FontSize(14.sp),
+              maxLines: 15,
+              textOverflow: TextOverflow.ellipsis,
+              color: colorSlate900)
+        },
+      );
     } else {
       return Html(
-      data: text,
-      shrinkWrap: true,
-      style: {
-        'body': Style(
-          margin: EdgeInsets.zero,
-          padding: EdgeInsets.zero,
-          fontSize: FontSize(14.sp),
-        )
-      },
-      onLinkTap: (String? url, RenderContext context,
-            Map<String, String> attributes, dom.Element? element) async {
-          print('lauch');
-          if (!await launch(url!)) throw 'Could not launch $url';
-        });
+          data: text,
+          shrinkWrap: true,
+          style: {
+            'body': Style(
+                margin: EdgeInsets.zero,
+                padding: EdgeInsets.zero,
+                fontSize: FontSize(14.sp),
+                color: colorSlate900)
+          },
+          onLinkTap: (String? url, RenderContext context,
+              Map<String, String> attributes, dom.Element? element) async {
+            print('lauch');
+            if (!await launch(url!)) throw 'Could not launch $url';
+          });
     }
-    
   }
 }

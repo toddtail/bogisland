@@ -1,5 +1,33 @@
 import 'package:flutter/material.dart';
 
+const colorSlate50 = Color(0XFFf8fafc);
+const colorNeutral50 = Color(0XFFfafafa);
+const colorRed50 = Color(0XFFfef2f2);
+const colorOrange50 = Color(0XFFfff7ed);
+const colorAmber50 = Color(0XFFfffbeb);
+const colorYellow50 = Color(0XFFfefce8);
+const colorGreen50 = Color(0XFFf0fdf4);
+const colorTeal50 = Color(0XFFf0fdfa);
+const colorCyan50 = Color(0XFFecfeff);
+const colorSky50 = Color(0XFFf0f9ff);
+const colorBlue50 = Color(0XFFeff6ff);
+const colorIndigo50 = Color(0XFFeef2ff);
+const colorRose50 = Color(0XFFfff1f2);
+
+const colorSlate100 = Color(0XFFf1f5f9);
+const colorNeutral100 = Color(0XFFf5f5f5);
+const colorRed100 = Color(0XFFfee2e2);
+const colorOrange100 = Color(0XFFffedd5);
+const colorAmber100 = Color(0XFFfef3c7);
+const colorYellow100 = Color(0XFFfef9c3);
+const colorGreen100 = Color(0XFFdcfce7);
+const colorTeal100 = Color(0XFFccfbf1);
+const colorCyan100 = Color(0XFFcffafe);
+const colorSky100 = Color(0XFFe0f2fe);
+const colorBlue100 = Color(0XFFdbeafe);
+const colorIndigo100 = Color(0XFFe0e7ff);
+const colorRose100 = Color(0XFFffe4e6);
+
 const colorSlate200 = Color(0XFFe2e8f0);
 const colorNeutral200 = Color(0XFFe5e5e5);
 const colorRed200 = Color(0XFFfecaca);
@@ -69,3 +97,21 @@ const colorSky600 = Color(0XFF0284c7);
 const colorBlue600 = Color(0XFF2563eb);
 const colorIndigo600 = Color(0XFF4f46e5);
 const colorRose600 = Color(0XFFe11d48);
+
+const colorSlate900 = Color(0XFF0f172a);
+const colorNeutral900 = Color(0XFF111827);
+
+
+// const colorSlate100 = Color(0XFF);
+// const colorNeutral100 = Color(0XFF);
+// const colorRed100 = Color(0XFF);
+// const colorOrange100 = Color(0XFF);
+// const colorAmber100 = Color(0XFF);
+// const colorYellow100 = Color(0XFF);
+// const colorGreen100 = Color(0XFF);
+// const colorTeal100 = Color(0XFF);
+// const colorCyan100 = Color(0XFF);
+// const colorSky100 = Color(0XFF);
+// const colorBlue100 = Color(0XFF);
+// const colorIndigo100 = Color(0XFF);
+// const colorRose100 = Color(0XFF);

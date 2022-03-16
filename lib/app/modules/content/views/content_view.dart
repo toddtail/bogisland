@@ -1,3 +1,4 @@
+import 'package:bog_island/app/data/tailwind_colors.dart';
 import 'package:bog_island/app/modules/content/widgets/content_bottom_bar.dart';
 import 'package:bog_island/app/modules/content/widgets/content_card.dart';
 import 'package:bog_island/app/modules/forum/widgets/topic_card.dart';
@@ -19,8 +20,8 @@ class ContentView extends GetView<ContentController> {
   Widget build(BuildContext context) {
     controller.openNewContent(arguments[0]);
     return Scaffold(
-      // backgroundColor: const Color(0XFF3395F8),
-      backgroundColor: const Color(0xFFFFFEF3),
+      // backgroundColor: colorSky500,
+      backgroundColor: colorAmber50,
       body: SafeArea(
         child: Stack(
           children: [
@@ -49,7 +50,7 @@ class ContentView extends GetView<ContentController> {
                       ),
                     )
                         .padding(left: 12.w, right: 12.w)
-                        .backgroundColor(const Color(0XFF3395F8)),
+                        .backgroundColor(colorSky500),
                     Expanded(
                       child: NotificationListener<ScrollNotification>(
                           onNotification: (ScrollNotification scrollInfo) {

@@ -1,4 +1,5 @@
 import 'package:bog_island/app/common/function/time_transfer.dart';
+import 'package:bog_island/app/data/tailwind_colors.dart';
 import 'package:bog_island/app/modules/content/controllers/content_controller.dart';
 import 'package:bog_island/app/modules/content/models/threads_model.dart';
 import 'package:bog_island/app/modules/global/controller/forum_list_controller.dart';
@@ -30,20 +31,22 @@ class ContentCard extends GetWidget<ContentController> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(reply.cookie!).fontSize(12.sp).fontWeight(FontWeight.normal),
+            Text(reply.cookie!)
+                .fontSize(12.sp)
+                .fontWeight(FontWeight.normal)
+                .textColor(colorSlate500),
             Text(timeTransfer(reply.time!))
                 .fontSize(12.sp)
                 .fontWeight(FontWeight.normal)
+                .textColor(colorSlate500)
           ],
         ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('${index + 1}楼')
-                .fontSize(12.sp)
-                .textColor(const Color(0XFF3395F8)),
-            Text('#${reply.id}').fontSize(12.sp)
+            Text('${index + 1}楼').fontSize(12.sp).textColor(colorSky500),
+            Text('#${reply.id}').fontSize(12.sp).textColor(colorSlate400)
             // .fontWeight(FontWeight.w500)
           ],
         ).padding(bottom: 4.h),
@@ -61,9 +64,8 @@ class ContentCard extends GetWidget<ContentController> {
     )
         .padding(left: 12.h, right: 12.h, top: 16.h, bottom: 8.h)
         .width(300.h)
-        .decorated(color: const Color(0xFFFFFEF3))
-        .backgroundColor(
-            index == 0 ? const Color(0XFF3395F8) : const Color(0xFFFFFEF3));
+        .decorated(color: colorAmber50)
+        .backgroundColor(index == 0 ? colorSky500 : colorAmber50);
   }
 
   Widget contentDisplay(String text) {
@@ -73,10 +75,10 @@ class ContentCard extends GetWidget<ContentController> {
         shrinkWrap: true,
         style: {
           'body': Style(
-            margin: EdgeInsets.zero,
-            padding: EdgeInsets.zero,
-            fontSize: FontSize(14.sp),
-          )
+              margin: EdgeInsets.zero,
+              padding: EdgeInsets.zero,
+              fontSize: FontSize(14.sp),
+              color: colorSlate900)
         },
         onLinkTap: (String? url, RenderContext context,
             Map<String, String> attributes, dom.Element? element) async {
