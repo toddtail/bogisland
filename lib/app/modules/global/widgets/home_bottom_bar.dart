@@ -50,7 +50,7 @@ Widget _barIcon(int index, String svgPath) {
 
   return Obx(() => InkWell(
     child: AnimatedContainer(
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 200),
       curve: Curves.easeInOutCirc,
       height: !controller.iconSelectedState[index - 1] ? 32.h : 40.h,
       width: !controller.iconSelectedState[index - 1] ? 32.h : 40.h,
@@ -60,6 +60,5 @@ Widget _barIcon(int index, String svgPath) {
       ),
     ),
     onTap: () => controller.onBarIconTap(index),
-    onDoubleTap: () => controller.onBarIconDoubleTap(index),
   ));
 }

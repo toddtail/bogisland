@@ -10,26 +10,19 @@ class HomeBottomBarController extends GetxController {
 
   void onBarIconTap(int index) {
     // 点击动画逻辑
-    if (index != 2) {
+    if (index == 2) {
+      iconSelectedState.value = [true, false, false, false, false];
+      isOnForumSelect.value = !isOnForumSelect.value;
+    } else if (index == 1 && iconSelectedState[0]) {
+      forumController.refreshTopic();
+    } else {
       iconSelectedState.value = [false, false, false, false, false];
       iconSelectedState[index - 1] = true;
       isOnForumSelect.value = false;
-    } else {
-      iconSelectedState.value = [true, false, false, false, false];
-      isOnForumSelect.value = !isOnForumSelect.value;
     }
   }
 
   void onTopicCellTaped() {
     isOnForumSelect.value = false;
-  }
-
-  void onBarIconDoubleTap(int index) {
-    // 点击动画逻辑
-    if (index == 1) {
-      iconSelectedState.value = [true, false, false, false, false];
-      isOnForumSelect.value = false;
-      forumController.refreshTopic();
-    }
   }
 }
