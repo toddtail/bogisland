@@ -28,7 +28,7 @@ class HomeView extends GetView<HomeController> {
                       : -165.h,
                   child: ForumSelectCard(),
                   curve: Curves.bounceInOut,
-                  duration: const Duration(milliseconds: 200))),
+                  duration: const Duration(milliseconds: 100))),
               const Positioned(
                 bottom: 0,
                 child: HomeBottomBar(),
