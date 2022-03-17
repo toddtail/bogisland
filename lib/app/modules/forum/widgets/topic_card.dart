@@ -3,6 +3,7 @@ import 'package:bog_island/app/data/tailwind_colors.dart';
 import 'package:bog_island/app/modules/forum/controllers/forum_controller.dart';
 import 'package:bog_island/app/modules/forum/models/forum_model.dart';
 import 'package:bog_island/app/modules/global/controller/forum_list_controller.dart';
+import 'package:bog_island/app/modules/image_viewer/widgets/image_cell.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
@@ -55,12 +56,8 @@ class TopicCard extends GetWidget<ForumController> {
         contentDisplay(info.content!),
         info.images == null
             ? Container()
-            : Image.network(
-                'https://bog-ac-static.smartgslb.com/image/thumb/${info.images![0].url}${info.images![0].ext}',
-                fit: BoxFit.fitWidth,
-                width: 100.h,
-                height: 100.h,
-              ).padding(top: 4.h)
+            : 
+            ImageCell('${info.images![0].url}${info.images![0].ext}'),
       ],
     )
         .padding(left: 12.h, right: 12.h, top: 16.h, bottom: 8.h)
