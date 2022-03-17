@@ -60,5 +60,6 @@ Widget _barIcon(int index, String svgPath) {
       ),
     ),
     onTap: () => controller.onBarIconTap(index),
+    onDoubleTap: () => controller.onBarIconDoubleTap(index),
   ));
 }

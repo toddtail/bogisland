@@ -1,3 +1,4 @@
+import 'package:bog_island/app/modules/forum/controllers/forum_controller.dart';
 import 'package:get/get.dart';
 
 class HomeBottomBarController extends GetxController {
@@ -5,6 +6,7 @@ class HomeBottomBarController extends GetxController {
 
   final iconSelectedState = [true, false, false, false, false].obs;
   final isOnForumSelect = false.obs;
+  final forumController = Get.find<ForumController>();
 
   void onBarIconTap(int index) {
     // 点击动画逻辑
@@ -20,5 +22,14 @@ class HomeBottomBarController extends GetxController {
 
   void onTopicCellTaped() {
     isOnForumSelect.value = false;
+  }
+
+  void onBarIconDoubleTap(int index) {
+    // 点击动画逻辑
+    if (index == 1) {
+      iconSelectedState.value = [true, false, false, false, false];
+      isOnForumSelect.value = false;
+      forumController.refreshTopic();
+    }
   }
 }

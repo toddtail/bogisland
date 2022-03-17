@@ -57,6 +57,12 @@ class ForumController extends GetxController {
     loadTopic();
   }
 
+  void refreshTopic() {
+    forumTopicList.value = [];
+    _currentLoadedPage = 0;
+    loadTopic();
+  }
+
   void jumpToContent(int index) {
     // Get.toNamed("/content", arguments: forumTopicList[index]);
     Get.toNamed("/content", arguments: [forumTopicList[index].id, index]);
