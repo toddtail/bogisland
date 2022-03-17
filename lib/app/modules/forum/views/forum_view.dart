@@ -2,6 +2,7 @@ import 'package:bog_island/app/data/icons_path.dart';
 import 'package:bog_island/app/data/tailwind_colors.dart';
 import 'package:bog_island/app/modules/forum/widgets/topic_card.dart';
 import 'package:bog_island/app/modules/global/controller/forum_list_controller.dart';
+import 'package:bog_island/app/modules/global/widgets/normal_top_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -18,35 +19,29 @@ class ForumView extends GetView<ForumController> {
   Widget build(BuildContext context) {
     return Scaffold(
       // backgroundColor: colorSky500,
-      backgroundColor: colorAmber50,
+      // backgroundColor: colorAmber50,
       body: Center(
           child: Obx(
         () => Column(
           children: [
-            SizedBox(
-              // width: 324.w,
-              height: 44.h,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(controller.forumTopicList.isEmpty
-                          ? ''
-                          : forumListController
-                              .liteForumMap[controller.selectedForumId.value])
-                      .fontSize(18.sp)
-                      .fontWeight(FontWeight.bold)
-                      .textColor(Colors.white),
-                  SvgPicture.asset(
-                    iconPlanetPath,
-                    color: Colors.white,
-                    width: 24.h,
-                  )
-                ],
-              ),
-            ).padding(left: 12.w, right: 12.w).backgroundColor(colorSky500),
+            normalTopBar(
+              controller.forumTopicList.isEmpty
+                  ? ''
+                  : forumListController
+                      .liteForumMap[controller.selectedForumId.value],
+              iconPlanetPath,
+            ),
             controller.forumTopicList.isEmpty
                 ? Container()
+                    .decorated(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(24.h),
+                          topRight: Radius.circular(24.h),
+                        ),
+                        color: colorAmber50)
+                    .backgroundColor(colorSky500)
+                    .width(324.w)
+                    .height(720.h)
                 : Expanded(
                     child: NotificationListener<ScrollNotification>(
                         onNotification: (ScrollNotification scrollInfo) {

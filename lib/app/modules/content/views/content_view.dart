@@ -2,6 +2,7 @@ import 'package:bog_island/app/data/tailwind_colors.dart';
 import 'package:bog_island/app/modules/content/widgets/content_bottom_bar.dart';
 import 'package:bog_island/app/modules/content/widgets/content_card.dart';
 import 'package:bog_island/app/modules/forum/widgets/topic_card.dart';
+import 'package:bog_island/app/modules/global/widgets/normal_top_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -30,27 +31,7 @@ class ContentView extends GetView<ContentController> {
               child: Obx(
                 () => Column(
                   children: [
-                    SizedBox(
-                      // width: 324.w,
-                      height: 44.h,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('>>${arguments[0]}')
-                              .fontSize(18.sp)
-                              .fontWeight(FontWeight.bold)
-                              .textColor(Colors.white),
-                          SvgPicture.asset(
-                            iconPlanetPath,
-                            color: Colors.white,
-                            width: 24.h,
-                          )
-                        ],
-                      ),
-                    )
-                        .padding(left: 12.w, right: 12.w)
-                        .backgroundColor(colorSky500),
+                    normalTopBar('>>${arguments[0]}', iconPlanetPath, textSize: 16),
                     Expanded(
                       child: NotificationListener<ScrollNotification>(
                           onNotification: (ScrollNotification scrollInfo) {
