@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:styled_widget/styled_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -19,7 +20,7 @@ class ForumView extends GetView<ForumController> {
   Widget build(BuildContext context) {
     return Scaffold(
       // backgroundColor: colorSky500,
-      // backgroundColor: colorAmber50,
+      backgroundColor: colorAmber50,
       body: Center(
           child: Obx(
         () => Column(
@@ -32,16 +33,25 @@ class ForumView extends GetView<ForumController> {
               iconPlanetPath,
             ),
             controller.forumTopicList.isEmpty
-                ? Container()
-                    .decorated(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(24.h),
-                          topRight: Radius.circular(24.h),
-                        ),
-                        color: colorAmber50)
-                    .backgroundColor(colorSky500)
-                    .width(324.w)
-                    .height(720.h)
+                ? Expanded(
+                  child: Container(
+                      alignment: Alignment.topCenter,
+                      margin: EdgeInsets.only(top: 60.h),
+                      child: Lottie.asset(
+                        'assets/lotties/salad-cat.json',
+                        width: 160.w,
+                        fit: BoxFit.fitWidth,
+                      ),
+                    )
+                      .decorated(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(24.h),
+                            topRight: Radius.circular(24.h),
+                          ),
+                          color: colorAmber50)
+                      .backgroundColor(colorSky500)
+                      .width(324.w),
+                )
                 : Expanded(
                     child: NotificationListener<ScrollNotification>(
                         onNotification: (ScrollNotification scrollInfo) {

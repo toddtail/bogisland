@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
 import 'package:styled_widget/styled_widget.dart';
 import '../controllers/content_controller.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -31,7 +32,8 @@ class ContentView extends GetView<ContentController> {
               child: Obx(
                 () => Column(
                   children: [
-                    normalTopBar('>>${arguments[0]}', iconPlanetPath, textSize: 16),
+                    normalTopBar('>>${arguments[0]}', iconPlanetPath,
+                        textSize: 16),
                     Expanded(
                       child: NotificationListener<ScrollNotification>(
                           onNotification: (ScrollNotification scrollInfo) {
@@ -43,7 +45,8 @@ class ContentView extends GetView<ContentController> {
                           },
                           child: ListView.builder(
                             itemBuilder: (BuildContext context, int index) {
-                              if (index == 0) {
+                              if (index == 0 &&
+                                  controller.contentList.isNotEmpty) {
                                 return Hero(
                                     tag: 'forum${arguments[1]}',
                                     child: Material(
@@ -51,6 +54,27 @@ class ContentView extends GetView<ContentController> {
                                       arguments[1],
                                       isInContent: true,
                                     )));
+                              } else if (index == 0 &&
+                                  controller.contentList.isEmpty) {
+                                return Wrap(
+                                  children: [
+                                    Hero(
+                                        tag: 'forum${arguments[1]}',
+                                        child: Material(
+                                            child: TopicCard(
+                                          arguments[1],
+                                          isInContent: true,
+                                        ))).width(324.w),
+                                    Container(
+                                      alignment: Alignment.topCenter,
+                                      child: Lottie.asset(
+                                        'assets/lotties/load-topic.json',
+                                        width: 160.w,
+                                        fit: BoxFit.fitWidth,
+                                      ),
+                                    ),
+                                  ],
+                                );
                               } else {
                                 return ContentCard(index - 1);
                               }
