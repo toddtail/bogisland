@@ -16,10 +16,10 @@ class HomeBottomBar extends GetWidget<HomeBottomBarController> {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _barIcon(
+        Obx((() => _barIcon(
           1,
-          iconPlanetPath,
-        ),
+          controller.iconSelectedState[0] ? iconReloadPath : iconPlanetPath,
+        ))),
         _barIcon(
           2,
           iconListBoxPath,

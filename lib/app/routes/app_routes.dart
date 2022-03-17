@@ -9,6 +9,8 @@ abstract class Routes {
   static const POST_EDIT = _Paths.POST_EDIT;
   static const CONTENT = _Paths.CONTENT;
   static const IMAGE_VIEWER = _Paths.IMAGE_VIEWER;
+  static const MARK = _Paths.MARK;
+  static const SETTING = _Paths.SETTING;
 }
 
 abstract class _Paths {
@@ -17,4 +19,6 @@ abstract class _Paths {
   static const POST_EDIT = '/post-edit';
   static const CONTENT = '/content';
   static const IMAGE_VIEWER = '/image-viewer';
+  static const MARK = '/mark';
+  static const SETTING = '/setting';
 }

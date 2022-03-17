@@ -13,3 +13,4 @@ const iconSettingsPath = 'assets/icons/settings-cog-line.svg';
 const iconTvPath = 'assets/icons/tv-old-line.svg';
 const iconSharePath = 'assets/icons/share-circle-line.svg';
 const iconFloorPath = 'assets/icons/line-height-line.svg';
+const iconReloadPath = 'assets/icons/reload-circle-line.svg';
