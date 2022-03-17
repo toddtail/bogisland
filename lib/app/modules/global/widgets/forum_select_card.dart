@@ -18,17 +18,14 @@ class ForumSelectCard extends GetWidget<HomeBottomBarController> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO use Wrap replace
-    return Obx((() => Container(
-                child: GridView.count(
-          crossAxisCount: 5,
-          childAspectRatio: (30 / 20),
-          children: List.generate(
-              forumListController.fullForumList.length,
-              (index) => forumCell(
-                  forumListController.fullForumList[index].name!,
-                  forumListController.fullForumList[index].id!)),
-        ))
+    return Obx((() => Center(
+          child: Wrap(
+              children: List.generate(
+                  forumListController.fullForumList.length,
+                  (index) => forumCell(
+                      forumListController.fullForumList[index].name!,
+                      forumListController.fullForumList[index].id!))),
+        )
             .decorated(
               // boxShadow: [
               //   BoxShadow(
@@ -52,13 +49,14 @@ class ForumSelectCard extends GetWidget<HomeBottomBarController> {
       alignment: Alignment.center,
       child: Text(text).fontSize(12.sp).textColor(Colors.white).bold(),
     )
-        .width(84.h)
+        .width(60.h)
+        .height(24.h)
         .decorated(
             borderRadius: BorderRadius.all(Radius.circular(8.h)),
             color: id != forumController.selectedForumId.value
                 ? colorSky500
                 : const Color(0XFF33F8A5))
-        .padding(bottom: 8.h, top: 8.h, left: 4.h, right: 4.h)
+        .padding(bottom: 8.h, top: 8.h, left: 8.h, right: 8.h)
         .gestures(onTap: () {
       forumController.reloadTopic(id);
       homeBottomBarController.onTopicCellTaped();
