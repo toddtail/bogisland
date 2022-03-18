@@ -27,23 +27,14 @@ class HomeView extends GetView<HomeController> {
               Positioned(
                 top: 0,
                 child: PageView(
+                  controller: homeBottomBarController.pageController,
                   children: [
                     KeepAliveWrapper(child: ForumView()),
                     KeepAliveWrapper(child: MarkView()),
                     KeepAliveWrapper(child: SettingView())
                   ],
                   onPageChanged: (index) {
-                    switch (index) {
-                      case 0:
-                        homeBottomBarController.onBarIconTap(1);
-                        break;
-                      case 1:
-                        homeBottomBarController.onBarIconTap(3);
-                        break;
-                      case 2:
-                        homeBottomBarController.onBarIconTap(5);
-                        break;
-                    }
+                    homeBottomBarController.onPageChanged(index);
                   },
                 ).width(324.w).height(710.h),
               ),
