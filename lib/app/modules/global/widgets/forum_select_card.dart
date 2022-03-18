@@ -18,14 +18,13 @@ class ForumSelectCard extends GetWidget<HomeBottomBarController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx((() => Center(
-          child: Wrap(
-              children: List.generate(
-                  forumListController.fullForumList.length,
-                  (index) => forumCell(
-                      forumListController.fullForumList[index].name!,
-                      forumListController.fullForumList[index].id!))),
-        )
+    return Obx((() => Wrap(
+        alignment: WrapAlignment.center,
+        children: List.generate(
+            forumListController.fullForumList.length,
+            (index) => forumCell(
+                forumListController.fullForumList[index].name!,
+                forumListController.fullForumList[index].id!)))
             .decorated(
               // boxShadow: [
               //   BoxShadow(
@@ -39,8 +38,8 @@ class ForumSelectCard extends GetWidget<HomeBottomBarController> {
               ),
               // color: colorAmber50,
             )
-            .width(324.w)
-            .height(164.h)
+            .width(324.w).padding(top: 8.h, bottom: 8.h)
+            // .height(380.h)
             .backgroundColor(colorAmber50)));
   }
 
@@ -60,6 +59,7 @@ class ForumSelectCard extends GetWidget<HomeBottomBarController> {
         .gestures(onTap: () {
       forumController.reloadTopic(id);
       homeBottomBarController.onTopicCellTaped();
+      Get.back();
     });
   }
 }

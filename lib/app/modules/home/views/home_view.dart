@@ -47,13 +47,6 @@ class HomeView extends GetView<HomeController> {
                   },
                 ).width(324.w).height(710.h),
               ),
-              Obx(() => AnimatedPositioned(
-                  bottom: homeBottomBarController.isOnForumSelect.value
-                      ? 59.h
-                      : -165.h,
-                  child: ForumSelectCard(),
-                  curve: Curves.bounceInOut,
-                  duration: const Duration(milliseconds: 100))),
               const Positioned(
                 bottom: 0,
                 child: HomeBottomBar(),
