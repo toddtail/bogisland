@@ -16,6 +16,7 @@ dependencies:
   url_launcher: 6.0.20
   extended_image: 6.0.2+1
   lottie: 1.2.2
+  get_storage: 2.0.3
   flutter: 
     sdk: flutter
   flutter_localizations: 
