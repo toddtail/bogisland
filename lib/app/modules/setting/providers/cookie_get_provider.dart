@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../cookie_get_model.dart';
+import '../models/cookie_get_model.dart';
 
 class CookieGetProvider extends GetConnect {
   @override

@@ -37,7 +37,6 @@ class ImageViewerView extends GetView<ImageViewerController> {
             case LoadState.completed:
               return null;
             case LoadState.failed:
-              //TODO 加载失败提示
               return null;
           }
         })));
