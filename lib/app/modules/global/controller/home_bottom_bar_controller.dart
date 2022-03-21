@@ -11,7 +11,7 @@ class HomeBottomBarController extends GetxController {
   final isOnForumSelect = false.obs;
   final forumController = Get.find<ForumController>();
   final List _jumpList = [0, 0, 1, 0, 2];
-  final List _pageChangedList = [0,2,4];
+  final List _pageChangedList = [0, 2, 4];
 
   @override
   void onInit() {
@@ -26,6 +26,8 @@ class HomeBottomBarController extends GetxController {
       Get.bottomSheet(ForumSelectCard());
     } else if (index == 1 && iconSelectedState[0]) {
       forumController.refreshTopic();
+    } else if (index == 4) {
+      Get.toNamed('/post-edit');
     } else {
       iconSelectedState.value = [false, false, false, false, false];
       iconSelectedState[index - 1] = true;
