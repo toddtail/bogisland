@@ -1,11 +1,14 @@
 import 'package:bog_island/app/data/tailwind_colors.dart';
 import 'package:bog_island/app/modules/setting/models/cookie_add_model.dart';
 import 'package:bog_island/app/modules/setting/models/cookie_del_model.dart';
+import 'package:bog_island/app/modules/setting/models/cookie_get_model.dart';
 import 'package:bog_island/app/modules/setting/models/cookie_info_model.dart';
 import 'package:bog_island/app/modules/setting/providers/cookie_add_provider.dart';
 import 'package:bog_island/app/modules/setting/providers/cookie_del_provider.dart';
+import 'package:bog_island/app/modules/setting/providers/cookie_get_provider.dart';
 import 'package:bog_island/app/modules/setting/providers/cookie_info_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,6 +19,7 @@ class SettingController extends GetxController {
   final cookieAddProvider = Get.find<CookieAddProvider>();
   final cookieInfoProvider = Get.find<CookieInfoProvider>();
   final cookieDelProvider = Get.find<CookieDelProvider>();
+  final cookieGetProvider = Get.find<CookieGetProvider>();
 
   final cookieList = [].obs;
 
@@ -80,7 +84,7 @@ class SettingController extends GetxController {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text('导入过往已生成的饼干。\n\n注意,应用会保存主饼干完整代码至本地，但不会保存影武者完整代码。'),
+            const Text('导入过往已生成的饼干。\n\n应用会保存主饼干完整代码至本地，但不会保存影武者完整代码。'),
             TextField(
               minLines: 1,
               maxLines: 3,
@@ -148,12 +152,11 @@ class SettingController extends GetxController {
               String cookie = cookieMaster.split('#')[0];
               String code = cookieMaster.split('#')[1];
               cookieDelProvider.postCookieDel(cookie, code, del).then((value) {
-                if(value.body is CookieDel) {
+                if (value.body is CookieDel) {
                   updateCookieList();
                   Get.back();
                 }
               });
-              
             },
             child: const Text('删除').textColor(colorRed300))
       ],
@@ -174,5 +177,31 @@ class SettingController extends GetxController {
         writeStorageCookies('0');
       });
     }
+  }
+
+  void getNewCookie() {
+    String newCookie = '';
+    cookieGetProvider.getCookieGet().then((value) {
+      if (value.body is CookieGet) {
+        newCookie = value.body.info;
+        Get.dialog(AlertDialog(
+          title: const SelectableText('获取新饼干成功'),
+          content: Text(newCookie),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Get.back();
+                },
+                child: const Text('返回')),
+            TextButton(
+                onPressed: () {
+                  Clipboard.setData(ClipboardData(text: newCookie));
+                  Get.back();
+                },
+                child: const Text('复制到剪贴板'))
+          ],
+        ));
+      }
+    });
   }
 }

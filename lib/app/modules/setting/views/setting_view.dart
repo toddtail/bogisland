@@ -45,7 +45,9 @@ class SettingView extends GetView<SettingController> {
     return Row(
       children: [
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            controller.getNewCookie();
+          },
           child:
               const Text('生成饼干').fontSize(14.sp).textColor(colorBlue400).bold(),
         ),
@@ -106,7 +108,7 @@ class SettingView extends GetView<SettingController> {
           color: colorRed300,
         ).gestures(onTap: () {
           controller.removeShadowCookie(cookie);
-        } )
+        })
       ],
     ).width(300.w).height(36).padding(top: 4.h, left: 8.w, right: 8.w);
   }
