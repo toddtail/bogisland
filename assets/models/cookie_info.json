@@ -1,0 +1,26 @@
+{
+    "type": "OK",
+    "code": 6001,
+    "info": {
+        "cookie": "sbdu68D9",
+        "vip": null,
+        "sign": 9,
+        "signtime": "2022-03-22 06:00:00",
+        "point": 180,
+        "exp": 900,
+        "list": [
+            {
+                "cookie": "sbdu68D9",
+                "remarks": null
+            },
+            {
+                "cookie": "sFKo23xn",
+                "remarks": null
+            },
+            {
+                "cookie": "233w53X",
+                "remarks": null
+            }
+        ]
+    }
+}

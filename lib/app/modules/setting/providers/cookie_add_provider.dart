@@ -9,26 +9,22 @@ class CookieAddProvider extends BogConnect {
   void onInit() {
     super.onInit();
     httpClient.defaultDecoder = (map) {
+      print(map);
       switch (map['code']) {
         case 3001:
-          Get.snackbar('3001', '饼干无效，系统中没有记录这块饼干',
-              duration: const Duration(seconds: 2),
-              backgroundColor: colorAmber200);
+        bogSnackBar('${map['code']}', '饼干无效，系统中没有记录这块饼干');
+          break;
+        case 3002:
+        bogSnackBar('${map['code']}', '饼干已被删除');
           break;
         case 3101:
-          Get.snackbar('3101', '已经是影武者的饼干，无法再次导入',
-              duration: const Duration(seconds: 2),
-              backgroundColor: colorAmber200);
+        bogSnackBar('${map['code']}', '已经是影武者的饼干，无法再次导入');
           break;
         case 3103:
-          Get.snackbar('3103', '主饼干无效的，无法执行影武者操作',
-              duration: const Duration(seconds: 2),
-              backgroundColor: colorAmber200);
+        bogSnackBar('${map['code']}', '主饼干无效的，无法执行影武者操作');
           break;
         case 3106:
-          Get.snackbar('3106', '影武者已达上限，无法继续导入',
-              duration: const Duration(seconds: 2),
-              backgroundColor: colorAmber200);
+        bogSnackBar('${map['code']}', '影武者已达上限，无法继续导入');
           break;
       }
       if (map['code'] == 3104) {

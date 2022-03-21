@@ -1,6 +1,10 @@
 import 'package:bog_island/app/data/tailwind_colors.dart';
 import 'package:bog_island/app/modules/setting/models/cookie_add_model.dart';
+import 'package:bog_island/app/modules/setting/models/cookie_del_model.dart';
+import 'package:bog_island/app/modules/setting/models/cookie_info_model.dart';
 import 'package:bog_island/app/modules/setting/providers/cookie_add_provider.dart';
+import 'package:bog_island/app/modules/setting/providers/cookie_del_provider.dart';
+import 'package:bog_island/app/modules/setting/providers/cookie_info_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -10,6 +14,9 @@ import 'package:styled_widget/styled_widget.dart';
 class SettingController extends GetxController {
   final storage = GetStorage();
   final cookieAddProvider = Get.find<CookieAddProvider>();
+  final cookieInfoProvider = Get.find<CookieInfoProvider>();
+  final cookieDelProvider = Get.find<CookieDelProvider>();
+
   final cookieList = [].obs;
 
   @override
@@ -27,8 +34,11 @@ class SettingController extends GetxController {
   @override
   void onClose() {}
 
-  void writeStorageCookies() {
+  void writeStorageCookies(String cookieMaster) {
     storage.write('cookie', cookieList.value);
+    if (cookieMaster != '0') {
+      storage.write('cookie_master', cookieMaster);
+    }
   }
 
   void readStorageCookies() {
@@ -36,21 +46,26 @@ class SettingController extends GetxController {
       print(storage.read('cookie').runtimeType);
       List tempList = storage.read('cookie');
       cookieList.value = List.generate(
-          tempList.length, (index) => Info.fromJson(tempList[index]));
+          tempList.length, (index) => CookieAddInfo.fromJson(tempList[index]));
     }
+    updateCookieList();
   }
 
   addCookie(String cookieAdd) async {
     String master;
     if (cookieList.isNotEmpty) {
-      master = cookieList[0].cookie!;
+      // master = cookieList[0].cookie!;
+      master = storage.read('cookie_master');
     } else {
       master = '0';
     }
     dynamic result = await cookieAddProvider.postCookieAdd(master, cookieAdd);
-    if (result.body.info is List<Info>) {
+    if (result.body is CookieAdd) {
       cookieList.value = result.body.info;
-      writeStorageCookies();
+      if (master == '0') {
+        master = cookieAdd;
+      }
+      writeStorageCookies(master);
       return true;
     } else {
       return false;
@@ -65,7 +80,7 @@ class SettingController extends GetxController {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text('导入已有的主饼干，请勿导入影武者'),
+            const Text('导入过往已生成的饼干。\n\n注意,应用会保存主饼干完整代码至本地，但不会保存影武者完整代码。'),
             TextField(
               minLines: 1,
               maxLines: 3,
@@ -99,7 +114,7 @@ class SettingController extends GetxController {
 
   void removeMasterCookie() {
     Get.dialog(AlertDialog(
-      title: const Text('删除主饼干?'),
+      title: const Text('移除主饼干?'),
       actions: [
         TextButton(
             onPressed: () {
@@ -110,10 +125,54 @@ class SettingController extends GetxController {
             onPressed: () {
               cookieList.value = [];
               storage.remove('cookie');
+              storage.remove('cookie_master');
               Get.back();
             },
             child: const Text('删除').textColor(colorRed300))
       ],
     ));
+  }
+
+  void removeShadowCookie(String del) {
+    Get.dialog(AlertDialog(
+      title: const Text('删除影武者饼干?'),
+      actions: [
+        TextButton(
+            onPressed: () {
+              Get.back();
+            },
+            child: const Text('取消').textColor(colorSky300)),
+        TextButton(
+            onPressed: () {
+              String cookieMaster = storage.read('cookie_master');
+              String cookie = cookieMaster.split('#')[0];
+              String code = cookieMaster.split('#')[1];
+              cookieDelProvider.postCookieDel(cookie, code, del).then((value) {
+                if(value.body is CookieDel) {
+                  updateCookieList();
+                  Get.back();
+                }
+              });
+              
+            },
+            child: const Text('删除').textColor(colorRed300))
+      ],
+    ));
+  }
+
+  void updateCookieList() {
+    if (storage.hasData('cookie_master')) {
+      String cookieMaster = storage.read('cookie_master');
+      String cookie = cookieMaster.split('#')[0];
+      String code = cookieMaster.split('#')[1];
+      cookieInfoProvider.postCookieInfo(cookie, code).then((value) {
+        if (value.body is CookieInfo) {
+          print(value.headers);
+          print(value.request);
+          cookieList.value = value.body.info.list;
+        }
+        writeStorageCookies('0');
+      });
+    }
   }
 }

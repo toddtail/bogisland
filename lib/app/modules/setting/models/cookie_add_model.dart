@@ -1,7 +1,7 @@
 class CookieAdd {
   String? type;
   int? code;
-  List<Info>? info;
+  List<CookieAddInfo>? info;
 
   CookieAdd({this.type, this.code, this.info});
 
@@ -9,9 +9,9 @@ class CookieAdd {
     type = json['type'];
     code = json['code'];
     if (json['info'] != null) {
-      info = <Info>[];
+      info = <CookieAddInfo>[];
       json['info'].forEach((v) {
-        info?.add(Info.fromJson(v));
+        info?.add(CookieAddInfo.fromJson(v));
       });
     }
   }
@@ -27,13 +27,13 @@ class CookieAdd {
   }
 }
 
-class Info {
+class CookieAddInfo {
   String? cookie;
   dynamic remarks;
 
-  Info({this.cookie, this.remarks});
+  CookieAddInfo({this.cookie, this.remarks});
 
-  Info.fromJson(Map<String, dynamic> json) {
+  CookieAddInfo.fromJson(Map<String, dynamic> json) {
     cookie = json['cookie'];
     remarks = json['remarks'];
   }

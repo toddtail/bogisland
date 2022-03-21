@@ -6,7 +6,9 @@ import 'package:bog_island/app/modules/global/providers/forum_list_provider.dart
 import 'package:bog_island/app/modules/mark/controllers/mark_controller.dart';
 import 'package:bog_island/app/modules/setting/controllers/setting_controller.dart';
 import 'package:bog_island/app/modules/setting/providers/cookie_add_provider.dart';
+import 'package:bog_island/app/modules/setting/providers/cookie_del_provider.dart';
 import 'package:bog_island/app/modules/setting/providers/cookie_get_provider.dart';
+import 'package:bog_island/app/modules/setting/providers/cookie_info_provider.dart';
 import 'package:get/get.dart';
 
 import '../controllers/home_controller.dart';
@@ -47,6 +49,12 @@ class HomeBinding extends Bindings {
     );
     Get.lazyPut<CookieGetProvider>(
       () => CookieGetProvider(),
+    );
+    Get.lazyPut<CookieDelProvider>(
+      () => CookieDelProvider(),
+    );
+    Get.lazyPut<CookieInfoProvider>(
+      () => CookieInfoProvider(),
     );
   }
 }

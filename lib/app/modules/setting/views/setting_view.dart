@@ -104,7 +104,9 @@ class SettingView extends GetView<SettingController> {
           iconDeletePath,
           width: 20.h,
           color: colorRed300,
-        )
+        ).gestures(onTap: () {
+          controller.removeShadowCookie(cookie);
+        } )
       ],
     ).width(300.w).height(36).padding(top: 4.h, left: 8.w, right: 8.w);
   }
