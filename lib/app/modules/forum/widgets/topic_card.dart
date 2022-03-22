@@ -56,8 +56,13 @@ class TopicCard extends GetWidget<ForumController> {
         contentDisplay(info.content!),
         info.images == null
             ? Container()
-            : 
-            ImageCell('${info.images![0].url}${info.images![0].ext}'),
+            : Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
+                children: List.generate(
+                    info.images!.length,
+                    (index) => imageCell(
+                        '${info.images![index].url}${info.images![index].ext}')),
+              ).width(0.9.sw),
       ],
     )
         .padding(left: 12.h, right: 12.h, top: 16.h, bottom: 8.h)

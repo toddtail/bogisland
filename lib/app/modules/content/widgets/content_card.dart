@@ -55,7 +55,13 @@ class ContentCard extends GetWidget<ContentController> {
         // TODO more images
         reply.images == null
             ? Container()
-            : ImageCell('${reply.images![0].url}${reply.images![0].ext}'),
+            : Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
+                children: List.generate(
+                    reply.images!.length,
+                    (index) => imageCell(
+                        '${reply.images![index].url}${reply.images![index].ext}')),
+              ).width(0.9.sw),
       ],
     )
         .padding(left: 12.h, right: 12.h, top: 16.h, bottom: 8.h)
