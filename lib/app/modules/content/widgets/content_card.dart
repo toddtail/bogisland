@@ -3,6 +3,7 @@ import 'package:bog_island/app/data/tailwind_colors.dart';
 import 'package:bog_island/app/modules/content/controllers/content_controller.dart';
 import 'package:bog_island/app/modules/content/models/threads_model.dart';
 import 'package:bog_island/app/modules/global/controller/forum_list_controller.dart';
+import 'package:bog_island/app/modules/global/widgets/topic_id_html.dart';
 import 'package:bog_island/app/modules/image_viewer/widgets/image_cell.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -56,7 +57,7 @@ class ContentCard extends GetWidget<ContentController> {
         reply.images == null
             ? Container()
             : Wrap(
-              crossAxisAlignment: WrapCrossAlignment.center,
+                crossAxisAlignment: WrapCrossAlignment.center,
                 children: List.generate(
                     reply.images!.length,
                     (index) => imageCell(
@@ -73,19 +74,27 @@ class ContentCard extends GetWidget<ContentController> {
   Widget contentDisplay(String text) {
     // TODO url clicked, id display
     return Html(
-        data: text,
-        shrinkWrap: true,
-        style: {
-          'body': Style(
-              margin: EdgeInsets.zero,
-              padding: EdgeInsets.zero,
-              fontSize: FontSize(14.sp),
-              color: colorSlate900)
-        },
-        onLinkTap: (String? url, RenderContext context,
-            Map<String, String> attributes, dom.Element? element) async {
-          print('lauch');
-          if (!await launch(url!)) throw 'Could not launch $url';
-        });
+      data: text,
+      shrinkWrap: true,
+      style: {
+        'body': Style(
+            margin: EdgeInsets.zero,
+            padding: EdgeInsets.zero,
+            fontSize: FontSize(14.sp),
+            color: colorSlate900)
+      },
+      onLinkTap: (String? url, RenderContext context,
+          Map<String, String> attributes, dom.Element? element) async {
+        print('lauch');
+        if (!await launch(url!)) throw 'Could not launch $url';
+      },
+      customRenders: {
+        quoteMatcher(): CustomRender.widget(widget: (context, buildChildren) {
+          // print(context.tree.children[0].toString().replaceAll('"', ''));
+          return TopicIdInHtml(
+              context.tree.children[0].toString().replaceAll('"', ''));
+        })
+      },
+    );
   }
 }

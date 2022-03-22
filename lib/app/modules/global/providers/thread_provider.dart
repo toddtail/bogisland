@@ -1,23 +1,31 @@
+import 'package:bog_island/app/common/provider/bog_connect.dart';
 import 'package:get/get.dart';
 
 import '../models/thread_model.dart';
 
-class ThreadProvider extends GetConnect {
+class ThreadProvider extends BogConnect {
   @override
   void onInit() {
+    super.onInit();
     httpClient.defaultDecoder = (map) {
-      if (map is Map<String, dynamic>) return Thread.fromJson(map);
-      if (map is List) return map.map((item) => Thread.fromJson(item)).toList();
+      switch (map['code']) {
+        case 6101:
+          bogSnackBar('${map['code']}', 'id不存在');
+          break;
+        case 6102:
+          bogSnackBar('${map['code']}', '没有找到这个内容	');
+          break;
+      }
+      if (map['code'] == 6001) {
+        if (map is Map<String, dynamic>) return Thread.fromJson(map);
+        if (map is List)
+          return map.map((item) => Thread.fromJson(item)).toList();
+      } else {
+        return map;
+      }
     };
-    httpClient.baseUrl = 'YOUR-API-URL';
   }
 
-  Future<Thread?> getThread(int id) async {
-    final response = await get('thread/$id');
-    return response.body;
-  }
-
-  Future<Response<Thread>> postThread(Thread thread) async =>
-      await post('thread', thread);
-  Future<Response> deleteThread(int id) async => await delete('thread/$id');
+  Future<Response<dynamic>> postThread(String id) async =>
+      await post('thread', FormData({'id': id}));
 }

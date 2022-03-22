@@ -1,10 +1,8 @@
-import 'dart:ffi';
-
 import 'package:bog_island/app/modules/global/models/forum_list_model.dart';
 import 'package:bog_island/app/modules/global/providers/forum_list_provider.dart';
 import 'package:get/get.dart';
 
-// 包含板块
+// 板块列表
 class ForumListController extends GetxController {
   ForumListController();
 
