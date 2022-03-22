@@ -4,52 +4,212 @@
     "info": [
         {
             "id": 0,
+            "rank": 0,
             "name": "时间线",
             "name2": "",
             "headimg": "timeline.png",
-            "info": "时间线是浏览所有板块内容的特殊版块，该板块仅浏览，不能发布主题。\n要想发布新主题，请选择板块后发布。"
+            "info": "时间线是浏览所有板块内容的特殊版块，该板块仅浏览，不能发布主题。\n要想发布新主题，请选择板块后发布。",
+            "hide": false,
+            "timeline": true,
+            "close": true
         },
         {
             "id": 1,
+            "rank": 1,
             "name": "综合版",
             "name2": "",
             "headimg": "",
-            "info": "综合版是未分类及版块功能上线前发布的内容统一归纳的版块，对于没有特殊划分需求的主题，都会发布在综合版。"
+            "info": "综合版是未分类及版块功能上线前发布的内容统一归纳的版块，对于没有特殊划分需求的主题，都会发布在综合版。",
+            "hide": false,
+            "timeline": true,
+            "close": true
         },
         {
             "id": 114514,
+            "rank": 2,
             "name": "欢乐恶臭",
             "name2": "",
             "headimg": "114514.png",
-            "info": "你是一个一个一个一个..啊啊啊啊！(首)\n在这里不必太认真。"
+            "info": "你是一个一个一个一个..啊啊啊啊！(首)\n在这里不必太认真。",
+            "hide": false,
+            "timeline": true,
+            "close": true
+        },
+        {
+            "id": 10,
+            "rank": 8,
+            "name": "音乐",
+            "name2": "",
+            "headimg": "music.jpg",
+            "info": "音乐/推歌",
+            "hide": false,
+            "timeline": true,
+            "close": true
+        },
+        {
+            "id": 7,
+            "rank": 9,
+            "name": "动漫",
+            "name2": "",
+            "headimg": "1646199790.jpg",
+            "info": "动画/漫画/绘图/二次元",
+            "hide": false,
+            "timeline": true,
+            "close": true
         },
         {
             "id": 3,
+            "rank": 10,
             "name": "游戏",
             "name2": "电竞",
             "headimg": "dududu.gif",
-            "info": "玩这个游戏真寄吧气人。"
+            "info": "玩这个游戏真寄吧气人。",
+            "hide": false,
+            "timeline": true,
+            "close": true
         },
         {
-            "id": 4,
-            "name": "东方Project",
+            "id": 5,
+            "rank": 11,
+            "name": "跑团",
             "name2": "",
-            "headimg": "ll.jpg",
-            "info": "《舰队Collection》游戏以第二次世界大战时期的日本帝国海军军舰为题材。玩家可以在游戏内一边收集军舰拟人化的角色“舰娘”，一边将已经收集到的舰娘强化并改造，最后在战斗中打倒深海舰队，成就无敌的联合舰队。"
+            "headimg": "Cardmaster_SealFate.png",
+            "info": "建议使用[n]或[n-n]来进行roll点。",
+            "hide": false,
+            "timeline": false,
+            "close": true
+        },
+        {
+            "id": 6,
+            "rank": 12,
+            "name": "文学",
+            "name2": "",
+            "headimg": "5681d158ccbf6c8119835b1aba3eb13532fa408b.gif",
+            "info": "小说/创作/怪谈/脑洞/文学\n日记/树洞已转移至日记版",
+            "hide": false,
+            "timeline": false,
+            "close": true
+        },
+        {
+            "id": 8,
+            "rank": 13,
+            "name": "日记",
+            "name2": "",
+            "headimg": "notebook.jpg",
+            "info": "日记版+树洞版",
+            "hide": false,
+            "timeline": false,
+            "close": true
+        },
+        {
+            "id": 12,
+            "rank": 14,
+            "name": "美食",
+            "name2": "",
+            "headimg": "1647168779.jpg",
+            "info": "美食/美酒/料理/吃货",
+            "hide": false,
+            "timeline": true,
+            "close": true
+        },
+        {
+            "id": 11,
+            "rank": 15,
+            "name": "社畜",
+            "name2": "",
+            "headimg": "1646817818.jpg",
+            "info": "我就是不想上班单纯想要工资这想法很奇怪吗？",
+            "hide": false,
+            "timeline": true,
+            "close": true
+        },
+        {
+            "id": 15,
+            "rank": 16,
+            "name": "主子",
+            "name2": "宠物",
+            "headimg": "yuumi.jpg",
+            "info": "　^　^\n[｡◕∀◕｡]",
+            "hide": false,
+            "timeline": true,
+            "close": true
+        },
+        {
+            "id": 9,
+            "rank": 100,
+            "name": "老三样",
+            "name2": "",
+            "headimg": "1646268549.jpg",
+            "info": "東方Project/Vocaloid/艦隊これくしょん",
+            "hide": false,
+            "timeline": true,
+            "close": true
         },
         {
             "id": 2233,
+            "rank": 200,
             "name": "圈内",
             "name2": "",
             "headimg": "missy.jpg",
-            "info": "圈(juan)内"
+            "info": "圈(juan)内",
+            "hide": false,
+            "timeline": true,
+            "close": true
+        },
+        {
+            "id": 4,
+            "rank": 254,
+            "name": "影流",
+            "name2": "",
+            "headimg": "73eb8ac5tw1egs5qeg1a4j207h07fmy9.jpg",
+            "info": "可以引流，但没必要。\n以宣传引流为目的的相关内容请发到这个版块。",
+            "hide": true,
+            "timeline": true,
+            "close": true
+        },
+        {
+            "id": 42,
+            "rank": 255,
+            "name": "里区",
+            "name2": "",
+            "headimg": "hide.png",
+            "info": "不会出现在时间线中的板块，在这里发布的内容依旧对访问该板块的所有人可见。\n虽然为里区，但是对内容的审查和其他板块相同，不要发布不可发布在公共平台的内容。\n请勿公开该板块的任何信息。",
+            "hide": true,
+            "timeline": false,
+            "close": true
+        },
+        {
+            "id": 444,
+            "rank": 44444,
+            "name": "键政",
+            "name2": "",
+            "headimg": "shaco.png",
+            "info": "任何涉及政治的版块只能发在这里，否则一律删除且无任何通知。\n在该板块发布任何违法/违规内容，都会删除且可能会回收发布权限。",
+            "hide": false,
+            "timeline": true,
+            "close": true
         },
         {
             "id": 2,
+            "rank": 65535,
             "name": "反馈",
             "name2": "BUG意见建议提交处",
             "headimg": "",
-            "info": "意见建议BUG都可以发在这，也可以用来测试。\n反馈帖请注明反馈或使用标题，不过无所谓，后台都能看到。"
+            "info": "遇到什么问题需要反馈的可以在这里发串。",
+            "hide": false,
+            "timeline": true,
+            "close": true
+        },
+        {
+            "id": 999,
+            "rank": 99999,
+            "name": "特殊",
+            "name2": "",
+            "headimg": "",
+            "info": "用于数据调用的特殊版块。\n把特殊代码填入标题才能发布主题。\n只有发布者及发布者的影武者才能回复。",
+            "hide": true,
+            "timeline": false,
+            "close": true
         }
     ]
 }

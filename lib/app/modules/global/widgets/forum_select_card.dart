@@ -19,28 +19,24 @@ class ForumSelectCard extends GetWidget<HomeBottomBarController> {
   @override
   Widget build(BuildContext context) {
     return Obx((() => Wrap(
-        alignment: WrapAlignment.center,
-        children: List.generate(
-            forumListController.fullForumList.length,
-            (index) => forumCell(
-                forumListController.fullForumList[index].name!,
-                forumListController.fullForumList[index].id!)))
-            .decorated(
-              // boxShadow: [
-              //   BoxShadow(
-              //       color: const Color(0xFFF6F5E0),
-              //       offset: Offset(0, -8.h),
-              //       blurRadius: 12)
-              // ],
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(24.h),
-                topRight: Radius.circular(24.h),
-              ),
-              // color: colorAmber50,
-            )
-            .width(324.w).padding(top: 8.h, bottom: 8.h)
-            // .height(380.h)
-            .backgroundColor(colorAmber50)));
+            alignment: WrapAlignment.center,
+            children: List.generate(
+                forumListController.fullForumList.length,
+                (index) => forumListController.fullForumList[index].hide!
+                    ? const SizedBox.shrink()
+                    : forumCell(forumListController.fullForumList[index].name!,
+                        forumListController.fullForumList[index].id!)))
+        .decorated(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(24.h),
+            topRight: Radius.circular(24.h),
+          ),
+          // color: colorAmber50,
+        )
+        .width(324.w)
+        .padding(top: 8.h, bottom: 8.h)
+        // .height(380.h)
+        .backgroundColor(colorAmber50)));
   }
 
   Widget forumCell(String text, int id) {
