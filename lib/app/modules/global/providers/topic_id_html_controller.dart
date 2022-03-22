@@ -21,7 +21,13 @@ class TopicIdHtmlController extends GetxController {
             threadLoadedMap.refresh();
           } else if (result.body is Thread) {
             print('thread');
-            threadLoadedMap.update(id, (value) => result.body.info.content);
+            threadLoadedMap.update(
+                id,
+                (value) => [
+                      result.body.info.cookie,
+                      result.body.info.time,
+                      result.body.info.content
+                    ]);
           }
         });
       } catch (e) {
