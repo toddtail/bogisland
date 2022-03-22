@@ -5,3 +5,8 @@ void showWarnSnackBar(String title, String message) {
   Get.snackbar(title, message, duration: const Duration(seconds: 2),
               backgroundColor: colorRed200);
 }
+
+void showNormalSnackBar(String title, String message) {
+  Get.snackbar(title, message, duration: const Duration(seconds: 2),
+              backgroundColor: colorBlue100);
+}

@@ -17,6 +17,9 @@ dependencies:
   extended_image: 6.0.2+1
   lottie: 1.2.2
   get_storage: 2.0.3
+  image_gallery_saver: 1.7.1
+  permission_handler: 9.2.0
+  path_provider: 2.0.9
   flutter: 
     sdk: flutter
   flutter_localizations: 
