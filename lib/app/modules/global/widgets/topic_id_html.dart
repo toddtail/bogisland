@@ -42,8 +42,10 @@ class TopicIdInHtml extends GetWidget<TopicIdHtmlController> {
                   .padding(bottom: 4.h);
             } else {
               return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(controller.threadLoadedMap[id][0])
                           .fontSize(12.sp)
