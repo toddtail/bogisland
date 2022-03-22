@@ -45,34 +45,31 @@ class ContentView extends GetView<ContentController> {
                           },
                           child: ListView.builder(
                             itemBuilder: (BuildContext context, int index) {
+                              Widget headThread = Hero(
+                                  tag: 'forum${arguments[1]}',
+                                  child: Material(
+                                      child: TopicCard(
+                                    arguments[1],
+                                    isInContent: true,
+                                  ))).width(324.w);
                               if (index == 0 &&
                                   controller.contentList.isNotEmpty) {
-                                return Hero(
-                                    tag: 'forum${arguments[1]}',
-                                    child: Material(
-                                        child: TopicCard(
-                                      arguments[1],
-                                      isInContent: true,
-                                    )));
+                                return headThread;
                               } else if (index == 0 &&
                                   controller.contentList.isEmpty) {
                                 return Wrap(
                                   children: [
-                                    Hero(
-                                        tag: 'forum${arguments[1]}',
-                                        child: Material(
-                                            child: TopicCard(
-                                          arguments[1],
-                                          isInContent: true,
-                                        ))).width(324.w),
-                                    Container(
-                                      alignment: Alignment.topCenter,
-                                      child: Lottie.asset(
-                                        'assets/lotties/load-topic.json',
-                                        width: 160.w,
-                                        fit: BoxFit.fitWidth,
-                                      ),
-                                    ),
+                                    headThread,
+                                    controller.isOnLoad.value
+                                        ? Container(
+                                            alignment: Alignment.topCenter,
+                                            child: Lottie.asset(
+                                              'assets/lotties/load-topic.json',
+                                              width: 160.w,
+                                              fit: BoxFit.fitWidth,
+                                            ),
+                                          )
+                                        : const SizedBox.shrink(),
                                   ],
                                 );
                               } else {
