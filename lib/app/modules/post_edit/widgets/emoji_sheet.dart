@@ -1,19 +1,19 @@
 import 'package:bog_island/app/data/emoji.dart';
 import 'package:bog_island/app/data/tailwind_colors.dart';
+import 'package:bog_island/app/modules/post_edit/controllers/post_edit_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:get/instance_manager.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 Widget emojiSheet() {
+  
   return DefaultTabController(
     length: 4,
     child: Column(
       children: [
         TabBar(
           indicatorColor: colorRed400,
-          labelColor: colorAmber200,
-          overlayColor: colorAmber200,
           tabs: [
           Tab(
             icon: const Text('ᕕ[ ᐛ ]ᕗ').textColor(colorNeutral600),
@@ -53,10 +53,14 @@ Widget singleEmojiPanel(String key) {
 }
 
 Widget emojiText(String text) {
+  final postEditController = Get.find<PostEditController>();
+
   return Material(
     color: Colors.transparent,
     child: InkWell(
-        onTap: () {},
+        onTap: () {
+          postEditController.onEmojiTap(text);
+        },
         child: Center(
           child: Text(text).fontSize(12.sp).textColor(colorNeutral600),
         )),
