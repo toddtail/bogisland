@@ -1,11 +1,19 @@
+import 'package:bog_island/app/modules/post_edit/providers/image_upload_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:image_picker/image_picker.dart';
 
+// emoji, input, image, post
 class PostEditController extends GetxController {
   late TextEditingController editorController;
   final storage = GetStorage();
+  final imageUploadProvider = Get.find<ImageUploadProvider>();
+
   final isEmojiOff = true.obs;
+  final imageSelectedFileList = [].obs;
+  final imageCodeList = [].obs;
+  final ImagePicker _picker = ImagePicker();
 
   @override
   void onInit() {
@@ -31,12 +39,13 @@ class PostEditController extends GetxController {
   }
 
   void onBarIconTap(int index) {
-    switch(index) {
+    switch (index) {
       case 1:
         isEmojiOff.value = !isEmojiOff.value;
         onEditorTextChanged();
         break;
       case 2:
+        pickImage();
         break;
       case 3:
         editorController.clear();
@@ -48,7 +57,28 @@ class PostEditController extends GetxController {
 
   void onEmojiTap(String text) {
     editorController.text = editorController.text + text;
-    editorController.selection = TextSelection.fromPosition(TextPosition(offset: editorController.text.length));
+    editorController.selection = TextSelection.fromPosition(
+        TextPosition(offset: editorController.text.length));
     onEditorTextChanged();
+  }
+
+  void pickImage() async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    print(image == null);
+    // jump provider, display image first
+  }
+
+  void getLostImage() async {
+    final LostDataResponse response = await _picker.retrieveLostData();
+    if (response.isEmpty) {
+      return;
+    }
+    if (response.files != null) {
+      for (final XFile file in response.files!) {
+        // _handleFile(file);
+      }
+    } else {
+      // _handleError(response.exception);
+    }
   }
 }
