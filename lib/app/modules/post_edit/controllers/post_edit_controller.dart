@@ -9,11 +9,11 @@ class PostEditController extends GetxController {
   late TextEditingController editorController;
   final storage = GetStorage();
   final imageUploadProvider = Get.find<ImageUploadProvider>();
+  final ImagePicker _picker = ImagePicker();
 
   final isEmojiOff = true.obs;
-  final imageSelectedFileList = [].obs;
+  final selectedImageFileList = <XFile>[].obs;
   final imageCodeList = [].obs;
-  final ImagePicker _picker = ImagePicker();
 
   @override
   void onInit() {
@@ -64,7 +64,9 @@ class PostEditController extends GetxController {
 
   void pickImage() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-    print(image == null);
+    if (image != null) {
+      selectedImageFileList.add(image);
+    }
     // jump provider, display image first
   }
 
@@ -80,5 +82,9 @@ class PostEditController extends GetxController {
     } else {
       // _handleError(response.exception);
     }
+  }
+
+  void removeSelectedImage(int index) {
+    selectedImageFileList.removeAt(index);
   }
 }

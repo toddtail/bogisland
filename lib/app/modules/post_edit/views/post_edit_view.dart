@@ -2,6 +2,7 @@ import 'package:bog_island/app/data/icons_path.dart';
 import 'package:bog_island/app/data/tailwind_colors.dart';
 import 'package:bog_island/app/modules/global/widgets/normal_top_bar.dart';
 import 'package:bog_island/app/modules/post_edit/widgets/emoji_sheet.dart';
+import 'package:bog_island/app/modules/post_edit/widgets/image_sheet.dart';
 import 'package:bog_island/app/modules/post_edit/widgets/post_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
@@ -21,9 +22,10 @@ class PostEditView extends GetView<PostEditController> {
             children: [
               normalTopBar('发帖', iconPenPath),
               editor(),
+              PostBottomBar(),
+              ImageSheet(),
               Obx(() => Offstage(
-                  offstage: controller.isEmojiOff.value, child: emojiSheet())),
-              PostBottomBar()
+                  offstage: controller.isEmojiOff.value, child: const EmojiSheet())),
             ],
           ).backgroundColor(colorAmber50),
         ),
