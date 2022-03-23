@@ -82,16 +82,15 @@ class PostEditController extends GetxController {
 
   pickImage() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-    await Future.delayed(Duration(seconds: 3));
     // TODO image load black
     if (image != null) {
-      imageUploadProvider.postImageUpload(image).then((value) {
-        if (value.body is ImageUpload) {
-          selectedImageIdList.add(value.body.pic);
-          selectedImageXFileList.add(image);
-          return true;
-        } else {}
-      });
+      final value = await imageUploadProvider.postImageUpload(image);
+
+      if (value.body is ImageUpload) {
+        selectedImageIdList.add(value.body.pic);
+        selectedImageXFileList.add(image);
+        return true;
+      } else {}
     }
     return false;
   }
