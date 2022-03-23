@@ -23,9 +23,12 @@ class PostEditView extends GetView<PostEditController> {
               normalTopBar('发帖', iconPenPath),
               editor(),
               PostBottomBar(),
-              ImageSheet(),
               Obx(() => Offstage(
-                  offstage: controller.isEmojiOff.value, child: const EmojiSheet())),
+                  offstage: controller.isImageOff.value,
+                  child: const ImageSheet())),
+              Obx(() => Offstage(
+                  offstage: controller.isEmojiOff.value,
+                  child: const EmojiSheet())),
             ],
           ).backgroundColor(colorAmber50),
         ),
@@ -40,6 +43,9 @@ class PostEditView extends GetView<PostEditController> {
               child: TextField(
                 onChanged: (value) {
                   controller.onEditorTextChanged();
+                },
+                onTap: () {
+                  controller.onEditorTap();
                 },
                 autofocus: true,
                 controller: controller.editorController,

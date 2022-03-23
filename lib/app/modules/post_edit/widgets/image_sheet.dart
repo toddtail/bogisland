@@ -23,7 +23,7 @@ class ImageSheet extends GetWidget<PostEditController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: List.generate(
-                    controller.selectedImageFileList.length + 1, (index) {
+                    controller.selectedImageXFileList.length + 1, (index) {
                   if (index == 0) {
                     return addButton();
                   } else {
@@ -49,13 +49,13 @@ class ImageSheet extends GetWidget<PostEditController> {
           borderRadius: BorderRadius.circular(4.w), color: Colors.white)
       // .backgroundColor(Colors.white)
       ,
-    ).gestures(onTap: () {
-      controller.pickImage();
+    ).gestures(onTap: () async{
+      await controller.pickImage();
     });
   }
 
   Widget imageBlock(int index) {
-    XFile image = controller.selectedImageFileList[index];
+    XFile image = controller.selectedImageXFileList[index];
     return Stack(
       children: [
         Positioned(

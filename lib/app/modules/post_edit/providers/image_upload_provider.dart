@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'dart:convert';
 import 'package:bog_island/app/common/provider/bog_post_connect.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -7,8 +9,17 @@ import '../models/image_upload_model.dart';
 class ImageUploadProvider extends BogPostConnect {
   @override
   void onInit() {
-    httpClient.defaultDecoder = (map) {
-      print(map);
+    super.onInit();
+    httpClient.defaultDecoder = (value) {
+      Map map;
+      if (value is String) {
+        map = json.decode(value);
+        print(map);
+      } else if (value is Map) {
+        map = value;
+      } else {
+        map = value as Map;
+      }
       switch (map['code']) {
         case 301:
           bogSnackBar('${map['code']}', '图片大小超过限制');
@@ -25,15 +36,29 @@ class ImageUploadProvider extends BogPostConnect {
       }
       if (map['code'] == 200) {
         if (map is Map<String, dynamic>) return ImageUpload.fromJson(map);
-        if (map is List)
-          return map.map((item) => ImageUpload.fromJson(item)).toList();
+        // if (map is List)
+        //   return map.map((item) => ImageUpload.fromJson(item)).toList();
       } else {
         return map;
       }
     };
   }
 
-  Future<Response<dynamic>> postImageUpload(XFile image) async =>
-      await post(
-          'upload', MultipartFile(image.readAsBytes(), filename: image.name));
+  Future<Response<dynamic>> postImageUpload(XFile image) async {
+    final imageData = await image.readAsBytes();
+    final imageContentType = 'image/${image.name.split('.')[1]}';
+    return post(
+        'upload',
+        FormData(
+          {
+            'image': MultipartFile(imageData,
+                filename: image.name, contentType: imageContentType)
+          },
+        ),
+        contentType: 'multipart/form-data', uploadProgress: (value) {
+      if (value % 10 == 0) {
+        print(value);
+      }
+    });
+  }
 }

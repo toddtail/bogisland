@@ -26,7 +26,7 @@ class EmojiSheet extends GetWidget<PostEditController> {
               icon: const Text('🤡').textColor(colorNeutral600),
             ),
             Tab(
-              icon: const Text('Roll').textColor(colorNeutral600),
+              icon: const Text('特殊').textColor(colorNeutral600),
             ),
           ]),
           TabBarView(
