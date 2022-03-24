@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:lottie/lottie.dart';
 import 'package:styled_widget/styled_widget.dart';
 import 'dart:io' show File;
 
@@ -41,16 +42,20 @@ class ImageSheet extends GetWidget<PostEditController> {
       child: SizedBox(
         width: 40.w,
         height: 40.w,
-        child: SvgPicture.asset(
-          iconImageAddPath,
-          color: colorNeutral500,
-        ),
+        child: controller.isOnImageLoad.value
+            ? Lottie.asset('assets/lotties/uploading.json')
+            : SvgPicture.asset(
+                iconImageAddPath,
+                color: colorNeutral500,
+              ),
       ).paddingAll(16.w).decorated(
           borderRadius: BorderRadius.circular(4.w), color: Colors.white)
       // .backgroundColor(Colors.white)
       ,
-    ).gestures(onTap: () async{
-      await controller.pickImage();
+    ).gestures(onTap: () async {
+      if (!controller.isOnImageLoad.value) {
+        await controller.pickImage();
+      }
     });
   }
 

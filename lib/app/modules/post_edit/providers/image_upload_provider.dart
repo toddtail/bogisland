@@ -44,15 +44,21 @@ class ImageUploadProvider extends BogPostConnect {
     };
   }
 
-  Future<Response<dynamic>> postImageUpload(XFile image) async {
-    final imageData = await image.readAsBytes();
-    final imageContentType = 'image/${image.name.split('.')[1]}';
+  Future<Response<dynamic>> postImageUpload(List image) async {
+    // final imageData = await image.readAsBytes();
+    // final imageContentType = 'image/${image.name.split('.')[1]}';
+    // final imageName = image.name;
+
+    final imageData = image[0];
+    final imageContentType = image[1];
+    final imageName = image[2];
+
     return await post(
       'upload',
       FormData(
         {
           'image': MultipartFile(imageData,
-              filename: image.name, contentType: imageContentType)
+              filename: imageName, contentType: imageContentType)
         },
       ),
       contentType: 'multipart/form-data',

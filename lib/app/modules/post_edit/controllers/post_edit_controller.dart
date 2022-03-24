@@ -1,5 +1,6 @@
 import 'package:bog_island/app/modules/post_edit/models/image_upload_model.dart';
 import 'package:bog_island/app/modules/post_edit/providers/image_upload_provider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -14,6 +15,7 @@ class PostEditController extends GetxController {
 
   final isEmojiOff = true.obs;
   final isImageOff = true.obs;
+  final isOnImageLoad = false.obs;
   final selectedImageXFileList = <XFile>[].obs;
   final selectedImageIdList = [].obs;
 
@@ -84,13 +86,25 @@ class PostEditController extends GetxController {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
     // TODO image load black
     if (image != null) {
-      final value = await imageUploadProvider.postImageUpload(image);
+      isOnImageLoad.value = true;
+      final imageData = await image.readAsBytes();
+      final imageContentType = 'image/${image.name.split('.')[1]}';
+      final imageName = image.name;
+      final isolateImageData = [imageData, imageContentType, imageName];
 
-      if (value.body is ImageUpload) {
-        selectedImageIdList.add(value.body.pic);
+      // final value = await imageUploadProvider.postImageUpload(image);
+      final String value = await compute(uploadImageIsolate, isolateImageData);
+
+      if (value != 'error') {
+        selectedImageIdList.add(value);
         selectedImageXFileList.add(image);
+        storage.write(_imageSelectedXfileListKey, selectedImageXFileList);
+        storage.write(_imageSelectedIdListKey, selectedImageIdList);
+        isOnImageLoad.value = false;
         return true;
-      } else {}
+      } else {
+        isOnImageLoad.value = false;
+      }
     }
     return false;
   }
@@ -113,7 +127,17 @@ class PostEditController extends GetxController {
   void removeSelectedImage(int index) {
     selectedImageXFileList.removeAt(index);
     selectedImageIdList.removeAt(index);
-    storage.remove(_imageSelectedIdListKey);
-    storage.remove(_imageSelectedXfileListKey);
+    storage.write(_imageSelectedXfileListKey, selectedImageXFileList);
+    storage.write(_imageSelectedIdListKey, selectedImageIdList);
+  }
+}
+
+Future<String> uploadImageIsolate(List data) async {
+  final provider = Get.put<ImageUploadProvider>(ImageUploadProvider());
+  final Response<dynamic> value = await provider.postImageUpload(data);
+  if (value.body is ImageUpload) {
+    return value.body.pic;
+  } else {
+    return 'error';
   }
 }
