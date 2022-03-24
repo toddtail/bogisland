@@ -2,6 +2,7 @@ import 'package:bog_island/app/modules/global/controller/forum_list_controller.d
 import 'package:bog_island/app/modules/post_edit/models/image_upload_model.dart';
 import 'package:bog_island/app/modules/post_edit/models/post_argument_model.dart';
 import 'package:bog_island/app/modules/post_edit/providers/image_upload_provider.dart';
+import 'package:bog_island/app/modules/post_edit/widgets/cookie_choice_sheet.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -70,6 +71,9 @@ class PostEditController extends GetxController {
 
   void onBarIconTap(int index) {
     switch (index) {
+      case 0:
+        showCookieChoiceSheet();
+        break;
       case 1:
         isEmojiOff.value = !isEmojiOff.value;
         isImageOff.value = true;
@@ -146,6 +150,10 @@ class PostEditController extends GetxController {
     selectedImageIdList.removeAt(index);
     storage.write(_imageSelectedXfileListKey, selectedImageXFileList);
     storage.write(_imageSelectedIdListKey, selectedImageIdList);
+  }
+
+  void showCookieChoiceSheet() {
+    Get.bottomSheet(const CookieChoiceSheet());
   }
 }
 

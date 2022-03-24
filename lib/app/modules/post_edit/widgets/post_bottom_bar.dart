@@ -17,6 +17,10 @@ class PostBottomBar extends GetWidget<PostEditController> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         _barIcon(
+          0,
+          iconCookiePath,
+        ),
+        _barIcon(
           1,
           iconFlowerPath,
         ),

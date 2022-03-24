@@ -15,13 +15,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 class SettingController extends GetxController {
+  // cookie cookie_master cookie_selected_index
   final storage = GetStorage();
   final cookieAddProvider = Get.find<CookieAddProvider>();
   final cookieInfoProvider = Get.find<CookieInfoProvider>();
   final cookieDelProvider = Get.find<CookieDelProvider>();
   final cookieGetProvider = Get.find<CookieGetProvider>();
 
-  final cookieList = [].obs;
+  final cookieList = <CookieAddInfo>[].obs;
+  final cookieSelectedIndex = 0.obs;
 
   @override
   void onInit() {
@@ -38,6 +40,7 @@ class SettingController extends GetxController {
   @override
   void onClose() {}
 
+  // 为0时不更新主cookie
   void writeStorageCookies(String cookieMaster) {
     storage.write('cookie', cookieList.value);
     if (cookieMaster != '0') {
@@ -47,10 +50,11 @@ class SettingController extends GetxController {
 
   void readStorageCookies() {
     if (storage.hasData('cookie')) {
-      print(storage.read('cookie').runtimeType);
+      // print(storage.read('cookie').runtimeType);
       List tempList = storage.read('cookie');
       cookieList.value = List.generate(
           tempList.length, (index) => CookieAddInfo.fromJson(tempList[index]));
+      cookieSelectedIndex.value = storage.read('cookie_selected_index');
     }
     updateCookieList();
   }
@@ -68,6 +72,7 @@ class SettingController extends GetxController {
       cookieList.value = result.body.info;
       if (master == '0') {
         master = cookieAdd;
+        storage.write('cookie_selected_index', 0);
       }
       writeStorageCookies(master);
       return true;
@@ -76,6 +81,7 @@ class SettingController extends GetxController {
     }
   }
 
+  // TODO move ui to widgets
   void importCookie() {
     String input = '';
     Get.dialog(
@@ -130,6 +136,7 @@ class SettingController extends GetxController {
               cookieList.value = [];
               storage.remove('cookie');
               storage.remove('cookie_master');
+              storage.remove('cookie_selected_index');
               Get.back();
             },
             child: const Text('删除').textColor(colorRed300))
@@ -154,6 +161,8 @@ class SettingController extends GetxController {
               cookieDelProvider.postCookieDel(cookie, code, del).then((value) {
                 if (value.body is CookieDel) {
                   updateCookieList();
+                  // TODO 加判断
+                  setCookieForPost(0);
                   Get.back();
                 }
               });
@@ -163,6 +172,7 @@ class SettingController extends GetxController {
     ));
   }
 
+  //更新 Cookie 影武者
   void updateCookieList() {
     if (storage.hasData('cookie_master')) {
       String cookieMaster = storage.read('cookie_master');
@@ -170,8 +180,6 @@ class SettingController extends GetxController {
       String code = cookieMaster.split('#')[1];
       cookieInfoProvider.postCookieInfo(cookie, code).then((value) {
         if (value.body is CookieInfo) {
-          print(value.headers);
-          print(value.request);
           cookieList.value = value.body.info.list;
         }
         writeStorageCookies('0');
@@ -203,5 +211,10 @@ class SettingController extends GetxController {
         ));
       }
     });
+  }
+
+  void setCookieForPost(int index) {
+    cookieSelectedIndex.value = index;
+    storage.write('cookie_selected_index', index);
   }
 }
