@@ -5,6 +5,7 @@ import 'package:bog_island/app/modules/content/models/threads_model.dart';
 import 'package:bog_island/app/modules/global/controller/forum_list_controller.dart';
 import 'package:bog_island/app/modules/global/widgets/topic_id_html.dart';
 import 'package:bog_island/app/modules/image_viewer/widgets/image_cell.dart';
+import 'package:bog_island/app/modules/post_edit/models/post_argument_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
@@ -48,7 +49,16 @@ class ContentCard extends GetWidget<ContentController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text('${index + 1}楼').fontSize(12.sp).textColor(colorSky500),
-            Text('#${reply.id}').fontSize(12.sp).textColor(colorSlate400)
+            Text('#${reply.id}')
+                .fontSize(12.sp)
+                .textColor(colorSlate400)
+                .gestures(onTap: () {
+              Get.toNamed('/post-edit',
+                  arguments: PostArgumentModel(
+                      isNewPost: false,
+                      quoteId: reply.id,
+                      topicId: controller.topicId.value));
+            })
             // .fontWeight(FontWeight.w500)
           ],
         ).padding(bottom: 4.h),

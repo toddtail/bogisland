@@ -63,6 +63,11 @@ class PostEditController extends GetxController {
     _forumIdTarget = argumentModel.forumId!;
     topicIdTaget.value = argumentModel.topicId!;
     forumNameTarget.value = forumListController.liteForumMap[_forumIdTarget];
+    if (!isNewPost.value && argumentModel.quoteId != null) {
+      editorController.text =
+          editorController.text + '>>Po.${argumentModel.quoteId}\n';
+      onEditorTextChanged();
+    }
   }
 
   void onEditorTextChanged() {
