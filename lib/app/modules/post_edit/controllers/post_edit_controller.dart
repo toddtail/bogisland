@@ -130,6 +130,10 @@ class PostEditController extends GetxController {
     storage.write(_imageSelectedXfileListKey, selectedImageXFileList);
     storage.write(_imageSelectedIdListKey, selectedImageIdList);
   }
+
+  void readArguments() {
+    
+  }
 }
 
 Future<String> uploadImageIsolate(List data) async {

@@ -1,5 +1,7 @@
 import 'package:bog_island/app/data/icons_path.dart';
 import 'package:bog_island/app/data/tailwind_colors.dart';
+import 'package:bog_island/app/modules/forum/controllers/forum_controller.dart';
+import 'package:bog_island/app/modules/global/controller/forum_list_controller.dart';
 import 'package:bog_island/app/modules/global/widgets/normal_top_bar.dart';
 import 'package:bog_island/app/modules/post_edit/widgets/emoji_sheet.dart';
 import 'package:bog_island/app/modules/post_edit/widgets/image_sheet.dart';
@@ -11,7 +13,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../controllers/post_edit_controller.dart';
 
 class PostEditView extends GetView<PostEditController> {
+  PostEditView({Key? key}) : super(key: key);
+
   final arguments = Get.arguments;
+  final forumController = Get.find<ForumController>();
+  final forumListController = Get.find<ForumListController>();
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +26,9 @@ class PostEditView extends GetView<PostEditController> {
         child: Center(
           child: Column(
             children: [
-              normalTopBar('发帖', iconPenPath),
+              normalTopBar(
+                  '发帖 - ${forumListController.liteForumMap[forumController.selectedForumId.value]}',
+                  iconPenPath),
               editor(),
               PostBottomBar(),
               Obx(() => Offstage(
