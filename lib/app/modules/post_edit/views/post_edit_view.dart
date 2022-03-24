@@ -16,21 +16,24 @@ class PostEditView extends GetView<PostEditController> {
   PostEditView({Key? key}) : super(key: key);
 
   final arguments = Get.arguments;
-  final forumController = Get.find<ForumController>();
-  final forumListController = Get.find<ForumListController>();
 
   @override
   Widget build(BuildContext context) {
+    controller.readArguments(arguments);
     return Scaffold(
       body: SafeArea(
         child: Center(
           child: Column(
             children: [
-              normalTopBar(
-                  '发帖 - ${forumListController.liteForumMap[forumController.selectedForumId.value]}',
-                  iconPenPath),
+              Obx(
+                () => normalTopBar(
+                    controller.isNewPost.value
+                        ? '发帖 - ${controller.forumNameTarget.value}'
+                        : '回复 >>Po.${controller.topicIdTaget.value}',
+                    iconPenPath),
+              ),
               editor(),
-              PostBottomBar(),
+              const PostBottomBar(),
               Obx(() => Offstage(
                   offstage: controller.isImageOff.value,
                   child: const ImageSheet())),

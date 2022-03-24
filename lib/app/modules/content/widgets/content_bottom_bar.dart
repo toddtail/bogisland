@@ -28,10 +28,11 @@ class ContentBottomBar extends GetWidget<ContentBottomBarController> {
           3,
           iconFloorPath,
         ),
-        _barIcon(
-          4,
-          iconSharePath,
-        ),
+        // TODO
+        // _barIcon(
+        //   4,
+        //   iconSharePath,
+        // ),
       ],
     )
         .width(324.w)
@@ -44,15 +45,13 @@ class ContentBottomBar extends GetWidget<ContentBottomBarController> {
 Widget _barIcon(int index, String svgPath) {
   final controller = Get.find<ContentBottomBarController>();
 
-  return Obx(() => InkWell(
-        child: SvgPicture.asset(
-          svgPath,
-          color: !controller.iconSelectedState[index - 1]
-              ? colorSlate500
-              : colorSky500,
-          width: 24.h,
-          height: 24.h,
-        ),
-        onTap: () => controller.onBarIconTap(index),
-      ));
+  return InkWell(
+    child: SvgPicture.asset(
+      svgPath,
+      color: colorSlate500,
+      width: 24.h,
+      height: 24.h,
+    ),
+    onTap: () => controller.onBarIconTap(index),
+  );
 }

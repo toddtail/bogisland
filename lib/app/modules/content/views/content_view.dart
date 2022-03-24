@@ -1,4 +1,5 @@
 import 'package:bog_island/app/data/tailwind_colors.dart';
+import 'package:bog_island/app/modules/content/models/content_argument_model.dart';
 import 'package:bog_island/app/modules/content/widgets/content_bottom_bar.dart';
 import 'package:bog_island/app/modules/content/widgets/content_card.dart';
 import 'package:bog_island/app/modules/forum/widgets/topic_card.dart';
@@ -16,11 +17,11 @@ import 'package:bog_island/app/data/icons_path.dart';
 class ContentView extends GetView<ContentController> {
   ContentView();
 
-  final arguments = Get.arguments;
+  final ContentArgumentModel arguments = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
-    controller.openNewContent(arguments[0]);
+    controller.openNewContent(arguments);
     return Scaffold(
       // backgroundColor: colorSky500,
       backgroundColor: colorAmber50,
@@ -32,7 +33,7 @@ class ContentView extends GetView<ContentController> {
               child: Obx(
                 () => Column(
                   children: [
-                    normalTopBar('>>${arguments[0]}', iconPlanetPath,
+                    normalTopBar('>>Po.${controller.topicId.value}', iconPlanetPath,
                         textSize: 16),
                     Expanded(
                       child: NotificationListener<ScrollNotification>(
@@ -46,10 +47,10 @@ class ContentView extends GetView<ContentController> {
                           child: ListView.builder(
                             itemBuilder: (BuildContext context, int index) {
                               Widget headThread = Hero(
-                                  tag: 'forum${arguments[1]}',
+                                  tag: 'forum${controller.topicIndexInForum.value}',
                                   child: Material(
                                       child: TopicCard(
-                                    arguments[1],
+                                    controller.topicIndexInForum.value,
                                     isInContent: true,
                                   ))).width(324.w);
                               if (index == 0 &&

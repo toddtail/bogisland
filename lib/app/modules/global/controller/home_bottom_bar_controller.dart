@@ -1,6 +1,7 @@
 import 'package:bog_island/app/common/function/notify.dart';
 import 'package:bog_island/app/modules/forum/controllers/forum_controller.dart';
 import 'package:bog_island/app/modules/global/widgets/forum_select_card.dart';
+import 'package:bog_island/app/modules/post_edit/models/post_argument_model.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -30,7 +31,10 @@ class HomeBottomBarController extends GetxController {
       forumController.refreshTopic();
     } else if (index == 4) {
       if (GetStorage().hasData('cookie')) {
-        Get.toNamed('/post-edit');
+        Get.toNamed('/post-edit',
+            arguments: PostArgumentModel(
+                isNewPost: true,
+                forumId: forumController.selectedForumId.value));
       } else {
         showWarnSnackBar('请先导入饼干', '没有饼干无法发帖');
       }

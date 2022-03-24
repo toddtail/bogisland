@@ -1,3 +1,4 @@
+import 'package:bog_island/app/modules/content/models/content_argument_model.dart';
 import 'package:bog_island/app/modules/content/models/threads_model.dart';
 import 'package:bog_island/app/modules/content/providers/threads_provider.dart';
 import 'package:bog_island/app/modules/forum/models/forum_model.dart' as fm;
@@ -10,7 +11,8 @@ class ContentController extends GetxController {
   final contentList = [].obs;
   final originalInfo = fm.Info().obs;
   int _currentLoadedPage = 0;
-  int _id = 0;
+  final topicId = 0.obs;
+  final topicIndexInForum = 0.obs;
   final isOnLoad = false.obs;
 
   @override
@@ -28,8 +30,9 @@ class ContentController extends GetxController {
   @override
   void onClose() {}
 
-  void openNewContent(int id) async {
-    _id = id;
+  void openNewContent(ContentArgumentModel model) async {
+    topicId.value = model.topicId!;
+    topicIndexInForum.value = model.topicIndexInForum!;
     _currentLoadedPage = 0;
     loadContent();
   }
@@ -40,8 +43,8 @@ class ContentController extends GetxController {
       Response result;
       isOnLoad.value = true;
       try {
-        result = await threadsProvider.postThreads(_id, _currentLoadedPage);
-      }catch(e) {
+        result = await threadsProvider.postThreads(topicId.value, _currentLoadedPage);
+      } catch (e) {
         rethrow;
       }
       if (result.body is Map) {

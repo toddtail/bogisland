@@ -1,4 +1,6 @@
+import 'package:bog_island/app/modules/global/controller/forum_list_controller.dart';
 import 'package:bog_island/app/modules/post_edit/models/image_upload_model.dart';
+import 'package:bog_island/app/modules/post_edit/models/post_argument_model.dart';
 import 'package:bog_island/app/modules/post_edit/providers/image_upload_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -11,13 +13,19 @@ class PostEditController extends GetxController {
   late TextEditingController editorController;
   final storage = GetStorage();
   final imageUploadProvider = Get.find<ImageUploadProvider>();
+  final forumListController = Get.find<ForumListController>();
   final _picker = ImagePicker();
 
   final isEmojiOff = true.obs;
   final isImageOff = true.obs;
   final isOnImageLoad = false.obs;
+  final isNewPost = true.obs;
   final selectedImageXFileList = <XFile>[].obs;
   final selectedImageIdList = [].obs;
+  final forumNameTarget = ''.obs;
+
+  int _forumIdTarget = 1;
+  final topicIdTaget = 0.obs;
 
   final _postTextKey = 'post_text';
   final _imageSelectedXfileListKey = 'image_selected_xfile_list';
@@ -27,6 +35,7 @@ class PostEditController extends GetxController {
   void onInit() {
     super.onInit();
     editorController = TextEditingController();
+
     if (storage.hasData(_postTextKey)) {
       editorController.text = storage.read(_postTextKey);
     }
@@ -45,6 +54,14 @@ class PostEditController extends GetxController {
   @override
   void onClose() {
     print('PostEditController Onclose');
+  }
+
+  void readArguments(dynamic arguments) {
+    PostArgumentModel argumentModel = arguments;
+    isNewPost.value = argumentModel.isNewPost!;
+    _forumIdTarget = argumentModel.forumId!;
+    topicIdTaget.value = argumentModel.topicId!;
+    forumNameTarget.value = forumListController.liteForumMap[_forumIdTarget];
   }
 
   void onEditorTextChanged() {
@@ -129,10 +146,6 @@ class PostEditController extends GetxController {
     selectedImageIdList.removeAt(index);
     storage.write(_imageSelectedXfileListKey, selectedImageXFileList);
     storage.write(_imageSelectedIdListKey, selectedImageIdList);
-  }
-
-  void readArguments() {
-    
   }
 }
 

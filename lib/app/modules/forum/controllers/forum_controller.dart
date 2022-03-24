@@ -1,3 +1,4 @@
+import 'package:bog_island/app/modules/content/models/content_argument_model.dart';
 import 'package:bog_island/app/modules/forum/models/forum_model.dart';
 import 'package:bog_island/app/modules/forum/providers/forum_provider.dart';
 import 'package:bog_island/app/modules/global/controller/forum_list_controller.dart';
@@ -64,7 +65,7 @@ class ForumController extends GetxController {
   }
 
   void jumpToContent(int index) {
-    // Get.toNamed("/content", arguments: forumTopicList[index]);
-    Get.toNamed("/content", arguments: [forumTopicList[index].id, index]);
+    Get.toNamed("/content", arguments: ContentArgumentModel(
+        topicId: forumTopicList[index].id, topicIndexInForum: index));
   }
 }
