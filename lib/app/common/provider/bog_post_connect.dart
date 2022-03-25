@@ -5,12 +5,14 @@ class BogPostConnect extends GetConnect {
   @override
   void onInit() {
     httpClient.baseUrl = 'http://bog.ac/post/';
-    
   }
 
   void bogSnackBar(String code, String content) {
-    Get.snackbar(code, content,
-              duration: const Duration(seconds: 2),
-              backgroundColor: colorAmber200);
+    try {
+      Get.snackbar(code, content,
+          duration: const Duration(seconds: 2), backgroundColor: colorAmber200);
+    } catch (e) {
+      return;
+    }
   }
 }
