@@ -3,6 +3,7 @@ import 'package:bog_island/app/modules/post_edit/models/image_upload_model.dart'
 import 'package:bog_island/app/modules/post_edit/models/post_argument_model.dart';
 import 'package:bog_island/app/modules/post_edit/providers/image_upload_provider.dart';
 import 'package:bog_island/app/modules/post_edit/widgets/cookie_choice_sheet.dart';
+import 'package:bog_island/app/modules/setting/controllers/setting_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,6 +16,7 @@ class PostEditController extends GetxController {
   final storage = GetStorage();
   final imageUploadProvider = Get.find<ImageUploadProvider>();
   final forumListController = Get.find<ForumListController>();
+  final settingController = Get.find<SettingController>();
   final _picker = ImagePicker();
 
   final isEmojiOff = true.obs;
@@ -159,6 +161,13 @@ class PostEditController extends GetxController {
 
   void showCookieChoiceSheet() {
     Get.bottomSheet(const CookieChoiceSheet());
+  }
+
+  String generateRequestCookie() {
+    final String master = GetStorage().read('cookie_master');
+    final String cookieUse = settingController
+        .cookieList[settingController.cookieSelectedIndex.value].cookie!;
+    return 'bog_master=$master; bog_sel=$cookieUse';
   }
 }
 
