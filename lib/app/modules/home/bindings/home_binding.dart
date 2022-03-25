@@ -56,5 +56,11 @@ class HomeBinding extends Bindings {
     Get.lazyPut<CookieInfoProvider>(
       () => CookieInfoProvider(),
     );
+
+    // Get.put<SettingController>(SettingController(), permanent: true);
+    // Get.put<CookieAddProvider>(CookieAddProvider(), permanent: true);
+    // Get.put<CookieGetProvider>(CookieGetProvider(), permanent: true);
+    // Get.put<CookieDelProvider>(CookieDelProvider(), permanent: true);
+    // Get.put<CookieInfoProvider>(CookieInfoProvider(), permanent: true);
   }
 }

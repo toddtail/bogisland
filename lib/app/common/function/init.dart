@@ -1,9 +1,11 @@
+import 'package:bog_island/app/modules/home/bindings/home_binding.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 
-initApp() async{
+initApp() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Future.delayed(const Duration(milliseconds: 100));
-  await GetStorage.init();
+  HomeBinding().dependencies();
+  // await GetStorage.init();
+  await Future.delayed(const Duration(milliseconds: 400));
   return true;
 }

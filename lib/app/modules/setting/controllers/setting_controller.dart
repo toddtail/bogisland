@@ -23,7 +23,6 @@ class SettingController extends GetxController {
   final cookieGetProvider = Get.find<CookieGetProvider>();
 
   final cookieList = <CookieAddInfo>[].obs;
-  final cookieSelectedIndex = 0.obs;
 
   @override
   void onInit() {
@@ -54,7 +53,6 @@ class SettingController extends GetxController {
       List tempList = storage.read('cookie');
       cookieList.value = List.generate(
           tempList.length, (index) => CookieAddInfo.fromJson(tempList[index]));
-      cookieSelectedIndex.value = storage.read('cookie_selected_index');
     }
     updateCookieList();
   }
@@ -72,7 +70,7 @@ class SettingController extends GetxController {
       cookieList.value = result.body.info;
       if (master == '0') {
         master = cookieAdd;
-        storage.write('cookie_selected_index', 0);
+        setCookieSelectedForPost(0);
       }
       writeStorageCookies(master);
       return true;
@@ -162,7 +160,7 @@ class SettingController extends GetxController {
                 if (value.body is CookieDel) {
                   updateCookieList();
                   // TODO 加判断
-                  setCookieForPost(0);
+                  setCookieSelectedForPost(0);
                   Get.back();
                 }
               });
@@ -213,8 +211,7 @@ class SettingController extends GetxController {
     });
   }
 
-  void setCookieForPost(int index) {
-    cookieSelectedIndex.value = index;
+  void setCookieSelectedForPost(int index) {
     storage.write('cookie_selected_index', index);
   }
 }

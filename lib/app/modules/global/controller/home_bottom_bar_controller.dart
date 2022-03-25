@@ -15,6 +15,7 @@ class HomeBottomBarController extends GetxController {
   final forumController = Get.find<ForumController>();
   final List _jumpList = [0, 0, 1, 0, 2];
   final List _pageChangedList = [0, 2, 4];
+  final storage = GetStorage();
 
   @override
   void onInit() {
@@ -30,7 +31,8 @@ class HomeBottomBarController extends GetxController {
     } else if (index == 1 && iconSelectedState[0]) {
       forumController.refreshTopic();
     } else if (index == 4) {
-      if (GetStorage().hasData('cookie')) {
+      // print(storage.hasData('cookie'));
+      if (storage.hasData('cookie')) {
         Get.toNamed('/post-edit',
             arguments: PostArgumentModel(
                 isNewPost: true,

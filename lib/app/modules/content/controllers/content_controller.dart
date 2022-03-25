@@ -43,7 +43,8 @@ class ContentController extends GetxController {
       Response result;
       isOnLoad.value = true;
       try {
-        result = await threadsProvider.postThreads(topicId.value, _currentLoadedPage);
+        result = await threadsProvider.postThreads(
+            topicId.value, _currentLoadedPage);
       } catch (e) {
         rethrow;
       }
@@ -54,5 +55,11 @@ class ContentController extends GetxController {
       }
       isOnLoad.value = false;
     }
+  }
+
+  void refreshContent() {
+    _currentLoadedPage = 0;
+    contentList.value = [];
+    loadContent();
   }
 }

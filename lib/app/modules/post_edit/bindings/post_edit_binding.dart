@@ -18,11 +18,5 @@ class PostEditBinding extends Bindings {
     Get.lazyPut<PostContentProvider>(
       () => PostContentProvider(),
     );
-    Get.lazyPut<SettingController>(
-      () => SettingController(),
-    );
-    Get.lazyPut<CookieAddProvider>(
-      () => CookieAddProvider(),
-    );
   }
 }

@@ -1,51 +1,62 @@
+import 'dart:typed_data';
+
+import 'package:bog_island/app/common/function/notify.dart';
+import 'package:bog_island/app/modules/content/controllers/content_controller.dart';
+import 'package:bog_island/app/modules/forum/controllers/forum_controller.dart';
 import 'package:bog_island/app/modules/global/controller/forum_list_controller.dart';
 import 'package:bog_island/app/modules/post_edit/models/image_upload_model.dart';
 import 'package:bog_island/app/modules/post_edit/models/post_argument_model.dart';
+import 'package:bog_island/app/modules/post_edit/models/post_content_model.dart';
 import 'package:bog_island/app/modules/post_edit/providers/image_upload_provider.dart';
+import 'package:bog_island/app/modules/post_edit/providers/post_content_provider.dart';
 import 'package:bog_island/app/modules/post_edit/widgets/cookie_choice_sheet.dart';
-import 'package:bog_island/app/modules/setting/controllers/setting_controller.dart';
+import 'package:bog_island/app/modules/setting/models/cookie_add_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
-// emoji, input, image, post
+// emoji, input, image, post, cookie
 class PostEditController extends GetxController {
   late TextEditingController editorController;
+  final _postContentProvider = Get.find<PostContentProvider>();
   final storage = GetStorage();
   final imageUploadProvider = Get.find<ImageUploadProvider>();
   final forumListController = Get.find<ForumListController>();
-  final settingController = Get.find<SettingController>();
   final _picker = ImagePicker();
 
   final isEmojiOff = true.obs;
   final isImageOff = true.obs;
-  final isOnImageLoad = false.obs;
+  final onImageLoad = false.obs;
+  bool _onPostConetent = false;
   final isNewPost = true.obs;
   final selectedImageXFileList = <XFile>[].obs;
   final selectedImageIdList = [].obs;
   final forumNameTarget = ''.obs;
+  final cookieIndexSelectedForPost = 0.obs;
 
   int _forumIdTarget = 1;
   final topicIdTaget = 0.obs;
 
-  final _postTextKey = 'post_text';
-  final _imageSelectedXfileListKey = 'image_selected_xfile_list';
-  final _imageSelectedIdListKey = 'image_selected_id_list';
+  final _tPostTextKey = 'post_text';
+  final _tImageSelectedXFilePathListKey = 'image_selected_xfile_path_list';
+  final _tImageSelectedIdListKey = 'image_selected_id_list';
 
   @override
   void onInit() {
     super.onInit();
     editorController = TextEditingController();
-
-    if (storage.hasData(_postTextKey)) {
-      editorController.text = storage.read(_postTextKey);
+    cookieIndexSelectedForPost.value = readCookieSelectedIndexForPost();
+    if (storage.hasData(_tPostTextKey)) {
+      editorController.text = storage.read(_tPostTextKey);
     }
-    if (storage.hasData(_imageSelectedXfileListKey)) {
-      selectedImageXFileList.value = storage.read(_imageSelectedXfileListKey);
-    } else if (storage.hasData(_imageSelectedIdListKey)) {
-      selectedImageIdList.value = storage.read(_imageSelectedIdListKey);
+    if (storage.hasData(_tImageSelectedXFilePathListKey)) {
+      final tempList = storage.read(_tImageSelectedXFilePathListKey);
+      selectedImageXFileList.value =
+          List.generate(tempList.length, (index) => XFile(tempList[index]));
+    } else if (storage.hasData(_tImageSelectedIdListKey)) {
+      selectedImageIdList.value = storage.read(_tImageSelectedIdListKey);
     }
   }
 
@@ -73,7 +84,7 @@ class PostEditController extends GetxController {
   }
 
   void onEditorTextChanged() {
-    storage.write(_postTextKey, editorController.text);
+    storage.write(_tPostTextKey, editorController.text);
   }
 
   void onBarIconTap(int index) {
@@ -91,9 +102,10 @@ class PostEditController extends GetxController {
         break;
       case 3:
         editorController.clear();
-        storage.remove(_postTextKey);
+        storage.remove(_tPostTextKey);
         break;
       case 4:
+        postContent();
         break;
     }
   }
@@ -110,11 +122,11 @@ class PostEditController extends GetxController {
     onEditorTextChanged();
   }
 
-  pickImage() async {
+  pickImageAndUpload() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
     // TODO image load black
     if (image != null) {
-      isOnImageLoad.value = true;
+      onImageLoad.value = true;
       final imageData = await image.readAsBytes();
       final imageContentType = 'image/${image.name.split('.')[1]}';
       final imageName = image.name;
@@ -126,12 +138,15 @@ class PostEditController extends GetxController {
       if (value != 'error') {
         selectedImageIdList.add(value);
         selectedImageXFileList.add(image);
-        storage.write(_imageSelectedXfileListKey, selectedImageXFileList);
-        storage.write(_imageSelectedIdListKey, selectedImageIdList);
-        isOnImageLoad.value = false;
+        List<String> tempXFilePathList;
+        tempXFilePathList = List.generate(selectedImageXFileList.length,
+            (index) => selectedImageXFileList[index].path);
+        storage.write(_tImageSelectedXFilePathListKey, tempXFilePathList);
+        storage.write(_tImageSelectedIdListKey, selectedImageIdList);
+        onImageLoad.value = false;
         return true;
       } else {
-        isOnImageLoad.value = false;
+        onImageLoad.value = false;
       }
     }
     return false;
@@ -155,22 +170,96 @@ class PostEditController extends GetxController {
   void removeSelectedImage(int index) {
     selectedImageXFileList.removeAt(index);
     selectedImageIdList.removeAt(index);
-    storage.write(_imageSelectedXfileListKey, selectedImageXFileList);
-    storage.write(_imageSelectedIdListKey, selectedImageIdList);
+    storage.write(_tImageSelectedXFilePathListKey, selectedImageXFileList);
+    storage.write(_tImageSelectedIdListKey, selectedImageIdList);
   }
 
   void showCookieChoiceSheet() {
     Get.bottomSheet(const CookieChoiceSheet());
   }
 
+  List<CookieAddInfo> readCookieList() {
+    List tempCookieList = storage.read('cookie');
+    List<CookieAddInfo> cookieList = List.generate(tempCookieList.length,
+        (index) => CookieAddInfo.fromJson(tempCookieList[index]));
+    return cookieList;
+  }
+
+  int readCookieSelectedIndexForPost() {
+    int selectedCookie = storage.read('cookie_selected_index');
+    return selectedCookie;
+  }
+
+  void setCookieSelectedForPost(int index) {
+    cookieIndexSelectedForPost.value = index;
+    storage.write('cookie_selected_index', index);
+  }
+
+  String readMasterCookie() {
+    return storage.read<String>('cookie_master')!;
+  }
+
   String generateRequestCookie() {
-    final String master = GetStorage().read('cookie_master');
-    final String cookieUse = settingController
-        .cookieList[settingController.cookieSelectedIndex.value].cookie!;
-    return 'bog_master=$master; bog_sel=$cookieUse';
+    List<CookieAddInfo> cookieList = readCookieList();
+    int selectedCookie = readCookieSelectedIndexForPost();
+    final String cookieUse = cookieList[selectedCookie].cookie!;
+    return 'bog_sel=$cookieUse';
+  }
+
+  void postContent() {
+    if (!_onPostConetent) {
+      Map<String, dynamic> data = {
+        'comment': editorController.text,
+        'webapp': 1,
+        'cookie': readMasterCookie()
+      };
+      if (isNewPost.value) {
+        data['forum'] = _forumIdTarget;
+      } else {
+        data['res'] = topicIdTaget.value;
+      }
+      if (selectedImageIdList.isNotEmpty) {
+        if(selectedImageIdList.length == 1) {
+          data['img[]'] =  selectedImageIdList[0];
+        } else if(selectedImageIdList.length > 1) {
+          data['img[]'] =  selectedImageIdList.value;
+        }
+      }
+      _postContentProvider
+          .postContent(generateRequestCookie(), data)
+          .then((value) {
+        print(
+            'value.body is ${value.body.runtimeType} ${value.body is PostContent}');
+        if (value.body is Map) {
+          _onPostConetent = false;
+        } else if (value.body is PostContent) {
+          Get.back();
+          showNormalSnackBar('发送成功', '已将你的信息发出');
+          releaseContentAfterPostSucceed();
+          refreshOutsideContentAfterPostSucceed();
+          Get.back();
+        }
+      });
+    }
+    _onPostConetent = false;
+  }
+
+  void releaseContentAfterPostSucceed() {
+    storage.remove(_tImageSelectedIdListKey);
+    storage.remove(_tImageSelectedXFilePathListKey);
+    storage.remove(_tPostTextKey);
+  }
+
+  void refreshOutsideContentAfterPostSucceed() {
+    if (isNewPost.value) {
+      Get.find<ForumController>().refreshTopic();
+    } else {
+      Get.find<ContentController>().refreshContent();
+    }
   }
 }
 
+// top-level isolate function
 Future<String> uploadImageIsolate(List data) async {
   final provider = Get.put<ImageUploadProvider>(ImageUploadProvider());
   final Response<dynamic> value = await provider.postImageUpload(data);

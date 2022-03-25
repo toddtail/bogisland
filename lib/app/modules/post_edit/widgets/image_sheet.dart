@@ -42,7 +42,7 @@ class ImageSheet extends GetWidget<PostEditController> {
       child: SizedBox(
         width: 40.w,
         height: 40.w,
-        child: controller.isOnImageLoad.value
+        child: controller.onImageLoad.value
             ? Lottie.asset('assets/lotties/uploading.json')
             : SvgPicture.asset(
                 iconImageAddPath,
@@ -53,8 +53,8 @@ class ImageSheet extends GetWidget<PostEditController> {
       // .backgroundColor(Colors.white)
       ,
     ).gestures(onTap: () async {
-      if (!controller.isOnImageLoad.value) {
-        await controller.pickImage();
+      if (!controller.onImageLoad.value) {
+        await controller.pickImageAndUpload();
       }
     });
   }

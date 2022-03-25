@@ -1,11 +1,11 @@
 import 'package:bog_island/app/data/tailwind_colors.dart';
-import 'package:bog_island/app/modules/setting/controllers/setting_controller.dart';
+import 'package:bog_island/app/modules/post_edit/controllers/post_edit_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:styled_widget/styled_widget.dart';
 
-class CookieChoiceSheet extends GetWidget<SettingController> {
+class CookieChoiceSheet extends GetWidget<PostEditController> {
   const CookieChoiceSheet({Key? key}) : super(key: key);
 
   @override
@@ -14,9 +14,9 @@ class CookieChoiceSheet extends GetWidget<SettingController> {
       return Container(
               child: Wrap(
         children: List.generate(
-            controller.cookieList.length,
-            (index) => Text(controller.cookieList[index].cookie!, textAlign: TextAlign.center,)
-                    .textColor(index == controller.cookieSelectedIndex.value
+            controller.readCookieList().length,
+            (index) => Text(controller.readCookieList()[index].cookie!, textAlign: TextAlign.center,)
+                    .textColor(index == controller.cookieIndexSelectedForPost.value
                         ? colorSky600
                         : colorNeutral600)
                     .fontSize(20.sp).bold()
@@ -24,7 +24,7 @@ class CookieChoiceSheet extends GetWidget<SettingController> {
                     .height(32.h)
                     .padding(top: 4.h)
                     .gestures(onTap: () {
-                  controller.setCookieForPost(index);
+                  controller.setCookieSelectedForPost(index);
                   Get.back();
                 })),
       ))
