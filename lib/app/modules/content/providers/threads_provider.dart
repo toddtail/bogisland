@@ -8,8 +8,8 @@ class ThreadsProvider extends BogConnect {
   void onInit() {
     super.onInit();
     httpClient.defaultDecoder = (map) {
-      // print(map);
-      if(map['info'] == 'error') {
+      print(map);
+      if(map['type'] == 'error') {
         return map as Map;
       }
       if (map is Map<String, dynamic>) return Threads.fromJson(map);

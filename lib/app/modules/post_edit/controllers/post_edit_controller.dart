@@ -219,10 +219,10 @@ class PostEditController extends GetxController {
         data['res'] = topicIdTaget.value;
       }
       if (selectedImageIdList.isNotEmpty) {
-        if(selectedImageIdList.length == 1) {
-          data['img[]'] =  selectedImageIdList[0];
-        } else if(selectedImageIdList.length > 1) {
-          data['img[]'] =  selectedImageIdList.value;
+        if (selectedImageIdList.length == 1) {
+          data['img[]'] = selectedImageIdList[0];
+        } else if (selectedImageIdList.length > 1) {
+          data['img[]'] = selectedImageIdList.value;
         }
       }
       _postContentProvider
@@ -237,10 +237,13 @@ class PostEditController extends GetxController {
           showNormalSnackBar('发送成功', '已将你的信息发出');
           releaseContentAfterPostSucceed();
           refreshOutsideContentAfterPostSucceed();
-          Get.back();
         }
       });
     }
+    // Get.back();
+    // showNormalSnackBar('发送成功', '已将你的信息发出');
+    // releaseContentAfterPostSucceed();
+    // refreshOutsideContentAfterPostSucceed();
     _onPostConetent = false;
   }
 

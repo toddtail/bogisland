@@ -28,7 +28,9 @@ class ContentController extends GetxController {
   }
 
   @override
-  void onClose() {}
+  void onClose() {
+    print('ContentController onClose');
+  }
 
   void openNewContent(ContentArgumentModel model) async {
     topicId.value = model.topicId!;
@@ -38,6 +40,7 @@ class ContentController extends GetxController {
   }
 
   void loadContent() async {
+    // TODO page load lock
     if (!isOnLoad.value) {
       _currentLoadedPage = _currentLoadedPage + 1;
       Response result;

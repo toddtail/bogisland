@@ -27,7 +27,9 @@ class ForumController extends GetxController {
   }
 
   @override
-  void onClose() {}
+  void onClose() {
+    print('ForumController onClose');
+  }
 
   void loadTopic() async {
     if (!_loadLock) {
