@@ -1,7 +1,7 @@
 import 'package:bog_island/app/common/function/time_transfer.dart';
 import 'package:bog_island/app/data/tailwind_colors.dart';
 import 'package:bog_island/app/modules/forum/models/topics_in_forum_model.dart';
-import 'package:bog_island/app/modules/global/controller/forum_list_controller.dart'; 
+import 'package:bog_island/app/modules/global/controller/forum_list_controller.dart';
 import 'package:bog_island/app/modules/image_viewer/widgets/image_cell.dart';
 import 'package:bog_island/app/modules/mark/controllers/mark_controller.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +11,7 @@ import 'package:styled_widget/styled_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MarkCard extends GetWidget<MarkController> {
-  MarkCard(this.index, { Key? key}) : super(key: key);
+  MarkCard(this.index, {Key? key}) : super(key: key);
 
   final int index;
   final forumListController = Get.find<ForumListController>();
@@ -79,20 +79,18 @@ class MarkCard extends GetWidget<MarkController> {
   }
 
   Widget contentDisplay(String text) {
-      return Html(
-        data: text,
-        shrinkWrap: true,
-        style: {
-          'body': Style(
-              margin: EdgeInsets.zero,
-              padding: EdgeInsets.zero,
-              fontSize: FontSize(14.sp),
-              maxLines: 15,
-              textOverflow: TextOverflow.ellipsis,
-              color: colorSlate900)
-        },
-      );
-    } 
-    
-  
+    return Html(
+      data: text,
+      shrinkWrap: true,
+      style: {
+        'body': Style(
+            margin: EdgeInsets.zero,
+            padding: EdgeInsets.zero,
+            fontSize: FontSize(14.sp),
+            maxLines: 15,
+            textOverflow: TextOverflow.ellipsis,
+            color: colorSlate900)
+      },
+    );
+  }
 }

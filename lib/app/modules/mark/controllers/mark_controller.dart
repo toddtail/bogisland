@@ -7,7 +7,7 @@ import 'package:logger/logger.dart';
 class MarkController extends GetxController {
   final storage = GetStorage();
 
-  final markTopicList = [].obs;
+  final markTopicList = <TopicInfo>[].obs;
 
   final isMarkListEmpty = true.obs;
 
@@ -36,7 +36,9 @@ class MarkController extends GetxController {
       isMarkListEmpty.value = false;
     } else {
       isMarkListEmpty.value = true;
-      markTopicList.value = storage.read(_tMarkKey);
+      final List tempList = storage.read(_tMarkKey);
+      markTopicList.value = List.generate(
+          tempList.length, (index) => TopicInfo.fromJson(tempList[index]));
     }
   }
 
@@ -47,10 +49,20 @@ class MarkController extends GetxController {
   }
 
   void addTopicToMark(TopicInfo info) {
-
+    markTopicList.insert(0, info);
+    writeToLocalStorage();
   }
 
   void removeTopicFromMark(int index) {
-
+    markTopicList.removeAt(index);
+    writeToLocalStorage();
   }
+
+  void writeToLocalStorage() {
+    final tempList = List.generate(
+        markTopicList.length, (index) => markTopicList[index].toJson());
+    storage.write(_tMarkKey, tempList);
+  }
+
+  
 }

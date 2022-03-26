@@ -1,6 +1,7 @@
 import 'package:bog_island/app/data/icons_path.dart';
 import 'package:bog_island/app/data/tailwind_colors.dart';
 import 'package:bog_island/app/modules/global/widgets/normal_top_bar.dart';
+import 'package:bog_island/app/modules/mark/widgets/mark_card.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:styled_widget/styled_widget.dart';
@@ -30,11 +31,16 @@ class MarkView extends GetView<MarkController> {
     return Obx((() => controller.isMarkListEmpty.value
         ? Center(
             child: SizedBox(
-              width: 220.w,
-              child: Lottie.asset('assets/lotties/black-cat.json')),
+                width: 220.w,
+                child: Lottie.asset('assets/lotties/black-cat.json')),
           ).padding(top: 40.h)
-        : Container()));
+        : Expanded(
+            child: ListView.builder(
+              itemBuilder: (BuildContext context, int index) =>
+                  MarkCard(index),
+              itemCount: controller.markTopicList.length,
+              shrinkWrap: true,
+            ),
+          )));
   }
-
-  
 }
