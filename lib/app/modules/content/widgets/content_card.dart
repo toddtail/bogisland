@@ -24,7 +24,7 @@ class ContentCard extends GetWidget<ContentController> {
 
   @override
   Widget build(BuildContext context) {
-    final Reply reply = controller.contentList[index];
+    final ThreadsReply reply = controller.contentList[index];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

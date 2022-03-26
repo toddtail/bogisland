@@ -1,14 +1,14 @@
 class Threads {
   String? type;
   int? code;
-  Info? info;
+  ThreadsInfo? info;
 
   Threads({this.type, this.code, this.info});
 
   Threads.fromJson(Map<String, dynamic> json) {
     type = json['type'];
     code = json['code'];
-    info = json['info'] != null ? Info?.fromJson(json['info']) : null;
+    info = json['info'] != null ? ThreadsInfo?.fromJson(json['info']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -22,7 +22,7 @@ class Threads {
   }
 }
 
-class Info {
+class ThreadsInfo {
   int? id;
   int? res;
   String? root;
@@ -36,9 +36,9 @@ class Info {
   dynamic lock;
   List<Images>? images;
   int? replyCount;
-  List<Reply>? reply;
+  List<ThreadsReply>? reply;
 
-  Info(
+  ThreadsInfo(
       {this.id,
       this.res,
       this.root,
@@ -54,7 +54,7 @@ class Info {
       this.replyCount,
       this.reply});
 
-  Info.fromJson(Map<String, dynamic> json) {
+  ThreadsInfo.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     res = json['res'];
     root = json['root'];
@@ -74,9 +74,9 @@ class Info {
     }
     replyCount = json['reply_count'];
     if (json['reply'] != null) {
-      reply = <Reply>[];
+      reply = <ThreadsReply>[];
       json['reply'].forEach((v) {
-        reply?.add(Reply.fromJson(v));
+        reply?.add(ThreadsReply.fromJson(v));
       });
     }
   }
@@ -124,7 +124,7 @@ class Images {
   }
 }
 
-class Reply {
+class ThreadsReply {
   int? id;
   int? res;
   int? time;
@@ -134,7 +134,7 @@ class Reply {
   String? content;
   List<Images>? images;
 
-  Reply(
+  ThreadsReply(
       {this.id,
       this.res,
       this.time,
@@ -144,7 +144,7 @@ class Reply {
       this.content,
       this.images});
 
-  Reply.fromJson(Map<String, dynamic> json) {
+  ThreadsReply.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     res = json['res'];
     time = json['time'];

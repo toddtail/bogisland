@@ -6,10 +6,9 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
 class ContentController extends GetxController {
-  //TODO: Implement ContentController
 
   final threadsProvider = Get.find<ThreadsProvider>();
-  final contentList = [].obs;
+  final contentList = <ThreadsReply>[].obs;
   final originalInfo = TopicInfo().obs;
   int _currentLoadedPage = 0;
   final topicId = 0.obs;
