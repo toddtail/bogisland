@@ -19,8 +19,8 @@ class ForumView extends GetView<ForumController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: colorSky500,
-      backgroundColor: colorAmber50,
+      backgroundColor: colorSky500,
+      // backgroundColor: colorAmber50,
       body: Center(
           child: Obx(
         () => Column(
@@ -73,7 +73,7 @@ class ForumView extends GetView<ForumController> {
                   ),
           ],
         ),
-      )),
+      )).backgroundColor(colorAmber50),
     );
   }
 }

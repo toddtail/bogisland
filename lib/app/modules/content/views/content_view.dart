@@ -23,8 +23,8 @@ class ContentView extends GetView<ContentController> {
   Widget build(BuildContext context) {
     controller.openNewContent(arguments);
     return Scaffold(
-      // backgroundColor: colorSky500,
-      backgroundColor: colorAmber50,
+      backgroundColor: colorSky500,
+      // backgroundColor: colorAmber50,
       body: SafeArea(
         child: Stack(
           children: [
@@ -90,7 +90,7 @@ class ContentView extends GetView<ContentController> {
               child: ContentBottomBar(),
             )
           ],
-        ),
+        ).backgroundColor(colorAmber50),
       ),
     );
   }

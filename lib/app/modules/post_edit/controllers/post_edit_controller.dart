@@ -39,8 +39,8 @@ class PostEditController extends GetxController {
   final topicIdTaget = 0.obs;
 
   final _tPostTextKey = 'post_text';
-  final _tImageSelectedXFilePathListKey = 'image_selected_xfile_path_list';
-  final _tImageSelectedIdListKey = 'image_selected_id_list';
+  // final _tImageSelectedXFilePathListKey = 'image_selected_xfile_path_list';
+  // final _tImageSelectedIdListKey = 'image_selected_id_list';
 
   @override
   void onInit() {
@@ -50,13 +50,13 @@ class PostEditController extends GetxController {
     if (storage.hasData(_tPostTextKey)) {
       editorController.text = storage.read(_tPostTextKey);
     }
-    if (storage.hasData(_tImageSelectedXFilePathListKey)) {
-      final tempList = storage.read(_tImageSelectedXFilePathListKey);
-      selectedImageXFileList.value =
-          List.generate(tempList.length, (index) => XFile(tempList[index]));
-    } else if (storage.hasData(_tImageSelectedIdListKey)) {
-      selectedImageIdList.value = storage.read(_tImageSelectedIdListKey);
-    }
+    // if (storage.hasData(_tImageSelectedXFilePathListKey)) {
+    //   final tempList = storage.read(_tImageSelectedXFilePathListKey);
+    //   selectedImageXFileList.value =
+    //       List.generate(tempList.length, (index) => XFile(tempList[index]));
+    // } else if (storage.hasData(_tImageSelectedIdListKey)) {
+    //   selectedImageIdList.value = storage.read(_tImageSelectedIdListKey);
+    // }
   }
 
   @override
@@ -140,8 +140,8 @@ class PostEditController extends GetxController {
         List<String> tempXFilePathList;
         tempXFilePathList = List.generate(selectedImageXFileList.length,
             (index) => selectedImageXFileList[index].path);
-        storage.write(_tImageSelectedXFilePathListKey, tempXFilePathList);
-        storage.write(_tImageSelectedIdListKey, selectedImageIdList);
+        // storage.write(_tImageSelectedXFilePathListKey, tempXFilePathList);
+        // storage.write(_tImageSelectedIdListKey, selectedImageIdList);
         onImageLoad.value = false;
         return true;
       } else {
@@ -183,8 +183,8 @@ class PostEditController extends GetxController {
   void removeSelectedImage(int index) {
     selectedImageXFileList.removeAt(index);
     selectedImageIdList.removeAt(index);
-    storage.write(_tImageSelectedXFilePathListKey, selectedImageXFileList);
-    storage.write(_tImageSelectedIdListKey, selectedImageIdList);
+    // storage.write(_tImageSelectedXFilePathListKey, selectedImageXFileList);
+    // storage.write(_tImageSelectedIdListKey, selectedImageIdList);
   }
 
   void showCookieChoiceSheet() {
@@ -261,8 +261,8 @@ class PostEditController extends GetxController {
   }
 
   void releaseContentAfterPostSucceed() {
-    storage.remove(_tImageSelectedIdListKey);
-    storage.remove(_tImageSelectedXFilePathListKey);
+    // storage.remove(_tImageSelectedIdListKey);
+    // storage.remove(_tImageSelectedXFilePathListKey);
     storage.remove(_tPostTextKey);
   }
 

@@ -14,10 +14,10 @@ class SettingView extends GetView<SettingController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: colorAmber50,
+      backgroundColor: colorSky500,
       body: Obx(() => Column(
             children: [normalTopBar('设置', iconSettingsPath), settingsBlock()],
-          )),
+          )).backgroundColor(colorAmber50),
     );
   }
 
