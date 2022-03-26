@@ -21,6 +21,8 @@ class ContentBinding extends Bindings {
     Get.lazyPut<TopicIdHtmlController>(
       () => TopicIdHtmlController(),
     );
-    Get.lazyPut<ThreadProvider>(() => ThreadProvider());
+    Get.lazyPut<ThreadProvider>(
+      () => ThreadProvider()
+    );
   }
 }
