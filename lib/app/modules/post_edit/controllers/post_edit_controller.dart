@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:bog_island/app/common/function/notify.dart';
 import 'package:bog_island/app/modules/content/controllers/content_controller.dart';
 import 'package:bog_island/app/modules/forum/controllers/forum_controller.dart';
@@ -134,9 +132,9 @@ class PostEditController extends GetxController {
       final isolateImageData = [imageData, imageContentType, imageName];
 
       // final value = await imageUploadProvider.postImageUpload(image);
-      final String value = await compute(uploadImageIsolate, isolateImageData);
+      final dynamic value = await compute(uploadImageIsolate, isolateImageData);
 
-      if (value != 'error') {
+      if (value is! Map) {
         selectedImageIdList.add(value);
         selectedImageXFileList.add(image);
         List<String> tempXFilePathList;
@@ -147,6 +145,20 @@ class PostEditController extends GetxController {
         onImageLoad.value = false;
         return true;
       } else {
+        switch (value['code']) {
+          case 301:
+            showWarnSnackBar('${value['code']}', '图片大小超过限制');
+            break;
+          case 302:
+            showWarnSnackBar('${value['code']}', '图片类型非系统允许的类型');
+            break;
+          case 303:
+            showWarnSnackBar('${value['code']}', '图片被ban');
+            break;
+          case 304:
+            showWarnSnackBar('${value['code']}', '没有上传图片	');
+            break;
+        }
         onImageLoad.value = false;
       }
     }
@@ -264,12 +276,12 @@ class PostEditController extends GetxController {
 }
 
 // top-level isolate function
-Future<String> uploadImageIsolate(List data) async {
+Future<dynamic> uploadImageIsolate(List data) async {
   final provider = Get.put<ImageUploadProvider>(ImageUploadProvider());
   final Response<dynamic> value = await provider.postImageUpload(data);
   if (value.body is ImageUpload) {
     return value.body.pic;
   } else {
-    return 'error';
+    return value.body as Map;
   }
 }
