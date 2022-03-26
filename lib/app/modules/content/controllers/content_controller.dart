@@ -1,7 +1,7 @@
 import 'package:bog_island/app/modules/content/models/content_argument_model.dart';
 import 'package:bog_island/app/modules/content/models/threads_model.dart';
 import 'package:bog_island/app/modules/content/providers/threads_provider.dart';
-import 'package:bog_island/app/modules/forum/models/forum_model.dart' as fm;
+import 'package:bog_island/app/modules/forum/models/topics_in_forum_model.dart' as fm;
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
@@ -10,7 +10,7 @@ class ContentController extends GetxController {
 
   final threadsProvider = Get.find<ThreadsProvider>();
   final contentList = [].obs;
-  final originalInfo = fm.Info().obs;
+  final originalInfo = fm.TopicInfo().obs;
   int _currentLoadedPage = 0;
   final topicId = 0.obs;
   final topicIndexInForum = 0.obs;

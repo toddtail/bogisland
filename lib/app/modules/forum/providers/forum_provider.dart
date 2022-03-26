@@ -1,7 +1,7 @@
 import 'package:bog_island/app/common/provider/bog_connect.dart';
 import 'package:get/get.dart';
 
-import '../models/forum_model.dart';
+import '../models/topics_in_forum_model.dart';
 
 class ForumProvider extends BogConnect {
   @override
@@ -11,8 +11,8 @@ class ForumProvider extends BogConnect {
       if (map['type'] == 'error') {
         return map as Map;
       }
-      if (map is Map<String, dynamic>) return Forum.fromJson(map);
-      if (map is List) return map.map((item) => Forum.fromJson(item)).toList();
+      if (map is Map<String, dynamic>) return TopicsInForum.fromJson(map);
+      if (map is List) return map.map((item) => TopicsInForum.fromJson(item)).toList();
     };
   }
 

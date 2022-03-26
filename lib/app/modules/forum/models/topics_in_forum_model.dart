@@ -1,17 +1,17 @@
-class Forum {
+class TopicsInForum {
   String? type;
   int? code;
-  List<Info>? info;
+  List<TopicInfo>? info;
 
-  Forum({this.type, this.code, this.info});
+  TopicsInForum({this.type, this.code, this.info});
 
-  Forum.fromJson(Map<String, dynamic> json) {
+  TopicsInForum.fromJson(Map<String, dynamic> json) {
     type = json['type'];
     code = json['code'];
     if (json['info'] != null) {
-      info = <Info>[];
+      info = <TopicInfo>[];
       json['info'].forEach((v) {
-        info?.add(Info.fromJson(v));
+        info?.add(TopicInfo.fromJson(v));
       });
     }
   }
@@ -27,7 +27,7 @@ class Forum {
   }
 }
 
-class Info {
+class TopicInfo {
   int? id;
   int? res;
   String? root;
@@ -44,7 +44,7 @@ class Info {
   int? hideCount;
   List<Reply>? reply;
 
-  Info(
+  TopicInfo(
       {this.id,
       this.res,
       this.root,
@@ -61,7 +61,7 @@ class Info {
       this.hideCount,
       this.reply});
 
-  Info.fromJson(Map<String, dynamic> json) {
+  TopicInfo.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     res = json['res'];
     root = json['root'];

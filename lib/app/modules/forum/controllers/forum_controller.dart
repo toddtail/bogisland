@@ -1,5 +1,5 @@
 import 'package:bog_island/app/modules/content/models/content_argument_model.dart';
-import 'package:bog_island/app/modules/forum/models/forum_model.dart';
+import 'package:bog_island/app/modules/forum/models/topics_in_forum_model.dart';
 import 'package:bog_island/app/modules/forum/providers/forum_provider.dart';
 import 'package:bog_island/app/modules/global/controller/forum_list_controller.dart';
 import 'package:get/get.dart';
@@ -42,8 +42,8 @@ class ForumController extends GetxController {
             .then((value) {
           if (value.body is Map) {
             // TODO error display
-          } else if (value.body is Forum) {
-            Forum result = value.body;
+          } else if (value.body is TopicsInForum) {
+            TopicsInForum result = value.body;
             forumTopicList.addAll(result.info!);
           }
         });
