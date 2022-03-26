@@ -1,6 +1,7 @@
 import 'package:bog_island/app/data/icons_path.dart';
 import 'package:bog_island/app/data/tailwind_colors.dart';
 import 'package:bog_island/app/modules/global/widgets/normal_top_bar.dart';
+import 'package:bog_island/app/modules/setting/bindings/setting_binding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -13,6 +14,7 @@ import '../controllers/setting_controller.dart';
 class SettingView extends GetView<SettingController> {
   @override
   Widget build(BuildContext context) {
+    SettingBinding().dependencies();
     return Scaffold(
       backgroundColor: colorSky500,
       body: Obx(() => Column(

@@ -16,9 +16,11 @@ class ContentBottomBar extends GetWidget<ContentBottomBarController> {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _barIcon(
-          1,
-          iconHeartPath,
+        Obx(
+          () => _barIcon(1, iconHeartPath,
+              color: controller.isTopicMarked.value
+                  ? colorRose500
+                  : colorSlate500),
         ),
         _barIcon(
           2,
@@ -40,18 +42,16 @@ class ContentBottomBar extends GetWidget<ContentBottomBarController> {
         // .padding(left: 20.h, right: 20.h)
         .backgroundColor(colorYellow50);
   }
-}
 
-Widget _barIcon(int index, String svgPath) {
-  final controller = Get.find<ContentBottomBarController>();
-
-  return InkWell(
-    child: SvgPicture.asset(
-      svgPath,
-      color: colorSlate500,
-      width: 24.h,
-      height: 24.h,
-    ),
-    onTap: () => controller.onBarIconTap(index),
-  );
+  Widget _barIcon(int index, String svgPath, {Color color = colorSlate500}) {
+    return InkWell(
+      child: SvgPicture.asset(
+        svgPath,
+        color: color,
+        width: 24.h,
+        height: 24.h,
+      ),
+      onTap: () => controller.onBarIconTap(index),
+    );
+  }
 }

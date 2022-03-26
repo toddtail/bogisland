@@ -1,7 +1,7 @@
 import 'package:bog_island/app/modules/content/models/content_argument_model.dart';
 import 'package:bog_island/app/modules/content/models/threads_model.dart';
 import 'package:bog_island/app/modules/content/providers/threads_provider.dart';
-import 'package:bog_island/app/modules/forum/models/topics_in_forum_model.dart' as fm;
+import 'package:bog_island/app/modules/forum/models/topics_in_forum_model.dart' ;
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
@@ -10,7 +10,7 @@ class ContentController extends GetxController {
 
   final threadsProvider = Get.find<ThreadsProvider>();
   final contentList = [].obs;
-  final originalInfo = fm.TopicInfo().obs;
+  final originalInfo = TopicInfo().obs;
   int _currentLoadedPage = 0;
   final topicId = 0.obs;
   final topicIndexInForum = 0.obs;
@@ -33,6 +33,8 @@ class ContentController extends GetxController {
     Logger().i('ContentController onClose');
   }
 
+  // arguments passed in view 
+  // use this function to init paramaters
   void openNewContent(ContentArgumentModel model) async {
     topicId.value = model.topicId!;
     topicIndexInForum.value = model.topicIndexInForum!;

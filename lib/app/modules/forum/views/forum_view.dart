@@ -1,5 +1,6 @@
 import 'package:bog_island/app/data/icons_path.dart';
 import 'package:bog_island/app/data/tailwind_colors.dart';
+import 'package:bog_island/app/modules/forum/bindings/forum_binding.dart';
 import 'package:bog_island/app/modules/forum/widgets/topic_card.dart';
 import 'package:bog_island/app/modules/global/controller/forum_list_controller.dart';
 import 'package:bog_island/app/modules/global/widgets/normal_top_bar.dart';
@@ -18,6 +19,7 @@ class ForumView extends GetView<ForumController> {
 
   @override
   Widget build(BuildContext context) {
+    ForumBinding().dependencies();
     return Scaffold(
       backgroundColor: colorSky500,
       // backgroundColor: colorAmber50,
@@ -34,7 +36,7 @@ class ForumView extends GetView<ForumController> {
             ),
             controller.forumTopicList.isEmpty
                 ? Expanded(
-                  child: Container(
+                    child: Container(
                       alignment: Alignment.topCenter,
                       margin: EdgeInsets.only(top: 60.h),
                       child: Lottie.asset(
@@ -43,15 +45,15 @@ class ForumView extends GetView<ForumController> {
                         fit: BoxFit.fitWidth,
                       ),
                     )
-                      .decorated(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(24.h),
-                            topRight: Radius.circular(24.h),
-                          ),
-                          color: colorAmber50)
-                      .backgroundColor(colorSky500)
-                      .width(324.w),
-                )
+                        .decorated(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(24.h),
+                              topRight: Radius.circular(24.h),
+                            ),
+                            color: colorAmber50)
+                        .backgroundColor(colorSky500)
+                        .width(324.w),
+                  )
                 : Expanded(
                     child: NotificationListener<ScrollNotification>(
                         onNotification: (ScrollNotification scrollInfo) {

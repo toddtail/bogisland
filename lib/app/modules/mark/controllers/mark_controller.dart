@@ -1,3 +1,4 @@
+import 'package:bog_island/app/common/function/notify.dart';
 import 'package:bog_island/app/modules/content/models/content_argument_model.dart';
 import 'package:bog_island/app/modules/forum/models/topics_in_forum_model.dart';
 import 'package:get/get.dart';
@@ -17,6 +18,7 @@ class MarkController extends GetxController {
   void onInit() {
     Logger().i('MarkController oninit');
     super.onInit();
+    readMarkList();
   }
 
   @override
@@ -34,11 +36,11 @@ class MarkController extends GetxController {
   void readMarkList() {
     if (storage.hasData(_tMarkKey)) {
       isMarkListEmpty.value = false;
-    } else {
-      isMarkListEmpty.value = true;
       final List tempList = storage.read(_tMarkKey);
       markTopicList.value = List.generate(
           tempList.length, (index) => TopicInfo.fromJson(tempList[index]));
+    } else {
+      isMarkListEmpty.value = true;
     }
   }
 
@@ -49,20 +51,57 @@ class MarkController extends GetxController {
   }
 
   void addTopicToMark(TopicInfo info) {
-    markTopicList.insert(0, info);
-    writeToLocalStorage();
+    int? index;
+    for (int i = 0; i < markTopicList.length; i++) {
+      if (markTopicList[i].id == info.id) {
+        index = i;
+        continue;
+      }
+    }
+    if (index == null) {
+      showNormalSnackBar('收藏成功', '已添加至本地收藏列表');
+      markTopicList.insert(0, info);
+      writeToLocalStorage();
+    } else {
+      showWarnSnackBar('收藏错误', '已收藏此帖子');
+    }
+    readMarkList();
   }
 
-  void removeTopicFromMark(int index) {
-    markTopicList.removeAt(index);
-    writeToLocalStorage();
+  void removeTopicFromMark(int topicId) {
+    int? index;
+    for (int i = 0; i < markTopicList.length; i++) {
+      if (markTopicList[i].id == topicId) {
+        index = i;
+        continue;
+      }
+    }
+    if (index != null) {
+      showNormalSnackBar('取消收藏成功', '已从本地收藏列表移出');
+      markTopicList.removeAt(index);
+      writeToLocalStorage();
+    } else {
+      showWarnSnackBar('取消收藏错误', '并未收藏此帖子');
+    }
+    readMarkList();
   }
 
   void writeToLocalStorage() {
-    final tempList = List.generate(
-        markTopicList.length, (index) => markTopicList[index].toJson());
-    storage.write(_tMarkKey, tempList);
+    if (markTopicList.isEmpty) {
+      storage.remove(_tMarkKey);
+    } else {
+      final tempList = List.generate(
+          markTopicList.length, (index) => markTopicList[index].toJson());
+      storage.write(_tMarkKey, tempList);
+    }
   }
 
-  
+  bool isTopicInMark(int topicId) {
+    for (TopicInfo info in markTopicList) {
+      if (info.id == topicId) {
+        return true;
+      }
+    }
+    return false;
+  }
 }
