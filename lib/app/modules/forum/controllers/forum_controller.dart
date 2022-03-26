@@ -3,6 +3,7 @@ import 'package:bog_island/app/modules/forum/models/forum_model.dart';
 import 'package:bog_island/app/modules/forum/providers/forum_provider.dart';
 import 'package:bog_island/app/modules/global/controller/forum_list_controller.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 // 板块包含内容
 class ForumController extends GetxController {
@@ -16,7 +17,7 @@ class ForumController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    print('ForumController init');
+    Logger().i('ForumController init');
     await forumListController.getForumList();
     loadTopic();
   }
@@ -28,7 +29,7 @@ class ForumController extends GetxController {
 
   @override
   void onClose() {
-    print('ForumController onClose');
+    Logger().i('ForumController onClose');
   }
 
   void loadTopic() async {

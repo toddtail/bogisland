@@ -13,7 +13,6 @@ class ImageUploadProvider extends BogPostConnect {
       Map map;
       if (value is String) {
         map = json.decode(value);
-        print(map);
       } else if (value is Map) {
         map = value;
       } else {

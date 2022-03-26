@@ -1,5 +1,6 @@
 import 'package:bog_island/app/common/provider/bog_post_connect.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 import '../models/cookie_get_model.dart';
 
@@ -8,7 +9,7 @@ class CookieGetProvider extends BogPostConnect {
   void onInit() {
     super.onInit();
     httpClient.defaultDecoder = (map) {
-      print(map);
+      Logger().i(map);
       switch (map['code']) {
         case 2001:
           bogSnackBar('${map['code']}', '饼干领取限制，一定时间后才能领取');

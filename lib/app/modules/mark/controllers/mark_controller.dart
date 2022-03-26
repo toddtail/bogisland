@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 class MarkController extends GetxController {
   //TODO: Implement MarkController
@@ -6,7 +7,7 @@ class MarkController extends GetxController {
   final count = 0.obs;
   @override
   void onInit() {
-    print('MarkController oninit');
+    Logger().i('MarkController oninit');
     super.onInit();
   }
 

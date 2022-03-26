@@ -71,7 +71,7 @@ class TopicIdInHtml extends GetWidget<TopicIdHtmlController> {
                     customRenders: {
                       quoteMatcher():
                           CustomRender.widget(widget: (context, buildChildren) {
-                        // print(context.tree.children[0].toString().replaceAll('"', ''));
+                        // Logger().i(context.tree.children[0].toString().replaceAll('"', ''));
                         return TopicIdInHtml(context.tree.children[0]
                             .toString()
                             .replaceAll('"', ''));

@@ -1,5 +1,6 @@
 import 'package:bog_island/app/common/provider/bog_connect.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 import '../models/threads_model.dart';
 
@@ -8,7 +9,7 @@ class ThreadsProvider extends BogConnect {
   void onInit() {
     super.onInit();
     httpClient.defaultDecoder = (map) {
-      print(map);
+      Logger().i(map);
       if(map['type'] == 'error') {
         return map as Map;
       }

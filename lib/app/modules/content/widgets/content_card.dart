@@ -95,12 +95,11 @@ class ContentCard extends GetWidget<ContentController> {
       },
       onLinkTap: (String? url, RenderContext context,
           Map<String, String> attributes, dom.Element? element) async {
-        print('lauch');
         if (!await launch(url!)) throw 'Could not launch $url';
       },
       customRenders: {
         quoteMatcher(): CustomRender.widget(widget: (context, buildChildren) {
-          // print(context.tree.children[0].toString().replaceAll('"', ''));
+          // Logger().i(context.tree.children[0].toString().replaceAll('"', ''));
           return TopicIdInHtml(
               context.tree.children[0].toString().replaceAll('"', ''));
         })

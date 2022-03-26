@@ -1,6 +1,7 @@
 import 'package:bog_island/app/modules/global/models/forum_list_model.dart';
 import 'package:bog_island/app/modules/global/providers/forum_list_provider.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 // 板块列表
 class ForumListController extends GetxController {
@@ -15,7 +16,7 @@ class ForumListController extends GetxController {
   void onInit() async {
     super.onInit();
     // getForumList();
-    print('ForumListController init');
+    Logger().i('ForumListController init');
   }
 
   @override

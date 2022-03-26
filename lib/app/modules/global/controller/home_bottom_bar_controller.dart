@@ -31,7 +31,7 @@ class HomeBottomBarController extends GetxController {
     } else if (index == 1 && iconSelectedState[0]) {
       forumController.refreshTopic();
     } else if (index == 4) {
-      // print(storage.hasData('cookie'));
+      // Logger().i(storage.hasData('cookie'));
       if (storage.hasData('cookie')) {
         Get.toNamed('/post-edit',
             arguments: PostArgumentModel(

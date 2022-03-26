@@ -20,7 +20,7 @@ class TopicIdHtmlController extends GetxController {
             threadLoadedMap.update(id, (value) => 'failed');
             threadLoadedMap.refresh();
           } else if (result.body is Thread) {
-            print('thread');
+
             threadLoadedMap.update(
                 id,
                 (value) => [

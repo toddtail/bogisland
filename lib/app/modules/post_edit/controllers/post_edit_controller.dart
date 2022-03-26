@@ -66,7 +66,7 @@ class PostEditController extends GetxController {
 
   @override
   void onClose() {
-    print('PostEditController Onclose');
+    Logger().i('PostEditController Onclose');
   }
 
   void readArguments(dynamic arguments) {
@@ -241,7 +241,7 @@ class PostEditController extends GetxController {
       _postContentProvider
           .postContent(generateRequestCookie(), data)
           .then((value) {
-        print(
+        Logger().i(
             'value.body is ${value.body.runtimeType} ${value.body is PostContent}');
         if (value.body is Map) {
           _onPostConetent = false;

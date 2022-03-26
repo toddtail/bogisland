@@ -12,6 +12,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:logger/logger.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 class SettingController extends GetxController {
@@ -26,7 +27,7 @@ class SettingController extends GetxController {
 
   @override
   void onInit() {
-    print('SettingController oninit');
+    Logger().i('SettingController oninit');
     readStorageCookies();
     super.onInit();
   }
@@ -52,7 +53,7 @@ class SettingController extends GetxController {
 
   void readStorageCookies() {
     if (storage.hasData('cookie')) {
-      // print(storage.read('cookie').runtimeType);
+      // Logger().i(storage.read('cookie').runtimeType);
       List tempList = storage.read('cookie');
       cookieList.value = List.generate(
           tempList.length, (index) => CookieAddInfo.fromJson(tempList[index]));
@@ -111,7 +112,7 @@ class SettingController extends GetxController {
               child: const Text('取消').textColor(colorNeutral400)),
           TextButton(
               onPressed: () async {
-                print(input);
+                Logger().i(input);
                 bool result = await addCookie(input);
                 if (result) {
                   Get.back();

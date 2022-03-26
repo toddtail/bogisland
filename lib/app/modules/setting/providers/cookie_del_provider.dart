@@ -1,6 +1,7 @@
 import 'package:bog_island/app/common/provider/bog_connect.dart';
 import 'package:bog_island/app/data/tailwind_colors.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 import '../models/cookie_del_model.dart';
 
@@ -9,7 +10,7 @@ class CookieDelProvider extends BogConnect {
   void onInit() {
     super.onInit();
     httpClient.defaultDecoder = (map) {
-      print(map);
+      Logger().i(map);
       switch (map['code']) {
         case 3001:
           bogSnackBar('${map['code']}', '提交参数不完整');

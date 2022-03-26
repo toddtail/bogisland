@@ -3,6 +3,7 @@ import 'package:bog_island/app/modules/content/models/threads_model.dart';
 import 'package:bog_island/app/modules/content/providers/threads_provider.dart';
 import 'package:bog_island/app/modules/forum/models/forum_model.dart' as fm;
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 class ContentController extends GetxController {
   //TODO: Implement ContentController
@@ -18,7 +19,7 @@ class ContentController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    print('ContentController init');
+    Logger().i('ContentController init');
     // loadContent();
   }
 
@@ -29,7 +30,7 @@ class ContentController extends GetxController {
 
   @override
   void onClose() {
-    print('ContentController onClose');
+    Logger().i('ContentController onClose');
   }
 
   void openNewContent(ContentArgumentModel model) async {

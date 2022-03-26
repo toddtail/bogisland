@@ -1,5 +1,6 @@
 import 'package:bog_island/app/common/provider/bog_post_connect.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 import '../models/post_content_model.dart';
 
@@ -9,7 +10,7 @@ class PostContentProvider extends BogPostConnect {
     super.onInit();
 
     httpClient.defaultDecoder = (map) {
-      print(map);
+      Logger().i(map);
       switch (map['code']) {
         case 4:
           bogSnackBar('${map['code']}', '该饼干的发布功能被暂时禁用');
