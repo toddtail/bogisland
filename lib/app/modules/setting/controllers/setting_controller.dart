@@ -41,7 +41,10 @@ class SettingController extends GetxController {
 
   // 为0时不更新主cookie
   void writeStorageCookies(String cookieMaster) {
-    storage.write('cookie', cookieList.value);
+    storage.write(
+        'cookie',
+        List.generate(
+            cookieList.length, (index) => cookieList[index].toJson()));
     if (cookieMaster != '0') {
       storage.write('cookie_master', cookieMaster);
     }
