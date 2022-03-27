@@ -19,6 +19,8 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.activeController();
+    
     return Scaffold(
         backgroundColor: colorSky500,
         body: SafeArea(
