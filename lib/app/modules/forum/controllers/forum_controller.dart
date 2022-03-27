@@ -1,3 +1,4 @@
+import 'package:bog_island/app/common/function/topic_to_threads_transfer.dart';
 import 'package:bog_island/app/modules/content/models/content_argument_model.dart';
 import 'package:bog_island/app/modules/forum/models/topics_in_forum_model.dart';
 import 'package:bog_island/app/modules/forum/providers/forum_provider.dart';
@@ -69,6 +70,6 @@ class ForumController extends GetxController {
 
   void jumpToContent(int index) {
     Get.toNamed("/content", arguments: ContentArgumentModel(
-        topicId: forumTopicList[index].id, topicIndexInForum: index));
+       topicData: transferTopicInfoToThreadsReply(forumTopicList[index])));
   }
 }

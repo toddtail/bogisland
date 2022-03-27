@@ -1,18 +1,17 @@
-class ContentArgumentModel {
-  int? topicId;
-  int? topicIndexInForum;
+import 'package:bog_island/app/modules/content/models/threads_model.dart';
 
-  ContentArgumentModel({this.topicId = 0, this.topicIndexInForum = 0}) {}
+class ContentArgumentModel {
+  ThreadsReply? topicData;
+
+  ContentArgumentModel({this.topicData}) {}
 
   ContentArgumentModel.fromJson(Map<String, dynamic> json) {
-    topicIndexInForum = json['topicIndexInForum'];
-    topicId = json['topicId'];
+    topicData = json['topicData'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['topicIndexInForum'] = topicIndexInForum;
-    data['topicId'] = topicId;
+    data['topicData'] = topicData;
     return data;
   }
 }

@@ -34,8 +34,8 @@ class ContentBottomBarController extends GetxController {
       if (isTopicMarked.value) {
         markController.removeTopicFromMark(contentController.topicId.value);
       } else {
-        markController.addTopicToMark(forumController
-            .forumTopicList[contentController.topicIndexInForum.value]);
+        // markController.addTopicToMark(forumController
+        //     .forumTopicList[contentController.topicIndexInForum.value]);
       }
       checkMarkState();
     }

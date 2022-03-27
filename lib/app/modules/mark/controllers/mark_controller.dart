@@ -45,9 +45,9 @@ class MarkController extends GetxController {
   }
 
   void jumpToContent(int index) {
-    Get.toNamed("/content",
-        arguments: ContentArgumentModel(
-            topicId: markTopicList[index].id, topicIndexInForum: index));
+    // Get.toNamed("/content",
+    //     arguments: ContentArgumentModel(
+    //         topicId: markTopicList[index].id, topicIndexInForum: index));
   }
 
   void addTopicToMark(TopicInfo info) {

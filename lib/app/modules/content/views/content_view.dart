@@ -33,7 +33,8 @@ class ContentView extends GetView<ContentController> {
               child: Obx(
                 () => Column(
                   children: [
-                    normalTopBar('>>Po.${controller.topicId.value}', iconPlanetPath,
+                    normalTopBar(
+                        '>>Po.${controller.topicId.value}', iconPlanetPath,
                         textSize: 16),
                     Expanded(
                       child: NotificationListener<ScrollNotification>(
@@ -47,37 +48,33 @@ class ContentView extends GetView<ContentController> {
                           child: ListView.builder(
                             itemBuilder: (BuildContext context, int index) {
                               Widget headThread = Hero(
-                                  tag: 'forum${controller.topicIndexInForum.value}',
-                                  child: Material(
-                                      child: TopicCard(
-                                    controller.topicIndexInForum.value,
-                                    isInContent: true,
-                                  ))).width(324.w);
+                                      tag: controller.topicId.toString(),
+                                      child: Material(child: ContentCard(0)))
+                                  .width(324.w);
                               if (index == 0 &&
-                                  controller.contentList.isNotEmpty) {
-                                return headThread;
-                              } else if (index == 0 &&
-                                  controller.contentList.isEmpty) {
-                                return Wrap(
-                                  children: [
-                                    headThread,
-                                    controller.isOnLoad.value
-                                        ? Container(
-                                            alignment: Alignment.topCenter,
-                                            child: Lottie.asset(
-                                              'assets/lotties/load-topic.json',
-                                              width: 160.w,
-                                              fit: BoxFit.fitWidth,
-                                            ),
-                                          )
-                                        : const SizedBox.shrink(),
-                                  ],
-                                );
+                                  controller.contentList.length == 1) {
+                                if (controller.isOnLoad.value) {
+                                  return Wrap(
+                                    children: [
+                                      headThread,
+                                      Container(
+                                        alignment: Alignment.topCenter,
+                                        child: Lottie.asset(
+                                          'assets/lotties/load-topic.json',
+                                          width: 160.w,
+                                          fit: BoxFit.fitWidth,
+                                        ),
+                                      )
+                                    ],
+                                  );
+                                } else {
+                                  return headThread;
+                                }
                               } else {
-                                return ContentCard(index - 1);
+                                return ContentCard(index);
                               }
                             },
-                            itemCount: controller.contentList.length + 1,
+                            itemCount: controller.contentList.length,
                             shrinkWrap: true,
                           )),
                     ),
