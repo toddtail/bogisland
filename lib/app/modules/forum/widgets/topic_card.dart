@@ -14,10 +14,9 @@ import 'package:html/dom.dart' as dom;
 import 'package:url_launcher/url_launcher.dart';
 
 class TopicCard extends GetWidget<ForumController> {
-  TopicCard(this.index, {this.isInContent = false, Key? key}) : super(key: key);
+  TopicCard(this.index, {Key? key}) : super(key: key);
 
   final int index;
-  final bool isInContent;
   final forumListController = Get.find<ForumListController>();
 
   @override
@@ -83,43 +82,18 @@ class TopicCard extends GetWidget<ForumController> {
   }
 
   Widget contentDisplay(String text) {
-    if (!isInContent) {
-      return Html(
-        data: text,
-        shrinkWrap: true,
-        style: {
-          'body': Style(
-              margin: EdgeInsets.zero,
-              padding: EdgeInsets.zero,
-              fontSize: FontSize(14.sp),
-              maxLines: 15,
-              textOverflow: TextOverflow.ellipsis,
-              color: colorSlate900)
-        },
-      );
-    } else {
-      return Html(
-        data: text,
-        shrinkWrap: true,
-        style: {
-          'body': Style(
-              margin: EdgeInsets.zero,
-              padding: EdgeInsets.zero,
-              fontSize: FontSize(14.sp),
-              color: colorSlate900)
-        },
-        onLinkTap: (String? url, RenderContext context,
-            Map<String, String> attributes, dom.Element? element) async {
-          if (!await launch(url!)) throw 'Could not launch $url';
-        },
-        customRenders: {
-          quoteMatcher(): CustomRender.widget(widget: (context, buildChildren) {
-            // Logger().i(context.tree.children[0].toString().replaceAll('"', ''));
-            return TopicIdInHtml(
-                context.tree.children[0].toString().replaceAll('"', ''));
-          })
-        },
-      );
-    }
+    return Html(
+      data: text,
+      shrinkWrap: true,
+      style: {
+        'body': Style(
+            margin: EdgeInsets.zero,
+            padding: EdgeInsets.zero,
+            fontSize: FontSize(14.sp),
+            maxLines: 15,
+            textOverflow: TextOverflow.ellipsis,
+            color: colorSlate900)
+      },
+    );
   }
 }
