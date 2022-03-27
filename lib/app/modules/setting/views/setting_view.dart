@@ -22,7 +22,7 @@ class SettingView extends GetView<SettingController> {
             children: [
               normalTopBar('设置', iconSettingsPath),
               settingsBlock(),
-              const Text('$appVersionName $appVersionTime')
+              const Text('$appVersionName $appVersionTime >>Po.79623')
                   .fontSize(12.sp)
                   .textColor(colorNeutral400)
                   .paddingAll(16.h)
