@@ -12,5 +12,8 @@ ThreadsReply transferTopicInfoToThreadsReply(TopicInfo topicInfo) {
     "content": topicInfo.content,
     "images": topicInfo.images
   };
-  return ThreadsReply.fromJson(data);
+  // if (topicInfo.images != null) {
+  //   data['images'] = topicInfo.images!;
+  // }
+  return ThreadsReply.fromJson(data, isFromTopicInfo: true);
 }

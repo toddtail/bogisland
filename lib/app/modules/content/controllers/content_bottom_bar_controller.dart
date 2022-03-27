@@ -10,14 +10,13 @@ class ContentBottomBarController extends GetxController {
   final contentController = Get.find<ContentController>();
   // use markController operate mark
   final markController = Get.find<MarkController>();
-  // use forumController get original topic info data
-  final forumController = Get.find<ForumController>();
 
   final isTopicMarked = false.obs;
 
   @override
   void onInit() {
     Logger().i('ContentBottomBarController oninit');
+    checkMarkState();
     super.onInit();
   }
 
@@ -34,8 +33,7 @@ class ContentBottomBarController extends GetxController {
       if (isTopicMarked.value) {
         markController.removeTopicFromMark(contentController.topicId.value);
       } else {
-        // markController.addTopicToMark(forumController
-        //     .forumTopicList[contentController.topicIndexInForum.value]);
+        markController.addTopicToMark(contentController.originalTopicInfo);
       }
       checkMarkState();
     }

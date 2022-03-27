@@ -70,6 +70,6 @@ class ForumController extends GetxController {
 
   void jumpToContent(int index) {
     Get.toNamed("/content", arguments: ContentArgumentModel(
-       topicData: transferTopicInfoToThreadsReply(forumTopicList[index])));
+       topicData: forumTopicList[index]));
   }
 }

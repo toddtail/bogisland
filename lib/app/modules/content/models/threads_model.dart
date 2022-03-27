@@ -1,3 +1,5 @@
+import 'package:bog_island/app/modules/forum/models/topics_in_forum_model.dart' show Images;
+
 class Threads {
   String? type;
   int? code;
@@ -105,24 +107,24 @@ class ThreadsInfo {
   }
 }
 
-class Images {
-  String? url;
-  String? ext;
+// class Images {
+//   String? url;
+//   String? ext;
 
-  Images({this.url, this.ext});
+//   Images({this.url, this.ext});
 
-  Images.fromJson(Map<String, dynamic> json) {
-    url = json['url'];
-    ext = json['ext'];
-  }
+//   Images.fromJson(Map<String, dynamic> json) {
+//     url = json['url'];
+//     ext = json['ext'];
+//   }
 
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['url'] = url;
-    data['ext'] = ext;
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final data = <String, dynamic>{};
+//     data['url'] = url;
+//     data['ext'] = ext;
+//     return data;
+//   }
+// }
 
 class ThreadsReply {
   int? id;
@@ -144,7 +146,8 @@ class ThreadsReply {
       this.content,
       this.images});
 
-  ThreadsReply.fromJson(Map<String, dynamic> json) {
+  ThreadsReply.fromJson(Map<String, dynamic> json,
+      {bool isFromTopicInfo = false}) {
     id = json['id'];
     res = json['res'];
     time = json['time'];
@@ -152,11 +155,15 @@ class ThreadsReply {
     cookie = json['cookie'];
     admin = json['admin'];
     content = json['content'];
-    if (json['images'] != null) {
-      images = <Images>[];
-      json['images'].forEach((v) {
-        images?.add(Images.fromJson(v));
-      });
+    if (isFromTopicInfo) {
+      images = json['images'];
+    } else {
+      if (json['images'] != null) {
+        images = <Images>[];
+        json['images'].forEach((v) {
+          images?.add(Images.fromJson(v));
+        });
+      }
     }
   }
 

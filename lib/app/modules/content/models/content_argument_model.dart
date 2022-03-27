@@ -1,7 +1,8 @@
 import 'package:bog_island/app/modules/content/models/threads_model.dart';
+import 'package:bog_island/app/modules/forum/models/topics_in_forum_model.dart';
 
 class ContentArgumentModel {
-  ThreadsReply? topicData;
+  TopicInfo? topicData;
 
   ContentArgumentModel({this.topicData}) {}
 

@@ -38,7 +38,9 @@ class MarkView extends GetView<MarkController> {
           ).padding(top: 40.h)
         : Expanded(
             child: ListView.builder(
-              itemBuilder: (BuildContext context, int index) => MarkCard(index),
+              itemBuilder: (BuildContext context, int index) => Hero(
+                tag: controller.markTopicList[index].id!,
+                child: MarkCard(index)),
               itemCount: controller.markTopicList.length,
               shrinkWrap: true,
             ),

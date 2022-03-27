@@ -1,3 +1,4 @@
+import 'package:bog_island/app/common/function/topic_to_threads_transfer.dart';
 import 'package:bog_island/app/modules/content/models/content_argument_model.dart';
 import 'package:bog_island/app/modules/content/models/threads_model.dart';
 import 'package:bog_island/app/modules/content/providers/threads_provider.dart';
@@ -8,6 +9,7 @@ import 'package:logger/logger.dart';
 class ContentController extends GetxController {
   final threadsProvider = Get.find<ThreadsProvider>();
   final contentList = <ThreadsReply>[].obs;
+  TopicInfo originalTopicInfo = TopicInfo();  //used for mark
   final topicInfo = ThreadsReply().obs;
   int _currentLoadedPage = 0;
   final topicId = 0.obs;
@@ -33,10 +35,11 @@ class ContentController extends GetxController {
   // arguments passed in view
   // use this function to init paramaters
   void openNewContent(ContentArgumentModel model) async {
-    topicInfo.value = model.topicData!;
+    originalTopicInfo = model.topicData!;
+    topicInfo.value = transferTopicInfoToThreadsReply(originalTopicInfo);
     topicId.value = topicInfo.value.id!;
-    // 从 forum 页面获取已经加载的首页
-    contentList.add(model.topicData!);
+    contentList.add(topicInfo.value);
+
     _currentLoadedPage = 0;
     loadContent();
   }
