@@ -4,6 +4,7 @@ import 'package:bog_island/app/modules/global/widgets/normal_top_bar.dart';
 import 'package:bog_island/app/modules/mark/bindings/mark_binding.dart';
 import 'package:bog_island/app/modules/mark/widgets/mark_card.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:lottie/lottie.dart';
 import 'package:styled_widget/styled_widget.dart';
 import 'package:get/get.dart';
@@ -14,18 +15,20 @@ class MarkView extends GetView<MarkController> {
   @override
   Widget build(BuildContext context) {
     MarkBinding().dependencies();
+    controller.setBuildContext(context);
+    
     return Scaffold(
       backgroundColor: colorSky500,
       body: SafeArea(
           child: Column(
-        children: [
+                children: [
           normalTopBar(
             '收藏',
             iconHeartPath,
           ),
           _markView()
-        ],
-      ).backgroundColor(colorAmber50)),
+                ],
+              ).backgroundColor(colorAmber50)),
     );
   }
 

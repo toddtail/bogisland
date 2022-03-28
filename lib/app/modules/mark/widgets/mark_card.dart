@@ -7,6 +7,7 @@ import 'package:bog_island/app/modules/mark/controllers/mark_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:styled_widget/styled_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -19,6 +20,8 @@ class MarkCard extends GetWidget<MarkController> {
   @override
   Widget build(BuildContext context) {
     final TopicInfo topicInfo = controller.markTopicList[index];
+    Logger().i('MarkCard build: $index');
+    // Logger().i('MarkCard build: ${topicInfo.content}');
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,19 +81,22 @@ class MarkCard extends GetWidget<MarkController> {
     });
   }
 
+  // Widget contentDisplay(String text) {
+  //   return Html(
+  //     data: text,
+  //     shrinkWrap: true,
+  //     style: {
+  //       'body': Style(
+  //           margin: EdgeInsets.zero,
+  //           padding: EdgeInsets.zero,
+  //           fontSize: FontSize(14.sp),
+  //           maxLines: 15,
+  //           textOverflow: TextOverflow.ellipsis,
+  //           color: colorSlate900)
+  //     },
+  //   );
+  // }
   Widget contentDisplay(String text) {
-    return Html(
-      data: text,
-      shrinkWrap: true,
-      style: {
-        'body': Style(
-            margin: EdgeInsets.zero,
-            padding: EdgeInsets.zero,
-            fontSize: FontSize(14.sp),
-            maxLines: 15,
-            textOverflow: TextOverflow.ellipsis,
-            color: colorSlate900)
-      },
-    );
+    return Text(text);
   }
 }
