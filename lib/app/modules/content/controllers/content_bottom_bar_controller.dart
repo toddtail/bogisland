@@ -1,8 +1,10 @@
+import 'package:bog_island/app/common/function/notify.dart';
 import 'package:bog_island/app/modules/content/controllers/content_controller.dart';
 import 'package:bog_island/app/modules/forum/controllers/forum_controller.dart';
 import 'package:bog_island/app/modules/mark/controllers/mark_controller.dart';
 import 'package:bog_island/app/modules/post_edit/models/post_argument_model.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 
 class ContentBottomBarController extends GetxController {
@@ -12,6 +14,8 @@ class ContentBottomBarController extends GetxController {
   final markController = Get.find<MarkController>();
 
   final isTopicMarked = false.obs;
+
+  final storage = GetStorage();
 
   @override
   void onInit() {
@@ -38,9 +42,13 @@ class ContentBottomBarController extends GetxController {
       checkMarkState();
     }
     if (index == 2) {
-      Get.toNamed('/post-edit',
-          arguments: PostArgumentModel(
-              isNewPost: false, topicId: contentController.topicId.value));
+      if (storage.hasData('cookie')) {
+        Get.toNamed('/post-edit',
+            arguments: PostArgumentModel(
+                isNewPost: false, topicId: contentController.topicId.value));
+      } else {
+        showWarnSnackBar('请先导入饼干', '没有饼干无法发帖');
+      }
     }
   }
 

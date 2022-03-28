@@ -1,3 +1,4 @@
+import 'package:bog_island/app/common/function/notify.dart';
 import 'package:bog_island/app/common/function/time_transfer.dart';
 import 'package:bog_island/app/data/tailwind_colors.dart';
 import 'package:bog_island/app/modules/content/controllers/content_controller.dart';
@@ -9,6 +10,7 @@ import 'package:bog_island/app/modules/post_edit/models/post_argument_model.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:styled_widget/styled_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:html/dom.dart' as dom;
@@ -19,7 +21,7 @@ class ContentCard extends GetWidget<ContentController> {
 
   final int index;
   final forumListController = Get.find<ForumListController>();
-
+  final storage = GetStorage();
   //TODO PO symbol
 
   @override
@@ -53,11 +55,15 @@ class ContentCard extends GetWidget<ContentController> {
                 .fontSize(12.sp)
                 .textColor(colorSlate400)
                 .gestures(onTap: () {
-              Get.toNamed('/post-edit',
-                  arguments: PostArgumentModel(
-                      isNewPost: false,
+              if (storage.hasData('cookie')) {
+                Get.toNamed('/post-edit',
+                    arguments: PostArgumentModel(
+                        isNewPost: false,
                       quoteId: reply.id,
                       topicId: controller.topicId.value));
+              } else {
+                showWarnSnackBar('请先导入饼干', '没有饼干无法发帖');
+              }
             })
             // .fontWeight(FontWeight.w500)
           ],

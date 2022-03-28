@@ -46,7 +46,9 @@ class PostEditController extends GetxController {
   void onInit() {
     super.onInit();
     editorController = TextEditingController();
-    cookieIndexSelectedForPost.value = readCookieSelectedIndexForPost();
+    if(storage.hasData('cookie')) {
+      cookieIndexSelectedForPost.value = readCookieSelectedIndexForPost();
+    }
     if (storage.hasData(_tPostTextKey)) {
       editorController.text = storage.read(_tPostTextKey);
     }
