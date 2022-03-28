@@ -19,7 +19,7 @@ class ContentBottomBarController extends GetxController {
 
   @override
   void onInit() {
-    Logger().i('ContentBottomBarController oninit');
+    // Logger().i('ContentBottomBarController oninit');
     checkMarkState();
     super.onInit();
   }

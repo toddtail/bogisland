@@ -11,11 +11,12 @@ import 'package:logger/logger.dart';
 import 'package:styled_widget/styled_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class MarkCard extends GetWidget<MarkController> {
+class MarkCard extends StatelessWidget {
   MarkCard(this.index, {Key? key}) : super(key: key);
 
   final int index;
   final forumListController = Get.find<ForumListController>();
+  final controller = Get.find<MarkController>();
 
   @override
   Widget build(BuildContext context) {

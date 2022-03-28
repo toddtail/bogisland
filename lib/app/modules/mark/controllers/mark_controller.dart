@@ -10,15 +10,14 @@ import 'package:logger/logger.dart';
 class MarkController extends GetxController {
   final storage = GetStorage();
   final logger = Logger();
-  
-  late BuildContext _context; 
+
+  late BuildContext _context;
 
   final markTopicList = <TopicInfo>[].obs;
 
   final isMarkListEmpty = true.obs;
 
   final _tMarkKey = 'mark';
-
 
   @override
   void onInit() {
@@ -69,7 +68,7 @@ class MarkController extends GetxController {
     if (index == null) {
       showNormalSnackBar('收藏成功', '已添加至本地收藏列表');
       markTopicList.insert(0, info);
-      logger.i(markTopicList[0].content);
+      // logger.i(markTopicList[0].content);
       await writeToLocalStorage();
     } else {
       showWarnSnackBar('收藏错误', '已收藏此帖子');
@@ -86,9 +85,9 @@ class MarkController extends GetxController {
       }
     }
     if (index != null) {
+      logger.i('$index 被移除');
       showNormalSnackBar('取消收藏成功', '已从本地收藏列表移出');
       markTopicList.removeAt(index);
-      logger.i(markTopicList[0].content);
       await writeToLocalStorage();
     } else {
       showWarnSnackBar('取消收藏错误', '并未收藏此帖子');
@@ -103,8 +102,8 @@ class MarkController extends GetxController {
       final tempList = List.generate(
           markTopicList.length, (index) => markTopicList[index].toJson());
       await storage.write(_tMarkKey, tempList);
-      rebuildAllChildren();
     }
+    // rebuildAllChildren();
   }
 
   bool isTopicInMark(int topicId) {
@@ -116,16 +115,21 @@ class MarkController extends GetxController {
     return false;
   }
 
-  void setBuildContext(BuildContext context) {
-    _context = context;
-  }
+  // void setBuildContext(BuildContext context) {
+  //   _context = context;
+  // }
 
-  void rebuildAllChildren() {
-    void rebuild(Element el) {
-      el.markNeedsBuild();
-      el.visitChildren(rebuild);
-    }
+  // void rebuildAllChildren() {
+  //   void rebuild(Element el) {
+  //     el.markNeedsBuild();
+  //     el.visitChildren(rebuild);
+  //   }
 
-    (_context as Element).visitChildren(rebuild);
-  }
+  //   (_context as Element).visitChildren(rebuild);
+  // }
+
+  // TopicInfo getTopicInfo(int index) {
+  //   logger.i(markTopicList[index]);
+  //   return markTopicList[index];
+  // }
 }

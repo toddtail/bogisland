@@ -9,7 +9,7 @@ class ThreadsProvider extends BogConnect {
   void onInit() {
     super.onInit();
     httpClient.defaultDecoder = (map) {
-      Logger().i(map);
+      // Logger().i(map);
       if(map['type'] == 'error') {
         return map as Map;
       }

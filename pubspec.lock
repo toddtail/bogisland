@@ -142,9 +142,9 @@ packages:
   flutter_html:
     dependency: "direct main"
     description:
-      name: flutter_html
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "lib/app/common/pub_custom/flutter_html-3.0.0-alpha.2"
+      relative: true
+    source: path
     version: "3.0.0-alpha.2"
   flutter_launcher_icons:
     dependency: "direct dev"

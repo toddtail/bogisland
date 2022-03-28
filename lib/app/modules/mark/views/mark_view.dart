@@ -2,6 +2,7 @@ import 'package:bog_island/app/data/icons_path.dart';
 import 'package:bog_island/app/data/tailwind_colors.dart';
 import 'package:bog_island/app/modules/global/widgets/normal_top_bar.dart';
 import 'package:bog_island/app/modules/mark/bindings/mark_binding.dart';
+// import 'package:bog_island/app/modules/mark/widgets/mark_card.dart';
 import 'package:bog_island/app/modules/mark/widgets/mark_card.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
@@ -15,20 +16,19 @@ class MarkView extends GetView<MarkController> {
   @override
   Widget build(BuildContext context) {
     MarkBinding().dependencies();
-    controller.setBuildContext(context);
-    
+
     return Scaffold(
       backgroundColor: colorSky500,
       body: SafeArea(
           child: Column(
-                children: [
+        children: [
           normalTopBar(
             '收藏',
             iconHeartPath,
           ),
           _markView()
-                ],
-              ).backgroundColor(colorAmber50)),
+        ],
+      ).backgroundColor(colorAmber50)),
     );
   }
 
@@ -41,9 +41,15 @@ class MarkView extends GetView<MarkController> {
           ).padding(top: 40.h)
         : Expanded(
             child: ListView.builder(
-              itemBuilder: (BuildContext context, int index) => Hero(
-                tag: controller.markTopicList[index].id!,
-                child: MarkCard(index)),
+              itemBuilder: (BuildContext context, int index) {
+                Logger().i('$index : ${controller.markTopicList[index].id} 构建');
+                Widget markcard =
+                    MarkCard(index);
+                Logger()
+                    .i('$index : ${controller.markTopicList[index].id} 构建2');
+                return Hero(
+                    tag: controller.markTopicList[index].id!, child: markcard);
+              },
               itemCount: controller.markTopicList.length,
               shrinkWrap: true,
             ),

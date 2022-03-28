@@ -18,7 +18,7 @@ class ContentController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    Logger().i('ContentController init');
+    // Logger().i('ContentController init');
     // loadContent();
   }
 
@@ -29,7 +29,7 @@ class ContentController extends GetxController {
 
   @override
   void onClose() {
-    Logger().i('ContentController onClose');
+    // Logger().i('ContentController onClose');
   }
 
   // arguments passed in view
