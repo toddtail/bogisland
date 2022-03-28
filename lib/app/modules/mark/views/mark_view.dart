@@ -33,7 +33,7 @@ class MarkView extends GetView<MarkController> {
   }
 
   Widget _markView() {
-    return Obx((() => controller.isMarkListEmpty.value
+    return Obx((() => controller.markTopicList.isEmpty
         ? Center(
             child: SizedBox(
                 width: 220.w,
