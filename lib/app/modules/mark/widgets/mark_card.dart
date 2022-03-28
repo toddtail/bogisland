@@ -81,22 +81,19 @@ class MarkCard extends GetWidget<MarkController> {
     });
   }
 
-  // Widget contentDisplay(String text) {
-  //   return Html(
-  //     data: text,
-  //     shrinkWrap: true,
-  //     style: {
-  //       'body': Style(
-  //           margin: EdgeInsets.zero,
-  //           padding: EdgeInsets.zero,
-  //           fontSize: FontSize(14.sp),
-  //           maxLines: 15,
-  //           textOverflow: TextOverflow.ellipsis,
-  //           color: colorSlate900)
-  //     },
-  //   );
-  // }
   Widget contentDisplay(String text) {
-    return Text(text);
+    return Html(
+      data: text,
+      shrinkWrap: true,
+      style: {
+        'body': Style(
+            margin: EdgeInsets.zero,
+            padding: EdgeInsets.zero,
+            fontSize: FontSize(14.sp),
+            maxLines: 15,
+            textOverflow: TextOverflow.ellipsis,
+            color: colorSlate900)
+      },
+    );
   }
 }
