@@ -68,6 +68,7 @@ class ContentController extends GetxController {
   void refreshContent() {
     _currentLoadedPage = 0;
     contentList.value = [];
+    contentList.add(topicInfo.value);
     loadContent();
   }
 }
