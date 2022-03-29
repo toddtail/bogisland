@@ -9,6 +9,7 @@ import 'package:bog_island/app/modules/setting/views/setting_view.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 import '../controllers/home_controller.dart';
 import 'package:styled_widget/styled_widget.dart';
@@ -20,32 +21,29 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     controller.activeController();
-    
     return Scaffold(
         backgroundColor: colorSky500,
-        body: SafeArea(
-          child: Stack(
-            children: [
-              Positioned(
-                top: 0,
-                child: PageView(
-                  controller: homeBottomBarController.pageController,
-                  children: [
-                    KeepAliveWrapper(child: ForumView()),
-                    KeepAliveWrapper(child: MarkView()),
-                    KeepAliveWrapper(child: SettingView())
-                  ],
-                  onPageChanged: (index) {
-                    homeBottomBarController.onPageChanged(index);
-                  },
-                ).width(324.w).height(710.h),
-              ),
-              const Positioned(
-                bottom: 0,
-                child: HomeBottomBar(),
-              ),
-            ],
-          ),
+        body: Stack(
+          children: [
+            Positioned(
+              top: 0,
+              child: PageView(
+                controller: homeBottomBarController.pageController,
+                children: [
+                  KeepAliveWrapper(child: ForumView()),
+                  KeepAliveWrapper(child: MarkView()),
+                  KeepAliveWrapper(child: SettingView())
+                ],
+                onPageChanged: (index) {
+                  homeBottomBarController.onPageChanged(index);
+                },
+              ).width(324.w).height(710.h),
+            ),
+            const Positioned(
+              bottom: 0,
+              child: HomeBottomBar(),
+            ),
+          ],
         ));
   }
 }

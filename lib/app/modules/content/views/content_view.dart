@@ -80,7 +80,9 @@ class ContentView extends GetView<ContentController> {
                           )),
                     ),
                   ],
-                ).width(324.w).height(656.h),
+                )
+                    .width(324.w)
+                    .height(1.sh - 40.h - MediaQuery.of(context).padding.top),
               ),
             ),
             const Positioned(

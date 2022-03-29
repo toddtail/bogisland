@@ -18,16 +18,18 @@ class SettingView extends GetView<SettingController> {
     SettingBinding().dependencies();
     return Scaffold(
       backgroundColor: colorSky500,
-      body: Obx(() => Column(
-            children: [
-              normalTopBar('设置', iconSettingsPath),
-              settingsBlock(),
-              const Text('$appVersionName $appVersionTime >>Po.79623')
-                  .fontSize(12.sp)
-                  .textColor(colorNeutral400)
-                  .paddingAll(16.h)
-            ],
-          )).backgroundColor(colorAmber50),
+      body: Obx(() => SafeArea(
+        child: Column(
+              children: [
+                normalTopBar('设置', iconSettingsPath),
+                settingsBlock(),
+                const Text('$appVersionName $appVersionTime >>Po.79623')
+                    .fontSize(12.sp)
+                    .textColor(colorNeutral400)
+                    .paddingAll(16.h)
+              ],
+            ),
+      )).backgroundColor(colorAmber50),
     );
   }
 

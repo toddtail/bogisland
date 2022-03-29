@@ -16,7 +16,6 @@ class MarkView extends GetView<MarkController> {
   @override
   Widget build(BuildContext context) {
     MarkBinding().dependencies();
-
     return Scaffold(
       backgroundColor: colorSky500,
       body: SafeArea(
@@ -26,7 +25,9 @@ class MarkView extends GetView<MarkController> {
             '收藏',
             iconHeartPath,
           ),
-          _markView()
+          // reduce safe area top padding height to make display correctly
+          // 104 is bottom bar height
+          _markView().height(1.sh - 104.h - MediaQuery.of(context).padding.top)
         ],
       ).backgroundColor(colorAmber50)),
     );
@@ -39,16 +40,14 @@ class MarkView extends GetView<MarkController> {
                 width: 220.w,
                 child: Lottie.asset('assets/lotties/black-cat.json')),
           ).padding(top: 40.h)
-        : Expanded(
-            child: ListView.builder(
-              itemBuilder: (BuildContext context, int index) {
-                return Hero(
-                    tag: '${controller.markTopicList[index].id!}mark',
-                    child: MarkCard(index));
-              },
-              itemCount: controller.markTopicList.length,
-              shrinkWrap: true,
-            ),
+        : ListView.builder(
+            itemBuilder: (BuildContext context, int index) {
+              return Hero(
+                  tag: '${controller.markTopicList[index].id!}mark',
+                  child: MarkCard(index));
+            },
+            itemCount: controller.markTopicList.length,
+            shrinkWrap: true,
           )));
   }
 }

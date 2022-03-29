@@ -12,6 +12,7 @@ class HomeBottomBar extends GetWidget<HomeBottomBarController> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,

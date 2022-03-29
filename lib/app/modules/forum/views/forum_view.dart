@@ -23,59 +23,61 @@ class ForumView extends GetView<ForumController> {
     return Scaffold(
       backgroundColor: colorSky500,
       // backgroundColor: colorAmber50,
-      body: Center(
-          child: Obx(
-        () => Column(
-          children: [
-            normalTopBar(
+      body: SafeArea(
+        child: Center(
+            child: Obx(
+          () => Column(
+            children: [
+              normalTopBar(
+                controller.forumTopicList.isEmpty
+                    ? ''
+                    : forumListController
+                        .liteForumMap[controller.selectedForumId.value],
+                iconPlanetPath,
+              ),
               controller.forumTopicList.isEmpty
-                  ? ''
-                  : forumListController
-                      .liteForumMap[controller.selectedForumId.value],
-              iconPlanetPath,
-            ),
-            controller.forumTopicList.isEmpty
-                ? Expanded(
-                    child: Container(
-                      alignment: Alignment.topCenter,
-                      margin: EdgeInsets.only(top: 60.h),
-                      child: Lottie.asset(
-                        'assets/lotties/salad-cat.json',
-                        width: 160.w,
-                        fit: BoxFit.fitWidth,
-                      ),
+                  ? Expanded(
+                      child: Container(
+                        alignment: Alignment.topCenter,
+                        margin: EdgeInsets.only(top: 60.h),
+                        child: Lottie.asset(
+                          'assets/lotties/salad-cat.json',
+                          width: 160.w,
+                          fit: BoxFit.fitWidth,
+                        ),
+                      )
+                          .decorated(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(24.h),
+                                topRight: Radius.circular(24.h),
+                              ),
+                              color: colorAmber50)
+                          .backgroundColor(colorSky500)
+                          .width(324.w),
                     )
-                        .decorated(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(24.h),
-                              topRight: Radius.circular(24.h),
-                            ),
-                            color: colorAmber50)
-                        .backgroundColor(colorSky500)
-                        .width(324.w),
-                  )
-                : Expanded(
-                    child: NotificationListener<ScrollNotification>(
-                        onNotification: (ScrollNotification scrollInfo) {
-                          if (scrollInfo.metrics.pixels ==
-                              scrollInfo.metrics.maxScrollExtent) {
-                            controller.loadTopic();
-                          }
-                          return true;
-                        },
-                        child: ListView.builder(
-                          itemBuilder: (BuildContext context, int index) {
-                            return Hero(
-                                tag: '${controller.forumTopicList[index].id}forum',
-                                child: Material(child: TopicCard(index)));
+                  : Expanded(
+                      child: NotificationListener<ScrollNotification>(
+                          onNotification: (ScrollNotification scrollInfo) {
+                            if (scrollInfo.metrics.pixels ==
+                                scrollInfo.metrics.maxScrollExtent) {
+                              controller.loadTopic();
+                            }
+                            return true;
                           },
-                          itemCount: controller.forumTopicList.length,
-                          shrinkWrap: true,
-                        )),
-                  ),
-          ],
-        ),
-      )).backgroundColor(colorAmber50),
+                          child: ListView.builder(
+                            itemBuilder: (BuildContext context, int index) {
+                              return Hero(
+                                  tag: '${controller.forumTopicList[index].id}forum',
+                                  child: Material(child: TopicCard(index)));
+                            },
+                            itemCount: controller.forumTopicList.length,
+                            shrinkWrap: true,
+                          )),
+                    ),
+            ],
+          ),
+        )).backgroundColor(colorAmber50),
+      ),
     );
   }
 }
