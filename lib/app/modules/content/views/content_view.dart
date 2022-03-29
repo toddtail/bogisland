@@ -48,7 +48,8 @@ class ContentView extends GetView<ContentController> {
                           child: ListView.builder(
                             itemBuilder: (BuildContext context, int index) {
                               Widget headThread = Hero(
-                                      tag: controller.topicId.toString(),
+                                      tag:
+                                          '${controller.topicId}${controller.heroTagAddition.value}',
                                       child: Material(child: ContentCard(0)))
                                   .width(324.w);
                               if (index == 0 &&

@@ -42,13 +42,9 @@ class MarkView extends GetView<MarkController> {
         : Expanded(
             child: ListView.builder(
               itemBuilder: (BuildContext context, int index) {
-                Logger().i('$index : ${controller.markTopicList[index].id} 构建');
-                Widget markcard =
-                    MarkCard(index);
-                Logger()
-                    .i('$index : ${controller.markTopicList[index].id} 构建2');
                 return Hero(
-                    tag: controller.markTopicList[index].id!, child: markcard);
+                    tag: '${controller.markTopicList[index].id!}mark',
+                    child: MarkCard(index));
               },
               itemCount: controller.markTopicList.length,
               shrinkWrap: true,

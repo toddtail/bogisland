@@ -54,7 +54,8 @@ class MarkController extends GetxController {
 
   void jumpToContent(int index) {
     Get.toNamed("/content",
-        arguments: ContentArgumentModel(topicData: markTopicList[index]));
+        arguments: ContentArgumentModel(
+            topicData: markTopicList[index], heroType: 'mark'));
   }
 
   void addTopicToMark(TopicInfo info) async {

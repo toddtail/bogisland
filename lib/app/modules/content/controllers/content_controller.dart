@@ -9,11 +9,12 @@ import 'package:logger/logger.dart';
 class ContentController extends GetxController {
   final threadsProvider = Get.find<ThreadsProvider>();
   final contentList = <ThreadsReply>[].obs;
-  TopicInfo originalTopicInfo = TopicInfo();  //used for mark
+  TopicInfo originalTopicInfo = TopicInfo(); //used for mark
   final topicInfo = ThreadsReply().obs;
   int _currentLoadedPage = 0;
   final topicId = 0.obs;
   final isOnLoad = false.obs;
+  final heroTagAddition = ''.obs;
 
   @override
   void onInit() {
@@ -39,7 +40,7 @@ class ContentController extends GetxController {
     topicInfo.value = transferTopicInfoToThreadsReply(originalTopicInfo);
     topicId.value = topicInfo.value.id!;
     contentList.add(topicInfo.value);
-
+    heroTagAddition.value = model.heroType!;
     _currentLoadedPage = 0;
     loadContent();
   }
