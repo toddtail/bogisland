@@ -59,8 +59,8 @@ class ContentCard extends GetWidget<ContentController> {
                 Get.toNamed('/post-edit',
                     arguments: PostArgumentModel(
                         isNewPost: false,
-                      quoteId: reply.id,
-                      topicId: controller.topicId.value));
+                        quoteId: reply.id,
+                        topicId: controller.topicId.value));
               } else {
                 showWarnSnackBar('请先导入饼干', '没有饼干无法发帖');
               }
@@ -69,7 +69,6 @@ class ContentCard extends GetWidget<ContentController> {
           ],
         ).padding(bottom: 4.h),
         contentDisplay(reply.content!),
-        // TODO more images
         reply.images == null
             ? Container()
             : Wrap(
@@ -83,8 +82,22 @@ class ContentCard extends GetWidget<ContentController> {
     )
         .padding(left: 12.h, right: 12.h, top: 16.h, bottom: 8.h)
         .width(300.h)
-        .decorated(color: colorAmber50)
-        .backgroundColor(index == 0 ? colorSky500 : colorAmber50);
+        .decorated(
+            borderRadius: index == 0
+                ? BorderRadius.only(
+                    topLeft: Radius.circular(24.h),
+                    topRight: Radius.circular(24.h),
+                  )
+                : null,
+            color: colorAmber50)
+            .backgroundGradient(const LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                colorSky500,
+                colorAmber50
+              ],
+            ));
   }
 
   Widget contentDisplay(String text) {

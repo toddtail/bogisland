@@ -76,7 +76,11 @@ class MarkCard extends StatelessWidget {
                   )
                 : null,
             color: colorAmber50)
-        .backgroundColor(index == 0 ? colorSky500 : colorAmber50)
+        .backgroundGradient(const LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [colorSky500, colorAmber50],
+        ))
         .gestures(onTap: () {
       controller.jumpToContent(index);
     });
