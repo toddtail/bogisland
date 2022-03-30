@@ -18,39 +18,40 @@ class SettingView extends GetView<SettingController> {
     SettingBinding().dependencies();
     return Scaffold(
       backgroundColor: colorSky500,
-      body: Obx(() => SafeArea(
+      body: SafeArea(
         child: Column(
-              children: [
-                normalTopBar('设置', iconSettingsPath),
-                settingsBlock(),
-                const Text('$appVersionName $appVersionTime >>Po.79623')
-                    .fontSize(12.sp)
-                    .textColor(colorNeutral400)
-                    .paddingAll(16.h)
-              ],
-            ),
-      )).backgroundColor(colorAmber50),
+          children: [
+            normalTopBar('设置', iconSettingsPath),
+            settingsBlock(),
+            const Text('$appVersionName $appVersionTime >>Po.79623')
+                .fontSize(12.sp)
+                .textColor(colorNeutral400)
+                .paddingAll(16.h)
+          ],
+        ).backgroundColor(colorAmber50)),
     );
   }
 
   Widget settingsBlock() {
-    return Column(
-      children: [
-        settingHeader('饼干管理', iconCookiePath, colorOrange400),
-        controller.cookieList.isEmpty
-            ? Container()
-            : Column(
-                children: List.generate(controller.cookieList.length, (index) {
-                  if (index == 0) {
-                    return cookieMaster(controller.cookieList[0].cookie!);
-                  } else {
-                    return cookieShadow(controller.cookieList[index].cookie!);
-                  }
-                }),
-              ),
-        cookieChoice()
-      ],
-    ).padding(all: 16.h);
+    return Obx(() => Column(
+          children: [
+            settingHeader('饼干管理', iconCookiePath, colorOrange400),
+            controller.cookieList.isEmpty
+                ? Container()
+                : Column(
+                    children:
+                        List.generate(controller.cookieList.length, (index) {
+                      if (index == 0) {
+                        return cookieMaster(controller.cookieList[0].cookie!);
+                      } else {
+                        return cookieShadow(
+                            controller.cookieList[index].cookie!);
+                      }
+                    }),
+                  ),
+            cookieChoice()
+          ],
+        ).padding(all: 16.h));
   }
 
   Widget cookieChoice() {
