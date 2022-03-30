@@ -37,7 +37,7 @@ class HomeView extends GetView<HomeController> {
                 onPageChanged: (index) {
                   homeBottomBarController.onPageChanged(index);
                 },
-              ).width(324.w).height(710.h),
+              ).width(324.w).height(1.sh-60.h),
             ),
             const Positioned(
               bottom: 0,

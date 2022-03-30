@@ -27,7 +27,8 @@ class MarkView extends GetView<MarkController> {
           ),
           // reduce safe area top padding height to make display correctly
           // 104 is bottom bar height
-          _markView().height(1.sh - 104.h - MediaQuery.of(context).padding.top)
+          Expanded(child: _markView())
+          // .height(1.sh - 104.h - MediaQuery.of(context).padding.top)
         ],
       ).backgroundColor(colorAmber50)),
     );
