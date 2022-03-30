@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:logger/logger.dart';
 import 'package:lottie/lottie.dart';
 import 'package:styled_widget/styled_widget.dart';
 import '../controllers/content_controller.dart';
@@ -22,6 +23,7 @@ class ContentView extends GetView<ContentController> {
   @override
   Widget build(BuildContext context) {
     controller.openNewContent(arguments);
+
     return Scaffold(
       backgroundColor: colorSky500,
       // backgroundColor: colorAmber50,
@@ -30,60 +32,54 @@ class ContentView extends GetView<ContentController> {
           children: [
             Positioned(
               top: 0,
-              child: Obx(
-                () => Column(
-                  children: [
-                    normalTopBar(
-                        '>>Po.${controller.topicId.value}', iconPlanetPath,
-                        textSize: 16),
-                    Expanded(
-                      child: NotificationListener<ScrollNotification>(
-                          onNotification: (ScrollNotification scrollInfo) {
-                            if (scrollInfo.metrics.pixels ==
-                                scrollInfo.metrics.maxScrollExtent) {
-                              controller.loadContent();
-                            }
-                            return true;
-                          },
-                          child: ListView.builder(
-                            itemBuilder: (BuildContext context, int index) {
-                              Widget headThread = Hero(
-                                      tag:
-                                          '${controller.topicId}${controller.heroTagAddition.value}',
-                                      child: Material(child: ContentCard(0)))
-                                  .width(324.w);
-                              if (index == 0 &&
-                                  controller.contentList.length == 1) {
-                                if (controller.isOnLoad.value) {
-                                  return Wrap(
-                                    children: [
-                                      headThread,
-                                      Container(
-                                        alignment: Alignment.topCenter,
-                                        child: Lottie.asset(
-                                          'assets/lotties/load-topic.json',
-                                          width: 160.w,
-                                          fit: BoxFit.fitWidth,
-                                        ),
-                                      )
-                                    ],
-                                  );
-                                } else {
-                                  return headThread;
+              child: Column(
+                children: [
+                  normalTopBar(
+                      '>>Po.${controller.topicId.value}', iconPlanetPath,
+                      textSize: 16),
+                  Expanded(
+                    child: NotificationListener<ScrollNotification>(
+                        onNotification: (ScrollNotification scrollInfo) {
+                          if (scrollInfo.metrics.pixels ==
+                              scrollInfo.metrics.maxScrollExtent) {
+                            controller.loadContent();
+                          }
+                          return true;
+                        },
+                        child: Obx(() => ListView.builder(
+                              itemBuilder: (BuildContext context, int index) {
+                                // when only headThread loaded in list
+                                if (index == 0 &&
+                                    controller.contentList.length == 1) {
+                                  // if onload, show loading animation
+                                  if (controller.isOnLoad.value) {
+                                    return Wrap(
+                                      children: [
+                                        headThread(),
+                                        loadingAnimationWidiget()
+                                      ],
+                                    );
+                                  }
+                                  // if loaded and no reply, only show headThread
+                                  else {
+                                    return headThread();
+                                  }
                                 }
-                              } else {
-                                return ContentCard(index);
-                              }
-                            },
-                            itemCount: controller.contentList.length,
-                            shrinkWrap: true,
-                          )),
-                    ),
-                  ],
-                )
-                    .width(324.w)
-                    .height(1.sh - 40.h - MediaQuery.of(context).padding.top),
-              ),
+                                // when more than 1 threads in list
+                                else if (controller.contentList.length > 1) {
+                                  return ContentCard(index);
+                                } else {
+                                  return ContentCard(index);
+                                }
+                              },
+                              itemCount: controller.contentList.length,
+                              shrinkWrap: true,
+                            ))),
+                  ),
+                ],
+              )
+                  .width(324.w)
+                  .height(1.sh - 40.h - MediaQuery.of(context).padding.top),
             ),
             const Positioned(
               bottom: 0,
@@ -91,6 +87,24 @@ class ContentView extends GetView<ContentController> {
             )
           ],
         ).backgroundColor(colorAmber50),
+      ),
+    );
+  }
+
+  Widget headThread() {
+    return Hero(
+            tag: '${controller.topicId}${controller.heroTagAddition.value}',
+            child: Material(child: ContentCard(0)))
+        .width(324.w);
+  }
+
+  Widget loadingAnimationWidiget() {
+    return Container(
+      alignment: Alignment.topCenter,
+      child: Lottie.asset(
+        'assets/lotties/load-topic.json',
+        width: 160.w,
+        fit: BoxFit.fitWidth,
       ),
     );
   }

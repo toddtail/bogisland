@@ -30,6 +30,12 @@ class ContentBottomBar extends GetWidget<ContentBottomBarController> {
           3,
           iconFloorPath,
         ),
+        Obx(
+          () => _barIcon(4, iconEyeLinePath,
+              color: controller.isOnlyPoDisplay.value
+                  ? colorTeal400
+                  : colorSlate500),
+        )
         // TODO
         // _barIcon(
         //   4,

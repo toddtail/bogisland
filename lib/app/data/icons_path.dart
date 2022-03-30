@@ -17,3 +17,5 @@ const iconReloadPath = 'assets/icons/reload-circle-line.svg';
 const iconCookiePath = 'assets/icons/cookie-line.svg';
 const iconDeletePath = 'assets/icons/delete-bin-line.svg';
 const iconImageAddPath = 'assets/icons/image-plus-line.svg';
+const iconEyeLinePath = 'assets/icons/eye-line.svg';
+const iconEyeLineOffPath = 'assets/icons/eye-off-line.svg';

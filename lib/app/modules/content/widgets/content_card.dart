@@ -28,6 +28,14 @@ class ContentCard extends GetWidget<ContentController> {
   Widget build(BuildContext context) {
     final ThreadsReply reply = controller.contentList[index];
 
+    return Obx(() => !controller.isOnlyPoDisplay.value
+        ? card(reply)
+        : (reply.cookie == controller.poCookie)
+            ? card(reply)
+            : const SizedBox.shrink());
+  }
+
+  Widget card(ThreadsReply reply) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -36,10 +44,7 @@ class ContentCard extends GetWidget<ContentController> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(reply.cookie!)
-                .fontSize(12.sp)
-                .fontWeight(FontWeight.normal)
-                .textColor(colorSlate500),
+            cookieDisplay(reply.cookie!, controller.poCookie),
             Text(timeTransfer(reply.time!))
                 .fontSize(12.sp)
                 .fontWeight(FontWeight.normal)
@@ -51,7 +56,7 @@ class ContentCard extends GetWidget<ContentController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text('${index + 1}楼').fontSize(12.sp).textColor(colorSky500),
-            Text('#${reply.id}')
+            Text('#${controller.contentList[index].id}')
                 .fontSize(12.sp)
                 .textColor(colorSlate400)
                 .gestures(onTap: () {
@@ -90,14 +95,11 @@ class ContentCard extends GetWidget<ContentController> {
                   )
                 : null,
             color: colorAmber50)
-            .backgroundGradient(const LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                colorSky500,
-                colorAmber50
-              ],
-            ));
+        .backgroundGradient(const LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [colorSky500, colorAmber50],
+        ));
   }
 
   Widget contentDisplay(String text) {
@@ -124,5 +126,33 @@ class ContentCard extends GetWidget<ContentController> {
         })
       },
     );
+  }
+
+  Widget cookieDisplay(String cookie, String poCookie) {
+    if (cookie == poCookie) {
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(cookie)
+              .fontSize(12.sp)
+              .fontWeight(FontWeight.normal)
+              .textColor(colorSlate500)
+              .padding(right: 4.w),
+          const Text('Po主')
+              .fontSize(10.sp)
+              .fontWeight(FontWeight.normal)
+              .textColor(Colors.white)
+              .padding(left: 4.w, right: 4.w)
+              .backgroundColor(colorTeal400)
+              .clipRRect(all: 24)
+        ],
+      );
+    } else {
+      return Text(cookie)
+          .fontSize(12.sp)
+          .fontWeight(FontWeight.normal)
+          .textColor(colorSlate500);
+    }
   }
 }

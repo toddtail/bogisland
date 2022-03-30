@@ -9,12 +9,16 @@ import 'package:logger/logger.dart';
 class ContentController extends GetxController {
   final threadsProvider = Get.find<ThreadsProvider>();
   final contentList = <ThreadsReply>[].obs;
-  TopicInfo originalTopicInfo = TopicInfo(); //used for mark
-  final topicInfo = ThreadsReply().obs;
-  int _currentLoadedPage = 0;
+  final threadsModeltopicInfo = ThreadsReply().obs;
+
+  final heroTagAddition = ''.obs;
   final topicId = 0.obs;
   final isOnLoad = false.obs;
-  final heroTagAddition = ''.obs;
+  final isOnlyPoDisplay = false.obs;
+
+  int _currentLoadedPage = 0;
+  TopicInfo originalTopicInfo = TopicInfo();
+  String poCookie = '';
 
   @override
   void onInit() {
@@ -39,11 +43,13 @@ class ContentController extends GetxController {
   void openNewContent(ContentArgumentModel model) async {
     if (originalTopicInfo != model.topicData) {
       originalTopicInfo = model.topicData!;
-      topicInfo.value = transferTopicInfoToThreadsReply(originalTopicInfo);
-      topicId.value = topicInfo.value.id!;
-      contentList.add(topicInfo.value);
+      threadsModeltopicInfo.value =
+          transferTopicInfoToThreadsReply(originalTopicInfo);
+      topicId.value = threadsModeltopicInfo.value.id!;
+      contentList.add(threadsModeltopicInfo.value);
       heroTagAddition.value = model.heroType!;
       _currentLoadedPage = 0;
+      poCookie = threadsModeltopicInfo.value.cookie!;
       loadContent();
     }
   }
@@ -72,7 +78,12 @@ class ContentController extends GetxController {
   void refreshContent() {
     _currentLoadedPage = 0;
     contentList.value = [];
-    contentList.add(topicInfo.value);
+    contentList.add(threadsModeltopicInfo.value);
     loadContent();
+  }
+
+  bool switchOnlyPoDisplay() {
+    isOnlyPoDisplay.value = !isOnlyPoDisplay.value;
+    return isOnlyPoDisplay.value;
   }
 }

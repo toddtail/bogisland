@@ -14,6 +14,7 @@ class ContentBottomBarController extends GetxController {
   final markController = Get.find<MarkController>();
 
   final isTopicMarked = false.obs;
+  final isOnlyPoDisplay = false.obs;
 
   final storage = GetStorage();
 
@@ -40,8 +41,7 @@ class ContentBottomBarController extends GetxController {
         markController.addTopicToMark(contentController.originalTopicInfo);
       }
       checkMarkState();
-    }
-    if (index == 2) {
+    } else if (index == 2) {
       if (storage.hasData('cookie')) {
         Get.toNamed('/post-edit',
             arguments: PostArgumentModel(
@@ -49,6 +49,10 @@ class ContentBottomBarController extends GetxController {
       } else {
         showWarnSnackBar('请先导入饼干', '没有饼干无法发帖');
       }
+    } else if (index == 3) {
+      showNormalSnackBar('功能开发中', '楼层跳转功能加载中');
+    } else if (index == 4) {
+      isOnlyPoDisplay.value = contentController.switchOnlyPoDisplay();
     }
   }
 
