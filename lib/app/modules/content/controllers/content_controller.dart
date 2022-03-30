@@ -19,30 +19,33 @@ class ContentController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // Logger().i('ContentController init');
+    Logger().i('ContentController init');
     // loadContent();
   }
 
   @override
   void onReady() {
+    Logger().i('ContentController onReady');
     super.onReady();
   }
 
   @override
   void onClose() {
-    // Logger().i('ContentController onClose');
+    Logger().i('ContentController onClose');
   }
 
   // arguments passed in view
   // use this function to init paramaters
   void openNewContent(ContentArgumentModel model) async {
-    originalTopicInfo = model.topicData!;
-    topicInfo.value = transferTopicInfoToThreadsReply(originalTopicInfo);
-    topicId.value = topicInfo.value.id!;
-    contentList.add(topicInfo.value);
-    heroTagAddition.value = model.heroType!;
-    _currentLoadedPage = 0;
-    loadContent();
+    if (originalTopicInfo != model.topicData) {
+      originalTopicInfo = model.topicData!;
+      topicInfo.value = transferTopicInfoToThreadsReply(originalTopicInfo);
+      topicId.value = topicInfo.value.id!;
+      contentList.add(topicInfo.value);
+      heroTagAddition.value = model.heroType!;
+      _currentLoadedPage = 0;
+      loadContent();
+    }
   }
 
   void loadContent() async {
