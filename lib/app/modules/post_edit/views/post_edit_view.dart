@@ -77,7 +77,7 @@ class PostEditView extends GetView<PostEditController> {
           .decorated(
             color: colorAmber50,
           )
-          .padding(left: 12.w, right: 12.w, bottom: 8.h),
+          .padding(top: 8.h, left: 12.w, right: 12.w, bottom: 8.h),
     );
   }
 }
