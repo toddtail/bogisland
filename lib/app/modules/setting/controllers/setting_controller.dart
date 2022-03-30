@@ -1,3 +1,4 @@
+import 'package:bog_island/app/common/function/notify.dart';
 import 'package:bog_island/app/data/tailwind_colors.dart';
 import 'package:bog_island/app/modules/setting/models/cookie_add_model.dart';
 import 'package:bog_island/app/modules/setting/models/cookie_del_model.dart';
@@ -217,5 +218,15 @@ class SettingController extends GetxController {
 
   void setCookieSelectedForPost(int index) {
     storage.write('cookie_selected_index', index);
+  }
+
+  void copyMasterCookieToClipboard() {
+    if (storage.hasData('cookie_master')) {
+      String cookieMaster = storage.read('cookie_master');
+      Clipboard.setData(ClipboardData(text: cookieMaster));
+      showNormalSnackBar('拷贝主饼干代码成功', '请粘贴到安全的地方以免被他人盗用');
+    } else {
+      showWarnSnackBar('出现了一点状况', '本地并没有保存你的主饼干代码');
+    }
   }
 }

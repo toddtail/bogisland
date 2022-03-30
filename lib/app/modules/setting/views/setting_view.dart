@@ -19,16 +19,16 @@ class SettingView extends GetView<SettingController> {
     return Scaffold(
       backgroundColor: colorSky500,
       body: SafeArea(
-        child: Column(
-          children: [
-            normalTopBar('设置', iconSettingsPath),
-            settingsBlock(),
-            const Text('$appVersionName $appVersionTime >>Po.79623')
-                .fontSize(12.sp)
-                .textColor(colorNeutral400)
-                .paddingAll(16.h)
-          ],
-        ).backgroundColor(colorAmber50)),
+          child: Column(
+        children: [
+          normalTopBar('设置', iconSettingsPath),
+          settingsBlock(),
+          const Text('$appVersionName $appVersionTime >>Po.79623')
+              .fontSize(12.sp)
+              .textColor(colorNeutral400)
+              .paddingAll(16.h)
+        ],
+      ).backgroundColor(colorAmber50)),
     );
   }
 
@@ -97,7 +97,10 @@ class SettingView extends GetView<SettingController> {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(cookie).bold().textColor(colorNeutral600).fontSize(14.sp),
+        Text(cookie).bold().textColor(colorNeutral600).fontSize(14.sp).gestures(
+            onTap: () {
+          controller.copyMasterCookieToClipboard();
+        }),
         SvgPicture.asset(
           iconDeletePath,
           width: 20.h,
