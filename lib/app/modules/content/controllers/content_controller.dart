@@ -1,3 +1,4 @@
+import 'package:bog_island/app/common/function/notify.dart';
 import 'package:bog_island/app/common/function/topic_to_threads_transfer.dart';
 import 'package:bog_island/app/modules/content/models/content_argument_model.dart';
 import 'package:bog_island/app/modules/content/models/threads_model.dart';
@@ -19,6 +20,8 @@ class ContentController extends GetxController {
   int _currentLoadedPage = 0;
   TopicInfo originalTopicInfo = TopicInfo();
   String poCookie = '';
+  int currentPage = 0;
+  int totalPage = 1;
 
   @override
   void onInit() {
@@ -43,6 +46,7 @@ class ContentController extends GetxController {
   void openNewContent(ContentArgumentModel model) async {
     if (originalTopicInfo != model.topicData) {
       originalTopicInfo = model.topicData!;
+      totalPage = originalTopicInfo.replyCount!;
       threadsModeltopicInfo.value =
           transferTopicInfoToThreadsReply(originalTopicInfo);
       topicId.value = threadsModeltopicInfo.value.id!;
@@ -63,14 +67,16 @@ class ContentController extends GetxController {
       try {
         result = await threadsProvider.postThreads(
             topicId.value, _currentLoadedPage);
+        if (result.body is Map) {
+          showWarnSnackBar('加载内容错误', '什么都没有啊');
+        } else if (result.body is Threads) {
+          totalPage = result.body.info!.replyCount!;
+          contentList.addAll(result.body.info!.reply!);
+        }
       } catch (e) {
         rethrow;
       }
-      if (result.body is Map) {
-        //TODO error display
-      } else if (result.body is Threads) {
-        contentList.addAll(result.body.info!.reply!);
-      }
+
       isOnLoad.value = false;
     }
   }
