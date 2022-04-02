@@ -4,6 +4,7 @@ import 'package:bog_island/app/modules/content/models/content_argument_model.dar
 import 'package:bog_island/app/modules/content/models/threads_model.dart';
 import 'package:bog_island/app/modules/content/providers/threads_provider.dart';
 import 'package:bog_island/app/modules/forum/models/topics_in_forum_model.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -15,6 +16,7 @@ class ContentController extends GetxController {
   final ItemScrollController itemScrollController = ItemScrollController();
   final ItemPositionsListener itemPositionsListener =
       ItemPositionsListener.create();
+  final Logger logger = Logger();
 
   final heroTagAddition = ''.obs;
   final topicId = 0.obs;
@@ -26,7 +28,7 @@ class ContentController extends GetxController {
   String poCookie = '';
 
   Map contentMap = {}.obs;
-  int currentPage = 0;
+  int currentWatchPage = 0;
   int totalPage = 1;
 
   @override
@@ -34,6 +36,11 @@ class ContentController extends GetxController {
     super.onInit();
     Logger().i('ContentController init');
     // loadContent();
+    itemPositionsListener.itemPositions.addListener(() {
+      num lastIndex = itemPositionsListener.itemPositions.value.last.index;
+      currentWatchPage = (lastIndex + 1) ~/ 20 + 1;
+      logger.i(currentWatchPage);
+    });
   }
 
   @override
@@ -75,7 +82,7 @@ class ContentController extends GetxController {
             .postThreads(topicId.value, _currentLoadedPage)
             .then((result) {
           if (result.body is Map) {
-            showWarnSnackBar('加载内容错误', '什么都没有啊');
+            // showWarnSnackBar('加载内容错误', '什么都没有啊');
           } else if (result.body is Threads) {
             totalPage = result.body.info!.replyCount!;
             result.body.info!.addFloor(_currentLoadedPage);
@@ -101,5 +108,13 @@ class ContentController extends GetxController {
   bool switchOnlyPoDisplay() {
     isOnlyPoDisplay.value = !isOnlyPoDisplay.value;
     return isOnlyPoDisplay.value;
+  }
+
+  void jumpToFloor(int page) {
+    int index = (page - 1) * 20 + 1;
+    itemScrollController.scrollTo(
+        index: index,
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeInOutCubic);
   }
 }
