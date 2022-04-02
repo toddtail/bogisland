@@ -6,11 +6,15 @@ import 'package:bog_island/app/modules/content/providers/threads_provider.dart';
 import 'package:bog_island/app/modules/forum/models/topics_in_forum_model.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class ContentController extends GetxController {
   final threadsProvider = Get.find<ThreadsProvider>();
   final contentList = <ThreadsReply>[].obs;
   final threadsModelTopicInfo = ThreadsReply().obs;
+  final ItemScrollController itemScrollController = ItemScrollController();
+  final ItemPositionsListener itemPositionsListener =
+      ItemPositionsListener.create();
 
   final heroTagAddition = ''.obs;
   final topicId = 0.obs;

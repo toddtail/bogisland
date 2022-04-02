@@ -12,7 +12,6 @@ dependencies:
   flutter_screenutil: 5.3.1
   flutter_svg: 1.0.3
   waterfall_flow: 3.0.2
-  # flutter_html: 3.0.0-alpha.2
   url_launcher: 6.0.20
   extended_image: 6.0.2+1
   lottie: 1.2.2
@@ -22,11 +21,12 @@ dependencies:
   path_provider: 2.0.9
   image_picker: 0.8.4+11
   logger: 1.1.0
+  scrollable_positioned_list: 0.2.3
   flutter: 
     sdk: flutter
   flutter_localizations: 
     sdk: flutter
-  flutter_html:
+  flutter_html: 
     path: ./lib/app/common/pub_custom/flutter_html-3.0.0-alpha.2/
 
 dev_dependencies: 
@@ -36,8 +36,8 @@ dev_dependencies:
   flutter_test: 
     sdk: flutter
 
-flutter_icons:
-  image_path: "assets/icon/Icon.jpg"
+flutter_icons: 
+  image_path: assets/icon/Icon.jpg
   android: true
   ios: true
   remove_alpha_ios: true

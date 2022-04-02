@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:logger/logger.dart';
 import 'package:lottie/lottie.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:styled_widget/styled_widget.dart';
 import '../controllers/content_controller.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -46,7 +47,7 @@ class ContentView extends GetView<ContentController> {
                           }
                           return true;
                         },
-                        child: Obx(() => ListView.builder(
+                        child: Obx(() => ScrollablePositionedList.builder(
                               itemBuilder: (BuildContext context, int index) {
                                 // when only headThread loaded in list
                                 if (index == 0 &&
@@ -72,6 +73,8 @@ class ContentView extends GetView<ContentController> {
                                   return ContentCard(index);
                                 }
                               },
+                              itemPositionsListener: controller.itemPositionsListener,
+                              itemScrollController: controller.itemScrollController,
                               itemCount: controller.contentList.length,
                               shrinkWrap: true,
                             ))),
