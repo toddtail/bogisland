@@ -10,7 +10,7 @@ import 'package:logger/logger.dart';
 class ContentController extends GetxController {
   final threadsProvider = Get.find<ThreadsProvider>();
   final contentList = <ThreadsReply>[].obs;
-  final threadsModeltopicInfo = ThreadsReply().obs;
+  final threadsModelTopicInfo = ThreadsReply().obs;
 
   final heroTagAddition = ''.obs;
   final topicId = 0.obs;
@@ -20,6 +20,8 @@ class ContentController extends GetxController {
   int _currentLoadedPage = 0;
   TopicInfo originalTopicInfo = TopicInfo();
   String poCookie = '';
+
+  Map contentMap = {}.obs;
   int currentPage = 0;
   int totalPage = 1;
 
@@ -47,13 +49,14 @@ class ContentController extends GetxController {
     if (originalTopicInfo != model.topicData) {
       originalTopicInfo = model.topicData!;
       totalPage = originalTopicInfo.replyCount!;
-      threadsModeltopicInfo.value =
+      threadsModelTopicInfo.value =
           transferTopicInfoToThreadsReply(originalTopicInfo);
-      topicId.value = threadsModeltopicInfo.value.id!;
-      contentList.add(threadsModeltopicInfo.value);
+      threadsModelTopicInfo.value.floor = 1;
+      topicId.value = threadsModelTopicInfo.value.id!;
+      contentList.add(threadsModelTopicInfo.value);
       heroTagAddition.value = model.heroType!;
       _currentLoadedPage = 0;
-      poCookie = threadsModeltopicInfo.value.cookie!;
+      poCookie = threadsModelTopicInfo.value.cookie!;
       loadContent();
     }
   }
@@ -62,17 +65,20 @@ class ContentController extends GetxController {
     // TODO page load lock
     if (!isOnLoad.value) {
       _currentLoadedPage = _currentLoadedPage + 1;
-      Response result;
       isOnLoad.value = true;
       try {
-        result = await threadsProvider.postThreads(
-            topicId.value, _currentLoadedPage);
-        if (result.body is Map) {
-          showWarnSnackBar('加载内容错误', '什么都没有啊');
-        } else if (result.body is Threads) {
-          totalPage = result.body.info!.replyCount!;
-          contentList.addAll(result.body.info!.reply!);
-        }
+        await threadsProvider
+            .postThreads(topicId.value, _currentLoadedPage)
+            .then((result) {
+          if (result.body is Map) {
+            showWarnSnackBar('加载内容错误', '什么都没有啊');
+          } else if (result.body is Threads) {
+            totalPage = result.body.info!.replyCount!;
+            result.body.info!.addFloor(_currentLoadedPage);
+            contentList.addAll(result.body.info!.reply!);
+            // Logger().i(contentList[1].floor);
+          }
+        });
       } catch (e) {
         rethrow;
       }
@@ -84,7 +90,7 @@ class ContentController extends GetxController {
   void refreshContent() {
     _currentLoadedPage = 0;
     contentList.value = [];
-    contentList.add(threadsModeltopicInfo.value);
+    contentList.add(threadsModelTopicInfo.value);
     loadContent();
   }
 

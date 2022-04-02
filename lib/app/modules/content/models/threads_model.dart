@@ -1,4 +1,5 @@
-import 'package:bog_island/app/modules/forum/models/topics_in_forum_model.dart' show Images;
+import 'package:bog_island/app/modules/forum/models/topics_in_forum_model.dart'
+    show Images;
 
 class Threads {
   String? type;
@@ -105,6 +106,15 @@ class ThreadsInfo {
     }
     return data;
   }
+
+  // be sure add floor before use Reply list
+  addFloor(int page) {
+    int index = 0;
+    reply?.forEach((v) {
+      v.floor = 20 * (page - 1) + index + 2;
+      index += 1;
+    });
+  }
 }
 
 // class Images {
@@ -135,6 +145,7 @@ class ThreadsReply {
   dynamic admin;
   String? content;
   List<Images>? images;
+  int? floor;
 
   ThreadsReply(
       {this.id,
@@ -144,7 +155,8 @@ class ThreadsReply {
       this.cookie,
       this.admin,
       this.content,
-      this.images});
+      this.images,
+      this.floor});
 
   ThreadsReply.fromJson(Map<String, dynamic> json,
       {bool isFromTopicInfo = false}) {
@@ -179,6 +191,7 @@ class ThreadsReply {
     if (images != null) {
       data['images'] = images?.map((v) => v.toJson()).toList();
     }
+    data['floor'] = floor;
     return data;
   }
 }
