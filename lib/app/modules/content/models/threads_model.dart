@@ -108,10 +108,11 @@ class ThreadsInfo {
   }
 
   // be sure add floor before use Reply list
-  addFloor(int page) {
+  addFloorAndPage(int page) {
     int index = 0;
     reply?.forEach((v) {
       v.floor = 20 * (page - 1) + index + 2;
+      v.page = page;
       index += 1;
     });
   }
@@ -146,6 +147,7 @@ class ThreadsReply {
   String? content;
   List<Images>? images;
   int? floor;
+  int? page;
 
   ThreadsReply(
       {this.id,
@@ -156,7 +158,8 @@ class ThreadsReply {
       this.admin,
       this.content,
       this.images,
-      this.floor});
+      this.floor,
+      this.page});
 
   ThreadsReply.fromJson(Map<String, dynamic> json,
       {bool isFromTopicInfo = false}) {
@@ -167,6 +170,8 @@ class ThreadsReply {
     cookie = json['cookie'];
     admin = json['admin'];
     content = json['content'];
+    // floor = json['floor'];
+    // page = json['page'];
     if (isFromTopicInfo) {
       images = json['images'];
     } else {

@@ -39,46 +39,49 @@ class ContentView extends GetView<ContentController> {
                       '>>Po.${controller.topicId.value}', iconPlanetPath,
                       textSize: 16),
                   Expanded(
-                    child: NotificationListener<ScrollNotification>(
-                        onNotification: (ScrollNotification scrollInfo) {
-                          if (scrollInfo.metrics.pixels ==
-                              scrollInfo.metrics.maxScrollExtent) {
-                            controller.loadContent();
-                          }
-                          return true;
-                        },
-                        child: Obx(() => ScrollablePositionedList.builder(
-                              itemBuilder: (BuildContext context, int index) {
-                                // when only headThread loaded in list
-                                if (index == 0 &&
-                                    controller.contentList.length == 1) {
-                                  // if onload, show loading animation
-                                  if (controller.isOnLoad.value) {
-                                    return Wrap(
-                                      children: [
-                                        headThread(),
-                                        loadingAnimationWidiget()
-                                      ],
-                                    );
-                                  }
-                                  // if loaded and no reply, only show headThread
-                                  else {
-                                    return headThread();
-                                  }
+                      child: Obx(() => controller.isOnLoad.value &&
+                              controller.contentList.isEmpty
+                          ? loadingAnimationWidiget()
+                          : NotificationListener<ScrollNotification>(
+                              onNotification: (ScrollNotification scrollInfo) {
+                                // bottom
+                                if (scrollInfo.metrics.pixels ==
+                                    scrollInfo.metrics.maxScrollExtent) {
+                                  controller.loadContent(LoadMode.bottom);
                                 }
-                                // when more than 1 threads in list
-                                else if (controller.contentList.length > 1) {
-                                  return ContentCard(index);
-                                } else {
-                                  return ContentCard(index);
+                                // top
+                                else if (scrollInfo.metrics.pixels ==
+                                    scrollInfo.metrics.minScrollExtent) {
+                                  controller.loadContent(LoadMode.top);
                                 }
+                                return true;
                               },
-                              itemPositionsListener: controller.itemPositionsListener,
-                              itemScrollController: controller.itemScrollController,
-                              itemCount: controller.contentList.length,
-                              shrinkWrap: true,
-                            ))),
-                  ),
+                              child: ScrollablePositionedList.builder(
+                                itemBuilder: (BuildContext context, int index) {
+                                  return controller.isOnLoad.value
+                                      ? controller.contentList.length == 1
+                                          ? Wrap(
+                                              children: [
+                                                headThreadWithHero(),
+                                                loadingAnimationWidiget()
+                                              ],
+                                            )
+                                          : controller.contentList[index]
+                                                      .floor ==
+                                                  1
+                                              ? headThreadWithHero()
+                                              : ContentCard(index)
+                                      : controller.contentList[index].floor == 1
+                                          ? headThreadWithHero()
+                                          : ContentCard(index);
+                                },
+                                itemPositionsListener:
+                                    controller.itemPositionsListener,
+                                itemScrollController:
+                                    controller.itemScrollController,
+                                itemCount: controller.contentList.length,
+                                shrinkWrap: true,
+                              )))),
                 ],
               )
                   .width(324.w)
@@ -94,7 +97,7 @@ class ContentView extends GetView<ContentController> {
     );
   }
 
-  Widget headThread() {
+  Widget headThreadWithHero() {
     return Hero(
             tag: '${controller.topicId}${controller.heroTagAddition.value}',
             child: Material(child: ContentCard(0)))

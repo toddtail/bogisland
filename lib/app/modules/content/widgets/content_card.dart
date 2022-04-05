@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:logger/logger.dart';
 import 'package:styled_widget/styled_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:html/dom.dart' as dom;
@@ -22,16 +23,13 @@ class ContentCard extends GetWidget<ContentController> {
   final int index;
   final forumListController = Get.find<ForumListController>();
   final storage = GetStorage();
-  //TODO PO symbol
 
   @override
   Widget build(BuildContext context) {
-    final ThreadsReply reply = controller.contentList[index];
-
     return Obx(() => !controller.isOnlyPoDisplay.value
-        ? card(reply)
-        : (reply.cookie == controller.poCookie)
-            ? card(reply)
+        ? card(controller.contentList[index])
+        : (controller.contentList[index].cookie == controller.poCookie)
+            ? card(controller.contentList[index])
             : const SizedBox.shrink());
   }
 
@@ -55,7 +53,7 @@ class ContentCard extends GetWidget<ContentController> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('${index + 1}楼').fontSize(12.sp).textColor(colorSky500),
+            Text('${reply.floor}楼').fontSize(12.sp).textColor(colorSky500),
             Text('#${controller.contentList[index].id}')
                 .fontSize(12.sp)
                 .textColor(colorSlate400)
@@ -88,12 +86,12 @@ class ContentCard extends GetWidget<ContentController> {
         .padding(left: 12.h, right: 12.h, top: 16.h, bottom: 8.h)
         .width(300.h)
         .decorated(
-            borderRadius: index == 0
-                ? BorderRadius.only(
-                    topLeft: Radius.circular(24.h),
-                    topRight: Radius.circular(24.h),
-                  )
-                : null,
+            // borderRadius: index == 0
+            //     ? BorderRadius.only(
+            //         topLeft: Radius.circular(24.h),
+            //         topRight: Radius.circular(24.h),
+            //       )
+            //     : null,
             color: colorAmber50)
         .backgroundGradient(const LinearGradient(
           begin: Alignment.topCenter,

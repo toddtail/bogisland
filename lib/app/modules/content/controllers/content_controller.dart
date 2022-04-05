@@ -9,6 +9,8 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
+enum LoadMode { top, bottom }
+
 class ContentController extends GetxController {
   final threadsProvider = Get.find<ThreadsProvider>();
   final contentList = <ThreadsReply>[].obs;
@@ -23,35 +25,42 @@ class ContentController extends GetxController {
   final isOnLoad = false.obs;
   final isOnlyPoDisplay = false.obs;
 
-  int _currentLoadedPage = 0;
   TopicInfo originalTopicInfo = TopicInfo();
   String poCookie = '';
 
-  Map contentMap = {}.obs;
-  int currentWatchPage = 0;
+  final contentMap = <int, List<ThreadsReply>>{}.obs;
+  int currentWatchPage = 1;
   int totalPage = 1;
+  int lastIndex = 1;
+  int firstIndex = 1;
 
   @override
   void onInit() {
     super.onInit();
-    Logger().i('ContentController init');
+    logger.i('ContentController init');
     // loadContent();
     itemPositionsListener.itemPositions.addListener(() {
-      num lastIndex = itemPositionsListener.itemPositions.value.last.index;
-      currentWatchPage = (lastIndex + 1) ~/ 20 + 1;
-      logger.i(currentWatchPage);
+      lastIndex = itemPositionsListener.itemPositions.value.last.index;
+      firstIndex = itemPositionsListener.itemPositions.value.first.index;
+      int lastIndexPage = contentList[lastIndex].page!;
+      if (currentWatchPage != lastIndexPage) {
+        currentWatchPage = lastIndexPage;
+        // logger.i(contentList.length);
+        // logger.i('最后的index $lastIndexFloor');
+        // logger.i('正在看第 $currentWatchPage 页');
+      }
     });
   }
 
   @override
   void onReady() {
-    Logger().i('ContentController onReady');
+    logger.i('ContentController onReady');
     super.onReady();
   }
 
   @override
   void onClose() {
-    Logger().i('ContentController onClose');
+    logger.i('ContentController onClose');
   }
 
   // arguments passed in view
@@ -63,58 +72,122 @@ class ContentController extends GetxController {
       threadsModelTopicInfo.value =
           transferTopicInfoToThreadsReply(originalTopicInfo);
       threadsModelTopicInfo.value.floor = 1;
+      threadsModelTopicInfo.value.page = 1;
       topicId.value = threadsModelTopicInfo.value.id!;
       contentList.add(threadsModelTopicInfo.value);
       heroTagAddition.value = model.heroType!;
-      _currentLoadedPage = 0;
       poCookie = threadsModelTopicInfo.value.cookie!;
-      loadContent();
-    }
-  }
-
-  void loadContent() async {
-    // TODO page load lock
-    if (!isOnLoad.value) {
-      _currentLoadedPage = _currentLoadedPage + 1;
       isOnLoad.value = true;
-      try {
-        await threadsProvider
-            .postThreads(topicId.value, _currentLoadedPage)
-            .then((result) {
-          if (result.body is Map) {
-            // showWarnSnackBar('加载内容错误', '什么都没有啊');
-          } else if (result.body is Threads) {
-            totalPage = result.body.info!.replyCount!;
-            result.body.info!.addFloor(_currentLoadedPage);
-            contentList.addAll(result.body.info!.reply!);
-            // Logger().i(contentList[1].floor);
-          }
-        });
-      } catch (e) {
-        rethrow;
+      bool loadResult = await loadContentMap(1);
+      if (loadResult) {
+        contentList.value = [];
+        addContentFromMapToList(1, LoadMode.top);
       }
-
       isOnLoad.value = false;
     }
   }
 
-  void refreshContent() {
-    _currentLoadedPage = 0;
-    contentList.value = [];
-    contentList.add(threadsModelTopicInfo.value);
-    loadContent();
+  loadContent(LoadMode mode) async {
+    if (!isOnLoad.value) {
+      isOnLoad.value = true;
+      // logger.i('loadContent at $mode');
+      bool loadState;
+      int loadPage;
+      // logger.i('正在看第 $currentWatchPage 页');
+      if (mode == LoadMode.top) {
+        if (currentWatchPage > 1) {
+          loadPage = currentWatchPage - 1;
+          loadState = await loadContentMap(loadPage);
+          if (loadState) {
+            addContentFromMapToList(loadPage, mode);
+            itemScrollController.jumpTo(index: firstIndex + 20);
+          }
+        }
+      } else if (mode == LoadMode.bottom) {
+        if (currentWatchPage < totalPage) {
+          loadPage = currentWatchPage + 1;
+          loadState = await loadContentMap(loadPage);
+          if (loadState) {
+            addContentFromMapToList(loadPage, mode);
+          }
+        }
+      }
+      isOnLoad.value = false;
+    }
+  }
+
+  Future<bool> loadContentMap(int page) async {
+    try {
+      final result = await threadsProvider.postThreads(topicId.value, page);
+      if (result.body is Threads) {
+        totalPage = result.body.info!.replyCount!;
+        result.body.info!.addFloorAndPage(page);
+        contentMap[page] = result.body.info!.reply!;
+        if (page == 1) {
+          contentMap[page]?.insert(0, threadsModelTopicInfo.value);
+        }
+        return true;
+      } else {
+        // showWarnSnackBar('加载内容错误', '什么都没有啊');
+        return false;
+      }
+    } catch (e) {
+      showWarnSnackBar('加载内容失败', '请检查网络');
+      return false;
+    }
+  }
+
+  addContentFromMapToList(int page, LoadMode mode) {
+    if (mode == LoadMode.top) {
+      contentList.insertAll(0, contentMap[page]!);
+    } else if (mode == LoadMode.bottom) {
+      contentList.insertAll(contentList.length, contentMap[page]!);
+    }
+    contentList.refresh();
+  }
+
+  loadContentAtBottom() async {
+    int currentTotalPage = totalPage;
+    loadContentMap(totalPage).then((value) {
+      if (value && (currentTotalPage == totalPage)) {
+        contentList.value = [];
+        addContentFromMapToList(currentTotalPage, LoadMode.top);
+      } else if (currentTotalPage < totalPage) {
+        loadContentMap(totalPage).then((value) {
+          if (value) {
+            contentList.value = [];
+            addContentFromMapToList(totalPage, LoadMode.top);
+          }
+        });
+      }
+    });
+  }
+
+  void jumpToFloor(int page) async {
+    if (!isOnLoad.value) {
+      isOnLoad.value = true;
+      contentList.value = [];
+      contentList.refresh();
+      bool loadState;
+      loadState = await loadContentMap(page);
+      if (loadState) {
+        addContentFromMapToList(page, LoadMode.top);
+      }
+      isOnLoad.value = false;
+      // itemScrollController.scrollTo(
+      //     index: index,
+      //     duration: const Duration(milliseconds: 200),
+      //     curve: Curves.easeInOutCubic);
+    }
+  }
+
+  // load bottom content after post
+  void refreshContent() async {
+    await loadContentAtBottom();
   }
 
   bool switchOnlyPoDisplay() {
     isOnlyPoDisplay.value = !isOnlyPoDisplay.value;
     return isOnlyPoDisplay.value;
-  }
-
-  void jumpToFloor(int page) {
-    int index = (page - 1) * 20 + 1;
-    itemScrollController.scrollTo(
-        index: index,
-        duration: const Duration(milliseconds: 200),
-        curve: Curves.easeInOutCubic);
   }
 }
