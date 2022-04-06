@@ -4,16 +4,18 @@ import 'package:bog_island/app/modules/content/controllers/content_controller.da
 import 'package:bog_island/app/modules/content/models/content_argument_model.dart';
 import 'package:bog_island/app/modules/content/widgets/content_bottom_bar.dart';
 import 'package:bog_island/app/modules/content/widgets/content_card.dart';
+import 'package:bog_island/app/modules/content/widgets/single_page_content.dart';
 import 'package:bog_island/app/modules/global/widgets/normal_top_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
+import 'package:paginated_items_builder/paginated_items_builder.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:styled_widget/styled_widget.dart';
 
-class ContentView extends GetView<ContentController> {
-  ContentView();
+class ContentViewNew extends GetView<ContentController> {
+  ContentViewNew();
 
   final ContentArgumentModel arguments = Get.arguments;
 
@@ -35,32 +37,24 @@ class ContentView extends GetView<ContentController> {
                       '>>Po.${controller.topicId.value}', iconPlanetPath,
                       textSize: 16),
                   Expanded(
-                      child: Obx(() => ScrollablePositionedList.builder(
-                                itemBuilder: (BuildContext context, int index) {
-                                  return controller.isOnLoad.value
-                                      ? controller.contentList.length == 1
-                                          ? Wrap(
-                                              children: [
-                                                headThreadWithHero(),
-                                                loadingAnimationWidiget()
-                                              ],
-                                            )
-                                          : controller.contentList[index]
-                                                      .floor ==
-                                                  1
-                                              ? headThreadWithHero()
-                                              : ContentCard(index)
-                                      : controller.contentList[index].floor == 1
-                                          ? headThreadWithHero()
-                                          : ContentCard(index);
-                                },
-                                itemPositionsListener:
-                                    controller.itemPositionsListener,
-                                itemScrollController:
-                                    controller.itemScrollController,
-                                itemCount: controller.contentList.length,
-                                shrinkWrap: true,
-                              ))),
+                      child: LoaderShimmer(
+                        child: ListView(
+                          children: [
+                            ContentSinglePage(1)
+                          ],
+                        ),
+                            // child: ScrollablePositionedList.builder(
+                            //   itemBuilder: (BuildContext context, int index) {
+                            //     return ContentSinglePage(index);
+                            //   },
+                            //   itemPositionsListener:
+                            //       controller.itemPositionsListener,
+                            //   itemScrollController:
+                            //       controller.itemScrollController,
+                            //   itemCount: 1,
+                            //   shrinkWrap: true,
+                            // ),
+                          )),
                 ],
               )
                   .width(324.w)
