@@ -7,7 +7,6 @@ import 'package:bog_island/app/modules/forum/models/topics_in_forum_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:paginated_items_builder/paginated_items_builder.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 enum LoadMode { top, bottom }
