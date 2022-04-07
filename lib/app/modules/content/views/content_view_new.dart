@@ -59,7 +59,7 @@ class ContentView extends GetView<ContentController> {
                             }, child:
                                   CustomScrollView(
                                     slivers: [
-                                      // ContentSlivers(false),
+                                      ContentSlivers(false),
                                       ContentSlivers(true),
                                     ],
                                   )))),

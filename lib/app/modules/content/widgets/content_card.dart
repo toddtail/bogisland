@@ -18,19 +18,26 @@ import 'package:html/dom.dart' as dom;
 import 'package:url_launcher/url_launcher.dart';
 
 class ContentCard extends GetWidget<ContentController> {
-  ContentCard(this.index, {Key? key}) : super(key: key);
+  ContentCard(this.index, {this.isPositive = true, Key? key}) : super(key: key);
 
   final int index;
+  final bool isPositive;
   final forumListController = Get.find<ForumListController>();
   final storage = GetStorage();
 
   @override
   Widget build(BuildContext context) {
     return Obx(() => !controller.isOnlyPoDisplay.value
-        ? card(controller.contentList[index])
-        : (controller.contentList[index].cookie == controller.poCookie)
-            ? card(controller.contentList[index])
-            : const SizedBox.shrink());
+        ? card(isPositive
+            ? controller.contentList[index]
+            : controller.contentNegativeList[index])
+        : isPositive
+            ? (controller.contentList[index].cookie == controller.poCookie)
+                ? card(controller.contentList[index])
+                : const SizedBox.shrink()
+            : (controller.contentNegativeList[index].cookie == controller.poCookie)
+                ? card(controller.contentNegativeList[index])
+                : const SizedBox.shrink());
   }
 
   Widget card(ThreadsReply reply) {

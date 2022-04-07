@@ -13,7 +13,6 @@ enum LoadMode { top, bottom }
 
 class ContentController extends GetxController {
   final threadsProvider = Get.find<ThreadsProvider>();
-
   final threadsModelTopicInfo = ThreadsReply().obs;
   final ItemScrollController itemScrollController = ItemScrollController();
   final ItemPositionsListener itemPositionsListener =
@@ -33,6 +32,10 @@ class ContentController extends GetxController {
   final contentMap = <int, List<ThreadsReply>>{}.obs;
   int currentWatchPage = 1;
   int totalPage = 1;
+  int basePage = 1;
+  int topPage = 1;
+  int bottomPage = 1;
+
   int lastIndex = 1;
   int firstIndex = 1;
 
@@ -97,20 +100,23 @@ class ContentController extends GetxController {
       int loadPage;
       // logger.i('正在看第 $currentWatchPage 页');
       if (mode == LoadMode.top) {
-        if (currentWatchPage > 1) {
-          loadPage = currentWatchPage - 1;
+        if (topPage > 1) {
+          loadPage = topPage - 1;
+          logger.i('LoadMode.top 正在loading $loadPage 页');
           loadState = await loadContentMap(loadPage);
           if (loadState) {
             addContentFromMapToList(loadPage, mode);
-            itemScrollController.jumpTo(index: firstIndex + 20);
+            topPage -= 1;
           }
         }
       } else if (mode == LoadMode.bottom) {
-        if (currentWatchPage < totalPage) {
-          loadPage = currentWatchPage + 1;
+        if (bottomPage < totalPage) {
+          loadPage = bottomPage + 1;
+          logger.i('LoadMode.bottom 正在loading $loadPage 页');
           loadState = await loadContentMap(loadPage);
           if (loadState) {
             addContentFromMapToList(loadPage, mode);
+            bottomPage += 1;
           }
         }
       }
@@ -118,11 +124,12 @@ class ContentController extends GetxController {
     }
   }
 
+  // load content to map and refresh total page
   Future<bool> loadContentMap(int page) async {
     try {
       final result = await threadsProvider.postThreads(topicId.value, page);
       if (result.body is Threads) {
-        totalPage = result.body.info!.replyCount!;
+        totalPage = result.body.info!.replyCount! ~/ 20;
         result.body.info!.addFloorAndPage(page);
         contentMap[page] = result.body.info!.reply!;
         if (page == 1) {
@@ -141,9 +148,9 @@ class ContentController extends GetxController {
 
   addContentFromMapToList(int page, LoadMode mode) {
     if (mode == LoadMode.top) {
-      contentList.insertAll(0, contentMap[page]!);
-    } else if (mode == LoadMode.bottom) {
       contentNegativeList.insertAll(0, contentMap[page]!);
+    } else if (mode == LoadMode.bottom) {
+      contentList.insertAll(contentList.length, contentMap[page]!);
     }
     logger.i('contentList length: ${contentList.length}');
     logger.i('contentNegativeList length: ${contentNegativeList.length}');
@@ -178,6 +185,7 @@ class ContentController extends GetxController {
       loadState = await loadContentMap(page);
       if (loadState) {
         addContentFromMapToList(page, LoadMode.bottom);
+        setPageVariable(page);
       }
       isOnLoad.value = false;
       // itemScrollController.scrollTo(
@@ -185,6 +193,12 @@ class ContentController extends GetxController {
       //     duration: const Duration(milliseconds: 200),
       //     curve: Curves.easeInOutCubic);
     }
+  }
+
+  void setPageVariable(int page) {
+    basePage = page;
+    topPage = page;
+    bottomPage = page;
   }
 
   // load bottom content after post

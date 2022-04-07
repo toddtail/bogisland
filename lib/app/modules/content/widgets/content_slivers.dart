@@ -12,12 +12,18 @@ class ContentSlivers extends StatelessWidget {
   final bool isPositive;
   @override
   Widget build(BuildContext context) {
-    if (isPositive) {
+    if (isPositive)
       return positiveSlivers();
-    } else {
+    else
       return negativeSlivers();
-    }
   }
+
+  // Widget positiveSlivers() {
+  //   return SliverList(
+  //       delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+  //     return ContentCard(index);
+  //   }, childCount: controller.contentList.length));
+  // }
 
   Widget positiveSlivers() {
     return SliverList(
@@ -25,40 +31,36 @@ class ContentSlivers extends StatelessWidget {
       return controller.isOnLoad.value
           ? controller.contentList.length == 1
               ? Wrap(
-                  children: [Text('index'), loadingAnimationWidiget()],
+                  children: [headThreadWithHero(), loadingAnimationWidiget()],
                 )
               : controller.contentList[index].floor == 1
-                  ? Text('index')
-                  : Text('index')
+                  ? headThreadWithHero()
+                  : ContentCard(index)
           : controller.contentList[index].floor == 1
-              ? Text('index')
-              : Text('index');
+              ? headThreadWithHero()
+              : ContentCard(index);
     }, childCount: controller.contentList.length));
   }
 
   Widget negativeSlivers() {
-    return controller.contentNegativeList.isNotEmpty
-        ? SliverList(
-            delegate:
-                SliverChildBuilderDelegate((BuildContext context, int index) {
-            return controller.isOnLoad.value
-                ? controller.contentNegativeList.length == 1
-                    ? Wrap(
-                        children: [
-                          headThreadWithHero(),
-                          loadingAnimationWidiget()
-                        ],
-                      )
-                    : controller.contentNegativeList[index].floor == 1
-                        ? headThreadWithHero()
-                        : ContentCard(
-                            controller.contentNegativeList.length - 1 - index)
-                : controller.contentNegativeList[index].floor == 1
-                    ? headThreadWithHero()
-                    : ContentCard(
-                        controller.contentNegativeList.length - 1 - index);
-          }, childCount: controller.contentNegativeList.length))
-        : SizedBox.shrink();
+    return SliverList(
+        delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+      return controller.isOnLoad.value
+          ? controller.contentNegativeList.length == 1
+              ? Wrap(
+                  children: [headThreadWithHero(), loadingAnimationWidiget()],
+                )
+              : controller.contentNegativeList[index].floor == 1
+                  ? headThreadWithHero()
+                  : ContentCard(
+                      controller.contentNegativeList.length - 1 - index,
+                      isPositive: false,
+                    )
+          : controller.contentList[index].floor == 1
+              ? headThreadWithHero()
+              : ContentCard(controller.contentNegativeList.length - 1 - index,
+                  isPositive: false);
+    }, childCount: controller.contentNegativeList.length));
   }
 
   Widget headThreadWithHero() {
