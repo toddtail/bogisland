@@ -30,7 +30,6 @@ class ContentController extends GetxController {
   String poCookie = '';
 
   final contentMap = <int, List<ThreadsReply>>{}.obs;
-  final contentMapPaginated = <int, PaginatedItemsResponse<ThreadsReply>>{}.obs;
   int currentWatchPage = 1;
   int totalPage = 1;
   int lastIndex = 1;
@@ -118,31 +117,7 @@ class ContentController extends GetxController {
     }
   }
 
-  Future<PaginatedItemsResponse<ThreadsReply>?> postThreadsInPaginated(
-      int page) async {
-    final result = await threadsProvider.postThreads(topicId.value, page);
-    if (result.body is Threads) {
-      totalPage = result.body.info!.replyCount!;
-      result.body.info!.addFloorAndPage(page);
-      contentMap[page] = result.body.info!.reply!;
-      if (page == 1) {
-        contentMap[page]?.insert(0, threadsModelTopicInfo.value);
-      }
-      final item = PaginatedItemsResponse<ThreadsReply>(
-        listItems: contentMap[page],
-        // no support for pagination for current api
-        paginationKey: null,
-        idGetter: (post) => post.id.toString(),
-      );
-      contentMapPaginated[page] = item;
-      return item;
-    } else {
-      return PaginatedItemsResponse<ThreadsReply>(
-        listItems: [],
-        idGetter: (post) => post.id.toString(),
-      );
-    }
-  }
+
 
   Future<bool> loadContentMap(int page) async {
     try {

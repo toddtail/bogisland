@@ -1,4 +1,3 @@
-import 'package:bog_island/app/modules/content/views/conetnt_view_new.dart';
 import 'package:get/get.dart';
 
 import '../modules/content/bindings/content_binding.dart';
@@ -41,7 +40,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.CONTENT,
-      page: () => ContentViewNew(),
+      page: () => ContentView(),
       binding: ContentBinding(),
     ),
     GetPage(
