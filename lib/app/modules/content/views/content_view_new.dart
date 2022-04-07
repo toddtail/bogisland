@@ -51,10 +51,10 @@ class ContentView extends GetView<ContentController> {
                                 controller.loadContent(LoadMode.bottom);
                               }
                               // top
-                              else if (scrollInfo.metrics.pixels ==
-                                  scrollInfo.metrics.minScrollExtent) {
-                                controller.loadContent(LoadMode.top);
-                              }
+                              // else if (scrollInfo.metrics.pixels ==
+                              //     scrollInfo.metrics.minScrollExtent) {
+                              //   controller.loadContent(LoadMode.top);
+                              // }
                               return true;
                             }, child:
                                   CustomScrollView(

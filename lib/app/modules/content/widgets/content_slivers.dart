@@ -1,3 +1,4 @@
+import 'package:bog_island/app/data/tailwind_colors.dart';
 import 'package:bog_island/app/modules/content/controllers/content_controller.dart';
 import 'package:bog_island/app/modules/content/widgets/content_card.dart';
 import 'package:flutter/material.dart';
@@ -12,10 +13,11 @@ class ContentSlivers extends StatelessWidget {
   final bool isPositive;
   @override
   Widget build(BuildContext context) {
-    if (isPositive)
+    if (isPositive) {
       return positiveSlivers();
-    else
+    } else {
       return negativeSlivers();
+    }
   }
 
   // Widget positiveSlivers() {
@@ -43,31 +45,44 @@ class ContentSlivers extends StatelessWidget {
   }
 
   Widget negativeSlivers() {
-    return SliverList(
-        delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-      return controller.isOnLoad.value
-          ? controller.contentNegativeList.length == 1
-              ? Wrap(
-                  children: [headThreadWithHero(), loadingAnimationWidiget()],
-                )
-              : controller.contentNegativeList[index].floor == 1
-                  ? headThreadWithHero()
-                  : ContentCard(
-                      controller.contentNegativeList.length - 1 - index,
-                      isPositive: false,
-                    )
-          : controller.contentList[index].floor == 1
-              ? headThreadWithHero()
-              : ContentCard(controller.contentNegativeList.length - 1 - index,
-                  isPositive: false);
-    }, childCount: controller.contentNegativeList.length));
+    return controller.contentNegativeList.isEmpty
+        ? SliverList(
+            delegate: SliverChildListDelegate([
+            Container().width(1.sh).height(0.1.h).backgroundColor(colorBlue400)
+          ]))
+        : SliverList(
+            delegate:
+                SliverChildBuilderDelegate((BuildContext context, int index) {
+            return controller.isOnLoad.value
+                ? controller.contentNegativeList.length == 1
+                    ? Wrap(
+                        children: [
+                          headThreadWithHero(isPositive: false),
+                          loadingAnimationWidiget()
+                        ],
+                      )
+                    : controller.contentNegativeList[index].floor == 1
+                        ? headThreadWithHero(isPositive: false)
+                        : ContentCard(
+                            controller.contentNegativeList.length - 1 - index,
+                            isPositive: false,
+                          )
+                : controller.contentList[index].floor == 1
+                    ? headThreadWithHero(isPositive: false)
+                    : ContentCard(
+                        controller.contentNegativeList.length - 1 - index,
+                        isPositive: false);
+          }, childCount: controller.contentNegativeList.length));
   }
 
-  Widget headThreadWithHero() {
+  Widget headThreadWithHero({bool isPositive = true}) {
     return Hero(
-            tag: '${controller.topicId}${controller.heroTagAddition.value}',
-            child: Material(child: ContentCard(0)))
-        .width(324.w);
+        tag: '${controller.topicId}${controller.heroTagAddition.value}',
+        child: Material(
+            child: ContentCard(
+          0,
+          isPositive: isPositive,
+        ))).width(324.w);
   }
 
   Widget loadingAnimationWidiget() {

@@ -148,7 +148,7 @@ class ContentController extends GetxController {
 
   addContentFromMapToList(int page, LoadMode mode) {
     if (mode == LoadMode.top) {
-      contentNegativeList.insertAll(0, contentMap[page]!);
+      contentNegativeList.insertAll(0, contentMap[page]!.reversed);
     } else if (mode == LoadMode.bottom) {
       contentList.insertAll(contentList.length, contentMap[page]!);
     }
