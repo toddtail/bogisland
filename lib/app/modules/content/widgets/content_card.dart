@@ -54,7 +54,7 @@ class ContentCard extends GetWidget<ContentController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text('${reply.floor}楼').fontSize(12.sp).textColor(colorSky500),
-            Text('#${controller.contentList[index].id}')
+            Text('#${reply.id}')
                 .fontSize(12.sp)
                 .textColor(colorSlate400)
                 .gestures(onTap: () {

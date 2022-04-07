@@ -22,8 +22,7 @@ dependencies:
   image_picker: 0.8.4+11
   logger: 1.1.0
   scrollable_positioned_list: 0.2.3
-  scroll_to_index: 2.1.1
-  bidirectional_listview: 1.0.3
+
   flutter: 
     sdk: flutter
   flutter_localizations: 

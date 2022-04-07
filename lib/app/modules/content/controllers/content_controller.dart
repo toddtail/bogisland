@@ -13,7 +13,7 @@ enum LoadMode { top, bottom }
 
 class ContentController extends GetxController {
   final threadsProvider = Get.find<ThreadsProvider>();
-  final contentList = <ThreadsReply>[].obs;
+
   final threadsModelTopicInfo = ThreadsReply().obs;
   final ItemScrollController itemScrollController = ItemScrollController();
   final ItemPositionsListener itemPositionsListener =
@@ -28,6 +28,8 @@ class ContentController extends GetxController {
   TopicInfo originalTopicInfo = TopicInfo();
   String poCookie = '';
 
+  final contentList = <ThreadsReply>[].obs;
+  final contentNegativeList = <ThreadsReply>[].obs;
   final contentMap = <int, List<ThreadsReply>>{}.obs;
   int currentWatchPage = 1;
   int totalPage = 1;
@@ -81,7 +83,7 @@ class ContentController extends GetxController {
       bool loadResult = await loadContentMap(1);
       if (loadResult) {
         contentList.value = [];
-        addContentFromMapToList(1, LoadMode.top);
+        addContentFromMapToList(1, LoadMode.bottom);
       }
       isOnLoad.value = false;
     }
@@ -116,8 +118,6 @@ class ContentController extends GetxController {
     }
   }
 
-
-
   Future<bool> loadContentMap(int page) async {
     try {
       final result = await threadsProvider.postThreads(topicId.value, page);
@@ -143,22 +143,25 @@ class ContentController extends GetxController {
     if (mode == LoadMode.top) {
       contentList.insertAll(0, contentMap[page]!);
     } else if (mode == LoadMode.bottom) {
-      contentList.insertAll(contentList.length, contentMap[page]!);
+      contentNegativeList.insertAll(0, contentMap[page]!);
     }
-    contentList.refresh();
+    logger.i('contentList length: ${contentList.length}');
+    logger.i('contentNegativeList length: ${contentNegativeList.length}');
+    // contentList.refresh();
   }
 
+  //TODO
   loadContentAtBottom() async {
     int currentTotalPage = totalPage;
     loadContentMap(totalPage).then((value) {
       if (value && (currentTotalPage == totalPage)) {
         contentList.value = [];
-        addContentFromMapToList(currentTotalPage, LoadMode.top);
+        addContentFromMapToList(currentTotalPage, LoadMode.bottom);
       } else if (currentTotalPage < totalPage) {
         loadContentMap(totalPage).then((value) {
           if (value) {
             contentList.value = [];
-            addContentFromMapToList(totalPage, LoadMode.top);
+            addContentFromMapToList(totalPage, LoadMode.bottom);
           }
         });
       }
@@ -169,11 +172,12 @@ class ContentController extends GetxController {
     if (!isOnLoad.value) {
       isOnLoad.value = true;
       contentList.value = [];
-      contentList.refresh();
+      contentNegativeList.value = [];
+      // contentList.refresh();
       bool loadState;
       loadState = await loadContentMap(page);
       if (loadState) {
-        addContentFromMapToList(page, LoadMode.top);
+        addContentFromMapToList(page, LoadMode.bottom);
       }
       isOnLoad.value = false;
       // itemScrollController.scrollTo(

@@ -22,13 +22,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.8.2"
-  bidirectional_listview:
-    dependency: "direct main"
-    description:
-      name: bidirectional_listview
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.3"
   boolean_selector:
     dependency: transitive
     description:
@@ -483,13 +476,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.4"
-  scroll_to_index:
-    dependency: "direct main"
-    description:
-      name: scroll_to_index
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.1.1"
   scrollable_positioned_list:
     dependency: "direct main"
     description:
