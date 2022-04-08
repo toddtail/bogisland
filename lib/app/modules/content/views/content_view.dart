@@ -2,6 +2,7 @@ import 'package:bog_island/app/data/tailwind_colors.dart';
 import 'package:bog_island/app/modules/content/models/content_argument_model.dart';
 import 'package:bog_island/app/modules/content/widgets/content_bottom_bar.dart';
 import 'package:bog_island/app/modules/content/widgets/content_card.dart';
+import 'package:bog_island/app/modules/content/widgets/content_slivers.dart';
 import 'package:bog_island/app/modules/forum/widgets/topic_card.dart';
 import 'package:bog_island/app/modules/global/widgets/normal_top_bar.dart';
 import 'package:flutter/material.dart';
@@ -52,35 +53,18 @@ class ContentView extends GetView<ContentController> {
                                 // top
                                 else if (scrollInfo.metrics.pixels ==
                                     scrollInfo.metrics.minScrollExtent) {
-                                  controller.loadContent(LoadMode.top);
+                                  // controller.loadContent(LoadMode.top);
+                                  controller.callTopLoadWorker();
                                 }
                                 return true;
                               },
-                              child: ScrollablePositionedList.builder(
-                                itemBuilder: (BuildContext context, int index) {
-                                  return controller.isOnLoad.value
-                                      ? controller.contentList.length == 1
-                                          ? Wrap(
-                                              children: [
-                                                headThreadWithHero(),
-                                                loadingAnimationWidiget()
-                                              ],
-                                            )
-                                          : controller.contentList[index]
-                                                      .floor ==
-                                                  1
-                                              ? headThreadWithHero()
-                                              : ContentCard(index)
-                                      : controller.contentList[index].floor == 1
-                                          ? headThreadWithHero()
-                                          : ContentCard(index);
-                                },
-                                itemPositionsListener:
-                                    controller.itemPositionsListener,
-                                itemScrollController:
-                                    controller.itemScrollController,
-                                itemCount: controller.contentList.length,
-                                shrinkWrap: true,
+                              child: CustomScrollView(
+                                center: controller.centerKey,
+                                slivers: [
+                                  ContentSlivers(false),
+                                  ContentSlivers(true,
+                                      key: controller.centerKey),
+                                ],
                               )))),
                 ],
               )

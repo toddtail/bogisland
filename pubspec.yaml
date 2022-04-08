@@ -21,7 +21,6 @@ dependencies:
   path_provider: 2.0.9
   image_picker: 0.8.4+11
   logger: 1.1.0
-  scrollable_positioned_list: 0.2.3
 
   flutter: 
     sdk: flutter

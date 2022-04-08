@@ -14,9 +14,6 @@ enum LoadMode { top, bottom }
 class ContentController extends GetxController {
   final threadsProvider = Get.find<ThreadsProvider>();
   final threadsModelTopicInfo = ThreadsReply().obs;
-  final ItemScrollController itemScrollController = ItemScrollController();
-  final ItemPositionsListener itemPositionsListener =
-      ItemPositionsListener.create();
   final Logger logger = Logger();
 
   final heroTagAddition = ''.obs;
@@ -31,7 +28,6 @@ class ContentController extends GetxController {
   final contentNegativeList = <ThreadsReply>[].obs;
   final contentMap = <int, List<ThreadsReply>>{}.obs;
 
-  int currentWatchPage = 1;
   int totalPage = 1;
   int basePage = 1;
   int topPage = 1;
