@@ -7,7 +7,6 @@ import 'package:bog_island/app/modules/forum/models/topics_in_forum_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 enum LoadMode { top, bottom }
 
@@ -28,10 +27,10 @@ class ContentController extends GetxController {
   final contentNegativeList = <ThreadsReply>[].obs;
   final contentMap = <int, List<ThreadsReply>>{}.obs;
 
-  int totalPage = 1;
+  final totalPage = 1.obs;
   int basePage = 1;
-  int topPage = 1;
-  int bottomPage = 1;
+  final topPage = 1.obs;
+  final bottomPage = 1.obs;
 
   int lastIndex = 1;
   int firstIndex = 1;
@@ -64,7 +63,7 @@ class ContentController extends GetxController {
   void openNewContent(ContentArgumentModel model) async {
     if (originalTopicInfo != model.topicData) {
       originalTopicInfo = model.topicData!;
-      totalPage = originalTopicInfo.replyCount!;
+      totalPage.value = originalTopicInfo.replyCount!;
       threadsModelTopicInfo.value =
           transferTopicInfoToThreadsReply(originalTopicInfo);
       threadsModelTopicInfo.value.floor = 1;
@@ -92,22 +91,22 @@ class ContentController extends GetxController {
       // logger.i('正在看第 $currentWatchPage 页');
       if (mode == LoadMode.top) {
         if (topPage > 1) {
-          loadPage = topPage - 1;
+          loadPage = topPage.value - 1;
           logger.i('LoadMode.top 正在loading $loadPage 页');
           loadState = await loadContentMap(loadPage);
           if (loadState) {
             addContentFromMapToList(loadPage, mode);
-            topPage -= 1;
+            topPage.value -= 1;
           }
         }
       } else if (mode == LoadMode.bottom) {
-        if (bottomPage < totalPage) {
-          loadPage = bottomPage + 1;
+        if (bottomPage < totalPage.value) {
+          loadPage = bottomPage.value + 1;
           logger.i('LoadMode.bottom 正在loading $loadPage 页');
           loadState = await loadContentMap(loadPage);
           if (loadState) {
             addContentFromMapToList(loadPage, mode);
-            bottomPage += 1;
+            bottomPage.value += 1;
           }
         }
       }
@@ -120,7 +119,7 @@ class ContentController extends GetxController {
     try {
       final result = await threadsProvider.postThreads(topicId.value, page);
       if (result.body is Threads) {
-        totalPage = result.body.info!.replyCount! ~/ 20;
+        totalPage.value = result.body.info!.replyCount! ~/ 20;
         result.body.info!.addFloorAndPage(page);
         contentMap[page] = result.body.info!.reply!;
         if (page == 1) {
@@ -155,16 +154,16 @@ class ContentController extends GetxController {
 
   //TODO
   loadContentAtBottom() async {
-    int currentTotalPage = totalPage;
-    loadContentMap(totalPage).then((value) {
-      if (value && (currentTotalPage == totalPage)) {
+    int currentTotalPage = totalPage.value;
+    loadContentMap(totalPage.value).then((value) {
+      if (value && (currentTotalPage == totalPage.value)) {
         contentList.value = [];
         addContentFromMapToList(currentTotalPage, LoadMode.bottom);
-      } else if (currentTotalPage < totalPage) {
-        loadContentMap(totalPage).then((value) {
+      } else if (currentTotalPage < totalPage.value) {
+        loadContentMap(totalPage.value).then((value) {
           if (value) {
             contentList.value = [];
-            addContentFromMapToList(totalPage, LoadMode.bottom);
+            addContentFromMapToList(totalPage.value, LoadMode.bottom);
           }
         });
       }
@@ -190,8 +189,8 @@ class ContentController extends GetxController {
 
   void setPageVariable(int page) {
     basePage = page;
-    topPage = page;
-    bottomPage = page;
+    topPage.value = page;
+    bottomPage.value = page;
   }
 
   // load bottom content after post

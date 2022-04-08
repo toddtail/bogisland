@@ -2,6 +2,7 @@ import 'package:bog_island/app/data/tailwind_colors.dart';
 import 'package:bog_island/app/modules/content/models/content_argument_model.dart';
 import 'package:bog_island/app/modules/content/widgets/content_bottom_bar.dart';
 import 'package:bog_island/app/modules/content/widgets/content_card.dart';
+import 'package:bog_island/app/modules/content/widgets/content_load_bar.dart';
 import 'package:bog_island/app/modules/content/widgets/content_slivers.dart';
 import 'package:bog_island/app/modules/forum/widgets/topic_card.dart';
 import 'package:bog_island/app/modules/global/widgets/normal_top_bar.dart';
@@ -11,7 +12,6 @@ import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:logger/logger.dart';
 import 'package:lottie/lottie.dart';
-import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:styled_widget/styled_widget.dart';
 import '../controllers/content_controller.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -61,9 +61,11 @@ class ContentView extends GetView<ContentController> {
                               child: CustomScrollView(
                                 center: controller.centerKey,
                                 slivers: [
+                                  topLoadingBar(),
                                   ContentSlivers(false),
                                   ContentSlivers(true,
                                       key: controller.centerKey),
+                                  bottomLoadingBar()
                                 ],
                               )))),
                 ],
