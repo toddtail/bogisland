@@ -45,25 +45,27 @@ class ContentView extends GetView<ContentController> {
                           ? loadingAnimationWidiget()
                           : NotificationListener<ScrollNotification>(
                               onNotification: (ScrollNotification scrollInfo) {
-                              // bottom
-                              if (scrollInfo.metrics.pixels ==
-                                  scrollInfo.metrics.maxScrollExtent) {
-                                controller.loadContent(LoadMode.bottom);
-                              }
-                              // top
-                              else if (scrollInfo.metrics.pixels ==
-                                  scrollInfo.metrics.minScrollExtent) {
-                                controller.loadContent(LoadMode.top);
-                              }
-                              return true;
-                            }, child:
-                                  CustomScrollView(
-                                    center: controller.centerKey,
-                                    slivers: [
-                                      ContentSlivers(false),
-                                      ContentSlivers(true, key: controller.centerKey),
-                                    ],
-                                  )))),
+                                // bottom
+                                if (scrollInfo.metrics.pixels ==
+                                    scrollInfo.metrics.maxScrollExtent) {
+                                  controller.loadContent(LoadMode.bottom);
+                                }
+                                // top
+                                else if (scrollInfo.metrics.pixels ==
+                                    scrollInfo.metrics.minScrollExtent) {
+                                  // controller.loadContent(LoadMode.top);
+                                  controller.callTopLoadWorker();
+                                }
+                                return true;
+                              },
+                              child: CustomScrollView(
+                                center: controller.centerKey,
+                                slivers: [
+                                  ContentSlivers(false),
+                                  ContentSlivers(true,
+                                      key: controller.centerKey),
+                                ],
+                              )))),
                 ],
               )
                   .width(324.w)

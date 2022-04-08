@@ -40,23 +40,15 @@ class ContentController extends GetxController {
   int lastIndex = 1;
   int firstIndex = 1;
   final centerKey = const ValueKey('bottom_sliver');
+  final _topWorkerCounter = 0.obs;
+  late Worker topWorker;
 
   @override
   void onInit() {
     super.onInit();
     logger.i('ContentController init');
-    // loadContent();
-    // itemPositionsListener.itemPositions.addListener(() {
-    //   lastIndex = itemPositionsListener.itemPositions.value.last.index;
-    //   firstIndex = itemPositionsListener.itemPositions.value.first.index;
-    //   int lastIndexPage = contentList[lastIndex].page!;
-    //   if (currentWatchPage != lastIndexPage) {
-    //     currentWatchPage = lastIndexPage;
-    //     // logger.i(contentList.length);
-    //     // logger.i('最后的index $lastIndexFloor');
-    //     // logger.i('正在看第 $currentWatchPage 页');
-    //   }
-    // });
+    topWorker = debounce(_topWorkerCounter, (latestValue) => loadContent(LoadMode.top),
+        time: const Duration(milliseconds: 800));
   }
 
   @override
@@ -68,6 +60,7 @@ class ContentController extends GetxController {
   @override
   void onClose() {
     logger.i('ContentController onClose');
+    topWorker.dispose();
   }
 
   // arguments passed in view
@@ -150,13 +143,18 @@ class ContentController extends GetxController {
 
   addContentFromMapToList(int page, LoadMode mode) {
     if (mode == LoadMode.top) {
-      contentNegativeList.insertAll(contentNegativeList.length, contentMap[page]!);
+      contentNegativeList.insertAll(
+          contentNegativeList.length, contentMap[page]!.reversed.toList());
     } else if (mode == LoadMode.bottom) {
       contentList.insertAll(contentList.length, contentMap[page]!);
     }
     logger.i('contentList length: ${contentList.length}');
     logger.i('contentNegativeList length: ${contentNegativeList.length}');
     // contentList.refresh();
+  }
+
+  callTopLoadWorker() {
+    _topWorkerCounter.value += 1;
   }
 
   //TODO

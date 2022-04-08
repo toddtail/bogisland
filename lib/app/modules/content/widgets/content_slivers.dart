@@ -65,12 +65,16 @@ class ContentSlivers extends StatelessWidget {
               : controller.contentNegativeList[index].floor == 1
                   ? headThreadWithHero(isPositive: false)
                   : ContentCard(
-                      controller.contentNegativeList.length-1-index,
+                      // controller.contentNegativeList.length-1-index,
+                      index,
                       isPositive: false,
                     )
           : controller.contentNegativeList[index].floor == 1
               ? headThreadWithHero(isPositive: false)
-              : ContentCard(controller.contentNegativeList.length-1-index, isPositive: false);
+              : ContentCard(
+                // controller.contentNegativeList.length-1-index, 
+                index,
+                isPositive: false);
     }, childCount: controller.contentNegativeList.length));
   }
 
