@@ -30,6 +30,7 @@ class ContentController extends GetxController {
   final contentList = <ThreadsReply>[].obs;
   final contentNegativeList = <ThreadsReply>[].obs;
   final contentMap = <int, List<ThreadsReply>>{}.obs;
+
   int currentWatchPage = 1;
   int totalPage = 1;
   int basePage = 1;
@@ -38,23 +39,24 @@ class ContentController extends GetxController {
 
   int lastIndex = 1;
   int firstIndex = 1;
+  final centerKey = const ValueKey('bottom_sliver');
 
   @override
   void onInit() {
     super.onInit();
     logger.i('ContentController init');
     // loadContent();
-    itemPositionsListener.itemPositions.addListener(() {
-      lastIndex = itemPositionsListener.itemPositions.value.last.index;
-      firstIndex = itemPositionsListener.itemPositions.value.first.index;
-      int lastIndexPage = contentList[lastIndex].page!;
-      if (currentWatchPage != lastIndexPage) {
-        currentWatchPage = lastIndexPage;
-        // logger.i(contentList.length);
-        // logger.i('最后的index $lastIndexFloor');
-        // logger.i('正在看第 $currentWatchPage 页');
-      }
-    });
+    // itemPositionsListener.itemPositions.addListener(() {
+    //   lastIndex = itemPositionsListener.itemPositions.value.last.index;
+    //   firstIndex = itemPositionsListener.itemPositions.value.first.index;
+    //   int lastIndexPage = contentList[lastIndex].page!;
+    //   if (currentWatchPage != lastIndexPage) {
+    //     currentWatchPage = lastIndexPage;
+    //     // logger.i(contentList.length);
+    //     // logger.i('最后的index $lastIndexFloor');
+    //     // logger.i('正在看第 $currentWatchPage 页');
+    //   }
+    // });
   }
 
   @override
@@ -148,7 +150,7 @@ class ContentController extends GetxController {
 
   addContentFromMapToList(int page, LoadMode mode) {
     if (mode == LoadMode.top) {
-      contentNegativeList.insertAll(0, contentMap[page]!.reversed);
+      contentNegativeList.insertAll(contentNegativeList.length, contentMap[page]!);
     } else if (mode == LoadMode.bottom) {
       contentList.insertAll(contentList.length, contentMap[page]!);
     }
@@ -188,10 +190,7 @@ class ContentController extends GetxController {
         setPageVariable(page);
       }
       isOnLoad.value = false;
-      // itemScrollController.scrollTo(
-      //     index: index,
-      //     duration: const Duration(milliseconds: 200),
-      //     curve: Curves.easeInOutCubic);
+      // loadContent(LoadMode.top);
     }
   }
 

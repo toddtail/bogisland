@@ -50,7 +50,7 @@ class ContentBottomBarController extends GetxController {
         showWarnSnackBar('请先导入饼干', '没有饼干无法发帖');
       }
     } else if (index == 3) {
-      jumpToFloor(4);
+      jumpToFloor(3);
       // showNormalSnackBar('功能开发中', '楼层跳转功能加载中');
     } else if (index == 4) {
       isOnlyPoDisplay.value = contentController.switchOnlyPoDisplay();

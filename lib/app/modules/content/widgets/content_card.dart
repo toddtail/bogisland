@@ -108,7 +108,6 @@ class ContentCard extends GetWidget<ContentController> {
   }
 
   Widget contentDisplay(String text) {
-    // TODO url clicked, id display
     return Html(
       data: text,
       shrinkWrap: true,
