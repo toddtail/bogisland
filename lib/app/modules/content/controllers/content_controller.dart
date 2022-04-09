@@ -13,6 +13,7 @@ enum LoadMode { top, bottom }
 class ContentController extends GetxController {
   final threadsProvider = Get.find<ThreadsProvider>();
   final threadsModelTopicInfo = ThreadsReply().obs;
+  final textEditingController = TextEditingController(text: '1');
   final Logger logger = Logger();
 
   final heroTagAddition = ''.obs;
@@ -120,7 +121,7 @@ class ContentController extends GetxController {
     try {
       final result = await threadsProvider.postThreads(topicId.value, page);
       if (result.body is Threads) {
-        totalPage.value = result.body.info!.replyCount! ~/ 21;
+        totalPage.value = result.body.info!.replyCount! ~/ 21 + 1;
         result.body.info!.addFloorAndPage(page);
         contentMap[page] = result.body.info!.reply!;
         if (page == 1) {
@@ -190,7 +191,7 @@ class ContentController extends GetxController {
     }
   }
 
-  void jumpToFloor(int page) async {
+  jumpToFloor(int page) async {
     if (!isOnLoad.value) {
       isOnLoad.value = true;
       contentList.value = [];
@@ -213,8 +214,13 @@ class ContentController extends GetxController {
     bottomPage.value = page;
   }
 
+  void onFloorJumpTapped() {
+    
+  }
+
   // load bottom content after post
   void refreshContent() async {
+    await jumpToFloor(totalPage.value);
     await loadContentAtBottom();
   }
 

@@ -1,5 +1,6 @@
 import 'package:bog_island/app/common/function/notify.dart';
 import 'package:bog_island/app/modules/content/controllers/content_controller.dart';
+import 'package:bog_island/app/modules/content/widgets/floor_selector.dart';
 import 'package:bog_island/app/modules/forum/controllers/forum_controller.dart';
 import 'package:bog_island/app/modules/mark/controllers/mark_controller.dart';
 import 'package:bog_island/app/modules/post_edit/models/post_argument_model.dart';
@@ -63,6 +64,6 @@ class ContentBottomBarController extends GetxController {
   }
 
   void jumpToFloor(int page) {
-    contentController.jumpToFloor(page);
+    Get.bottomSheet(const FloorSelector());
   }
 }

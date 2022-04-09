@@ -261,7 +261,7 @@ class PostEditController extends GetxController {
     // refreshOutsideContentAfterPostSucceed();
     _onPostConetent = false;
   }
-
+  
   void releaseContentAfterPostSucceed() {
     // storage.remove(_tImageSelectedIdListKey);
     // storage.remove(_tImageSelectedXFilePathListKey);
