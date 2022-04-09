@@ -42,8 +42,9 @@ class ContentController extends GetxController {
   void onInit() {
     super.onInit();
     logger.i('ContentController init');
-    topWorker = debounce(_topWorkerCounter, (latestValue) => loadContent(LoadMode.top),
-        time: const Duration(milliseconds: 800));
+    topWorker = debounce(
+        _topWorkerCounter, (latestValue) => loadContent(LoadMode.top),
+        time: const Duration(milliseconds: 500));
   }
 
   @override
@@ -119,7 +120,7 @@ class ContentController extends GetxController {
     try {
       final result = await threadsProvider.postThreads(topicId.value, page);
       if (result.body is Threads) {
-        totalPage.value = result.body.info!.replyCount! ~/ 20;
+        totalPage.value = result.body.info!.replyCount! ~/ 21;
         result.body.info!.addFloorAndPage(page);
         contentMap[page] = result.body.info!.reply!;
         if (page == 1) {
@@ -154,20 +155,39 @@ class ContentController extends GetxController {
 
   //TODO
   loadContentAtBottom() async {
-    int currentTotalPage = totalPage.value;
-    loadContentMap(totalPage.value).then((value) {
-      if (value && (currentTotalPage == totalPage.value)) {
-        contentList.value = [];
-        addContentFromMapToList(currentTotalPage, LoadMode.bottom);
-      } else if (currentTotalPage < totalPage.value) {
-        loadContentMap(totalPage.value).then((value) {
-          if (value) {
-            contentList.value = [];
-            addContentFromMapToList(totalPage.value, LoadMode.bottom);
+    if (!isOnLoad.value) {
+      isOnLoad.value = true;
+      int savedTotalPage = totalPage.value;
+      int savedContentLastPageLength = contentMap[totalPage.value]!.length;
+      loadContentMap(totalPage.value).then((result) {
+        if (result) {
+          // 页数没变
+          if (savedTotalPage == totalPage.value) {
+            // 最后一页内容变了
+            if (savedContentLastPageLength !=
+                contentMap[totalPage.value]!.length) {
+              contentList.removeRange(
+                  contentList.length - savedContentLastPageLength,
+                  contentList.length - 1);
+              addContentFromMapToList(totalPage.value, LoadMode.bottom);
+            } else {
+              showNormalSnackBar('此Po文暂无更新', '去刷点别的吧');
+            }
           }
-        });
-      }
-    });
+          // 页数变了,则移动 basePage,以为存在可能增加了很多页的情况
+          else if (savedTotalPage < totalPage.value) {
+            setPageVariable(totalPage.value);
+            loadContentMap(totalPage.value).then((result) {
+              if (result) {
+                contentList.value = [];
+                addContentFromMapToList(totalPage.value, LoadMode.bottom);
+              }
+            });
+          }
+        }
+      });
+      isOnLoad.value = false;
+    }
   }
 
   void jumpToFloor(int page) async {

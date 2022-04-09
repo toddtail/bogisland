@@ -83,18 +83,11 @@ class ContentView extends GetView<ContentController> {
     );
   }
 
-  Widget headThreadWithHero() {
-    return Hero(
-            tag: '${controller.topicId}${controller.heroTagAddition.value}',
-            child: Material(child: ContentCard(0)))
-        .width(324.w);
-  }
-
   Widget loadingAnimationWidiget() {
     return Container(
       alignment: Alignment.topCenter,
       child: Lottie.asset(
-        'assets/lotties/load-topic.json',
+        'assets/lotties/bottom-loading.json',
         width: 160.w,
         fit: BoxFit.fitWidth,
       ),
