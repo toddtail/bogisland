@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bog_island/app/common/function/notify.dart';
 import 'package:bog_island/app/common/function/topic_to_threads_transfer.dart';
 import 'package:bog_island/app/modules/content/models/content_argument_model.dart';
@@ -5,6 +7,7 @@ import 'package:bog_island/app/modules/content/models/threads_model.dart';
 import 'package:bog_island/app/modules/content/providers/threads_provider.dart';
 import 'package:bog_island/app/modules/forum/models/topics_in_forum_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
@@ -13,7 +16,8 @@ enum LoadMode { top, bottom }
 class ContentController extends GetxController {
   final threadsProvider = Get.find<ThreadsProvider>();
   final threadsModelTopicInfo = ThreadsReply().obs;
-  final textEditingController = TextEditingController(text: '1');
+  final floorEditingController = TextEditingController(text: '1');
+  final floorWheelController = FixedExtentScrollController();
   final Logger logger = Logger();
 
   final heroTagAddition = ''.obs;
@@ -38,6 +42,7 @@ class ContentController extends GetxController {
   final centerKey = const ValueKey('bottom_sliver');
   final _topWorkerCounter = 0.obs;
   late Worker topWorker;
+  Timer? _debounce;
 
   @override
   void onInit() {
@@ -58,6 +63,8 @@ class ContentController extends GetxController {
   void onClose() {
     logger.i('ContentController onClose');
     topWorker.dispose();
+    floorEditingController.dispose();
+    floorWheelController.dispose();
   }
 
   // arguments passed in view
@@ -215,7 +222,23 @@ class ContentController extends GetxController {
   }
 
   void onFloorJumpTapped() {
-    
+    jumpToFloor(int.parse(floorEditingController.text));
+    Get.back();
+  }
+
+  changeFloorSelection(ScrollDirection direction) {
+    if (_debounce?.isActive ?? false) _debounce!.cancel();
+    _debounce = Timer(const Duration(milliseconds: 12), () {
+      int floor = int.parse(floorEditingController.text);
+      if (direction == ScrollDirection.reverse) {
+        if (floor < totalPage.value) floor += 1;
+      } else if (direction == ScrollDirection.forward) {
+        if (floor > 1) floor -= 1;
+      }
+      floorEditingController.text = floor.toString();
+      floorEditingController.selection = TextSelection.fromPosition(
+          TextPosition(offset: floorEditingController.text.length));
+    });
   }
 
   // load bottom content after post
